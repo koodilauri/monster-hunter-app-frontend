@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+- 2.0.0
+- 1.9.3
+- jruby-19mode
+- rbx-2
+deploy:
+  provider: heroku
+  api_key:
+    secure: paKr80oHHo1vwG9zmo5OW6hQWj59rCzdTLHQ6qpPwUt6kSHYjsMVAKGFk00EJMnTICmzmSRv9t2KIEAIXEvkJb2N0GLd4lXuc1ID6TWMCGu5a5OhAec1CdkJGxFSBF3IhX+1ryefYBOw0JxOLmrdimDyCInKnj0LMdFtRDkdy4Hk5gVcRQEucVO6loHrMEsGXWiWLGMyqjSpX7ylb8LYY1kfhcoEzLufoylWZaGvj6gVVhLV0WKC5B5fsfzjrjcD4tJ0Hp5Y820zSFQzrSfdwl2MpAiuRCAQ8bnIbR8GBbukvykWZSAmo9neziPEKr0rKDCEbVshK8cxPjE6fciiusJudoDpo/SW+brWXRJjMT/ONNT3K8LeV9l9rHFZ4uGmezvdaoan5oV+vg9mV54RtYxOGItXx/zpwFsMK/qonTMJyLDX4yKU8ctRsdYMPOikrItQBL9S9g3V9GgabVR2eM8SYxkmtrF9nMH8J1dLF47I068/S2wTk/3vKDSI+q9/chdnBKBpcwGmlbOqipSNctGNVYIme90swGlaYI/NdN+RMjFVi2b85qgyXWPchf4OaC69jtEeRofgqcarxJZGCSsIHh59fic8nxT+YjFePyzyHENUcsO9MOullU0wtPjsFh94+0WFTz/DVKWRf2/KCPVVujeGl9hZg8IkB3d4Nwc=
+  app: monster-hunter-app
+  on:
+    repo: koodilauri/monster-hunter-app-frontend
