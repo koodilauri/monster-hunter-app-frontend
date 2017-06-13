@@ -1,17 +1,25 @@
 import React from "react";
+import axios from 'axios';
 
 class SubmissionList extends React.Component{
-  state={
-    newData:{
-      name: "",
-      time: "",
-      type: ""
-    },
-    submissions:[
-      {name:"lauri", time:"05:11:00",type:1},
-      {name:"lauri", time:"07:46:00",type:2}
-      
-    ]
+  constructor(){
+    super();
+    this.state={
+      newData:{
+        name: "",
+        time: "",
+        type: ""
+      },
+      submissions:[]
+    };
+  }
+
+  componentDidMount() {
+    axios.get(`https://monster-hunter-app-api.herokuapp.com/submissions`)
+      .then(res => {
+        const submissions = res.data.submissions;
+        this.setState({submissions});
+      });
   }
 
   renderSubmission(submission){
@@ -31,9 +39,11 @@ class SubmissionList extends React.Component{
       <div>
         <table id="submissions">
           <thead>
-            <td>Name</td>
-            <td>Time</td>
-            <td>Type</td>            
+            <tr>
+              <th>Name</th>
+              <th>Time</th>
+              <th>Type</th>
+            </tr>            
           </thead>
           <tbody>
             { submissions.map( (submission) => {
