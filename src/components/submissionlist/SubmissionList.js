@@ -2,17 +2,15 @@ import React from "react";
 import axios from 'axios';
 
 class SubmissionList extends React.Component{
-  constructor(){
-    super();
-    this.state={
-      newData:{
-        name: "",
-        time: "",
-        type: ""
-      },
-      submissions:[]
-    };
-  }
+  state={
+    newData:{
+      name: "",
+      time: "",
+      type: ""
+    },
+    submissions:[]
+  };
+  
 
   componentDidMount() {
     axios.get(`https://monster-hunter-app-api.herokuapp.com/submissions`)
