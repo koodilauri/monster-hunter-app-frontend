@@ -13,8 +13,7 @@ class SubmissionList extends React.Component{
   
 
   componentDidMount() {
-    axios.get(`https://monster-hunter-app-api.herokuapp.com/submissions`)
-      .then(res => {
+    axios.get("https://monster-hunter-app-api.herokuapp.com/submissions").then(res => {
         const submissions = res.data.submissions;
         this.setState({submissions});
       });
@@ -22,7 +21,7 @@ class SubmissionList extends React.Component{
 
   renderSubmission(submission){
     return (            
-      <tr id={submission.id}>
+      <tr id={submission.name.toString()}>
         <td className="name">{ submission.name }</td>
         <td className="time">{ submission.time }</td>
         <td className="type">{ submission.type }</td>  
