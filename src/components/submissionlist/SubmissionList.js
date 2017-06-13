@@ -16,6 +16,8 @@ class SubmissionList extends React.Component{
     axios.get("https://monster-hunter-app-api.herokuapp.com/submissions").then(res => {
         const submissions = res.data.submissions;
         this.setState({submissions});
+      }).catch(err => {
+        console.log('Request failed :(')
       });
   }
 
