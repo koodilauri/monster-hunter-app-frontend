@@ -13,7 +13,7 @@ class SubmissionList extends React.Component{
   
 
   componentDidMount() {
-    axios.get("https://monster-hunter-app-api.herokuapp.com/submissions").then(res => {
+    axios.get("https://monster-hunter-app-api.herokuapp.com/submission").then(res => {
         const submissions = res.data.submissions;
         this.setState({submissions});
       }).catch(err => {
