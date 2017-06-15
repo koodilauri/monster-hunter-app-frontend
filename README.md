@@ -1,8 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-Heroku link: 
-https://monster-hunter-app.herokuapp.com/
-https://monster-hunter-app-api.herokuapp.com/submission
+#Heroku links: 
+[App in heroku](https://monster-hunter-app.herokuapp.com/)
+[Backend in heroku](https://monster-hunter-app-api.herokuapp.com/submission)
 
 [![Build Status](https://travis-ci.org/koodilauri/monster-hunter-app-frontend.svg?branch=master)](https://travis-ci.org/koodilauri/monster-hunter-app-frontend)
 
