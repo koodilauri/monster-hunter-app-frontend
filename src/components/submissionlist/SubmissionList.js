@@ -25,8 +25,10 @@ class SubmissionList extends React.Component{
     return (            
       <tr id={submission.name.toString()}>
         <td className="name">{ submission.name }</td>
-        <td className="time">{ submission.time }</td>
-        <td className="type">{ submission.type }</td>  
+        <td className="quest">{ submission.quest }</td>
+        <td className="time">{ submission.questtime }</td>
+        <td className="weapon">{ submission.weapon }</td>  
+        <td className="style">{ submission.style }</td>            
       </tr>
       
     )
@@ -40,8 +42,10 @@ class SubmissionList extends React.Component{
           <thead>
             <tr>
               <th>Name</th>
+              <th>Type</th>              
               <th>Time</th>
-              <th>Type</th>
+              <th>Weapon</th>              
+              <th>Style</th>
             </tr>            
           </thead>
           <tbody>
