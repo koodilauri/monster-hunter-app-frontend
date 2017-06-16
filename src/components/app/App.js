@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import SubmissionFrom from "../submissionform/SubmissionForm";
-import SubmissionList from "../submissionlist/SubmissionList";
+import SubmissionFrom from "../submission/SubmissionForm";
+import SubmissionList from "../submission/SubmissionList";
 
 class App extends Component {
   render() {

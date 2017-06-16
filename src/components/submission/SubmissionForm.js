@@ -7,29 +7,31 @@ class SubmissionForm extends React.Component {
       name: "",
       quest: "",
       questTime: "",
-      weapon: "",
-      type: ""
+      weapon: "Great Sword",
+      style: "Guild"
     }
   }
 
   handleChange = (field, event) => {
+    event.preventDefault();
     const newValue = event.target.value;
-    const patt = /[^0-9:0-9]/;
-    console.log(patt.test(newValue), newValue, field);
-    if (field === "questTime" && !patt.test(newValue)){
+    const patt1 = /^([a-zA-Z0-9']+(-| )?)+$/i;
+    const patt2 = /^([0-4]{0,1}[0-9]{0,1}(:){0,1}[0-5]{0,1}[0-9]{0,1}){1}$/i;    
+    if (field === "questTime" && patt2.test(newValue)){
       this.state.newSubmission[field] = event.target.value;
       this.setState({});      
     }
-    if (field != "questTime"){
+    if (((field === "name" || field === "quest") && patt1.test(newValue)) || (field === "weapon" || field === "style")){
       this.state.newSubmission[field] = event.target.value;
       this.setState({});
     }
+
   }
 
   renderCreateSubmission(){
     const {newSubmission} = this.state;
     return(
-    <form>
+    <form action="https://monster-hunter-app-api.herokuapp.com/submission" method="POST">
         <tr className="create-row">
           <td>
             <input className="create-input"
@@ -56,7 +58,8 @@ class SubmissionForm extends React.Component {
               />          
           </td> 
           <td>
-            <select className="create-input" name="weapon">
+            <select className="create-input" name="weapon"
+              onChange={this.handleChange.bind(this, 'weapon')}>
               <option value="Great Sword">Great Sword</option>
               <option value="Long Sword">Long Sword</option>
               <option value="Sword & Shield">Sword & Shield</option>
@@ -70,11 +73,12 @@ class SubmissionForm extends React.Component {
               <option value="Charge Blade">Charge Blade</option>
               <option value="Light Bowgun">Light Bowgun</option>
               <option value="Heavy Bowgun">Heavy Bowgun</option>
-              <option value="Bow">Bow</option>         
+              <option value="Bow">Bow</option>
             </select>
           </td>
           <td>
-            <select className="create-input" name="style">
+            <select className="create-input" name="style"
+              onChange={this.handleChange.bind(this, 'style')}>            
               <option value="Guild">Guild</option>
               <option value="Striker">Striker</option>
               <option value="Adept">Adept</option>
@@ -91,8 +95,7 @@ class SubmissionForm extends React.Component {
   render(){
     return(
       <div>
-        <p>{this.state.newSubmission.name}</p>
-        {this.renderCreateSubmission()}
+        {this.renderCreateSubmission()}        
       </div>
     )
   }
