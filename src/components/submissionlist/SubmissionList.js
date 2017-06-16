@@ -3,11 +3,6 @@ import axios from 'axios';
 
 class SubmissionList extends React.Component{
   state={
-    newData:{
-      name: "",
-      time: "",
-      type: ""
-    },
     submissions:[]
   };
   
@@ -62,7 +57,6 @@ class SubmissionList extends React.Component{
   render(){
     return(
       <div>
-        <p>hei</p>
         {this.renderList()}
       </div>
     )
