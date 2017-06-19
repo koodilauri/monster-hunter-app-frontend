@@ -1,8 +1,8 @@
 import React from "react";
+import axios from 'axios';
 
 class SubmissionForm extends React.Component {
   state={
-    Hei:"hei",
     newSubmission:{
       name: "",
       quest: "",
@@ -28,10 +28,25 @@ class SubmissionForm extends React.Component {
 
   }
 
+  handleSubmit = (event) => {
+    const {newSubmission} = this.state;
+    event.preventDefault()
+    axios.post("https://monster-hunter-app-api.herokuapp.com/submission", newSubmission)
+      .then(function (response) {     
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    newSubmission.quest="";
+    newSubmission.questTime="";
+    this.setState({});   
+  }
+
   renderCreateSubmission(){
     const {newSubmission} = this.state;
     return(
-    <form action="https://monster-hunter-app-api.herokuapp.com/submission" method="POST">
+    <form onSubmit={this.handleSubmit}>
         <tr className="create-row">
           <td>
             <input className="create-input"
