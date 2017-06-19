@@ -1,5 +1,6 @@
 import React from "react";
 import axios from 'axios';
+import SubmissionList from "../submission/SubmissionList";
 
 class SubmissionForm extends React.Component {
   state={
@@ -38,9 +39,6 @@ class SubmissionForm extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-    newSubmission.quest="";
-    newSubmission.questTime="";
-    this.setState({});   
   }
 
   renderCreateSubmission(){
