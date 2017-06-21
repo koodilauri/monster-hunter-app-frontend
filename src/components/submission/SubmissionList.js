@@ -12,8 +12,6 @@ class SubmissionList extends React.Component{
         const submissions = res.data.submissions;
         this.setState({submissions});
         
-        // window.localStorage.setItem('submissions', this.state.submissions);
-        // console.log(window.localStorage.getItem('submission'), "hei");
       }).catch(err => {
         console.log('Request failed :(')
       });
@@ -34,7 +32,6 @@ class SubmissionList extends React.Component{
 
   renderList(){
     const {submissions} =this.state;
-    // const submissions = window.localStorage.getItem('submission');
     return(
       <div>
         <table id="submissions">
