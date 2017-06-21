@@ -12,6 +12,7 @@ let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 )
 store.dispatch(doStuff({name:"lauri",quest:"quest1"}))
+store.dispatch(doStuff({name:"bob",quest:"quest2"}))
 unsubscribe()
 
 class App extends Component {
