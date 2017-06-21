@@ -3,8 +3,8 @@ import axios from 'axios';
 import SubmissionList from "../submission/SubmissionList";
 
 class SubmissionForm extends React.Component {
-  state={
-    newSubmission:{
+  state = {
+    newSubmission: {
       name: "",
       quest: "",
       questTime: "",
@@ -17,12 +17,12 @@ class SubmissionForm extends React.Component {
     event.preventDefault();
     const newValue = event.target.value;
     const patt1 = /^([a-zA-Z0-9']+(-| )?)+$/i;
-    const patt2 = /^([0-4]{0,1}[0-9]{0,1}(:){0,1}[0-5]{0,1}[0-9]{0,1}){1}$/i;    
-    if (field === "questTime" && patt2.test(newValue)){
+    const patt2 = /^([0-4]{0,1}[0-9]{0,1}(:){0,1}[0-5]{0,1}[0-9]{0,1}){1}$/i;
+    if (field === "questTime" && patt2.test(newValue)) {
       this.state.newSubmission[field] = event.target.value;
-      this.setState({});      
+      this.setState({});
     }
-    if (((field === "name" || field === "quest") && patt1.test(newValue)) || (field === "weapon" || field === "style")){
+    if (((field === "name" || field === "quest") && patt1.test(newValue)) || (field === "weapon" || field === "style")) {
       this.state.newSubmission[field] = event.target.value;
       this.setState({});
     }
@@ -30,10 +30,10 @@ class SubmissionForm extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const {newSubmission} = this.state;
+    const { newSubmission } = this.state;
     event.preventDefault()
-    axios.post("https://monster-hunter-app-api.herokuapp.com/submission", newSubmission)
-      .then(function (response) {     
+    axios.post("http://localhost:8081/submission", newSubmission)
+      .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
@@ -41,10 +41,10 @@ class SubmissionForm extends React.Component {
       });
   }
 
-  renderCreateSubmission(){
-    const {newSubmission} = this.state;
-    return(
-    <form onSubmit={this.handleSubmit}>
+  renderCreateSubmission() {
+    const { newSubmission } = this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
         <tr className="create-row">
           <td>
             <input className="create-input"
@@ -63,13 +63,13 @@ class SubmissionForm extends React.Component {
             />
           </td>
           <td>
-            <input className="create-input" 
-              name="questTime" 
-              placeholder="00:00" 
+            <input className="create-input"
+              name="questTime"
+              placeholder="00:00"
               value={newSubmission.questTime}
               onChange={this.handleChange.bind(this, 'questTime')}
-              />          
-          </td> 
+            />
+          </td>
           <td>
             <select className="create-input" name="weapon"
               onChange={this.handleChange.bind(this, 'weapon')}>
@@ -91,7 +91,7 @@ class SubmissionForm extends React.Component {
           </td>
           <td>
             <select className="create-input" name="style"
-              onChange={this.handleChange.bind(this, 'style')}>            
+              onChange={this.handleChange.bind(this, 'style')}>
               <option value="Guild">Guild</option>
               <option value="Striker">Striker</option>
               <option value="Adept">Adept</option>
@@ -99,16 +99,16 @@ class SubmissionForm extends React.Component {
             </select>
           </td>
           <td><button type="submit" className="nord-button">Submit</button></td>
-          
-        </tr>
-    </form>
-    )  
-}
 
-  render(){
-    return(
+        </tr>
+      </form>
+    )
+  }
+
+  render() {
+    return (
       <div>
-        {this.renderCreateSubmission()}        
+        {this.renderCreateSubmission()}
       </div>
     )
   }

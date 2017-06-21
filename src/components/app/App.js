@@ -5,6 +5,15 @@ import './App.css';
 import SubmissionFrom from "../submission/SubmissionForm";
 import SubmissionList from "../submission/SubmissionList";
 
+import doStuff from "../../actions/doStuff";
+import store from "../../store";
+console.log(store.getState())
+let unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
+)
+store.dispatch(doStuff({name:"lauri",quest:"quest1"}))
+unsubscribe()
+
 class App extends Component {
   render() {
     return (
