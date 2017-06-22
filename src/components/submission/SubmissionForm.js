@@ -116,32 +116,42 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  render() {
-    // store.dispatch(doStuff({ name: "lauri", quest: "quest1" }))
-    let input
+  renderStuff(){
+    return this.props.stuff.map((stuff)=>
+    <p>{stuff}</p>)
+  }
+
+  renderButton() {
+    let input    
     return (
       <div>
-        <div>
-          <form onSubmit={e => {
-            e.preventDefault()
-            if (!input.value.trim()) {
-              return
-            }
-            store.dispatch(this.props.onStuffClick(input.value))
-            console.log(this.props.onStuffClick(input.value))
-            input.value = ''
-            console.log(store.getState())
-            console.log(this.state)            
-          }}>
-            <input ref={node => {
-              input = node
-            }} />
-            <button type="submit">
-              Add Stuff
+        <form onSubmit={e => {
+          e.preventDefault()
+          if (!input.value.trim()) {
+            return
+          }
+          store.dispatch(this.props.onStuffClick(input.value))
+          console.log(this.props.onStuffClick(input.value))
+          input.value = ''
+          console.log(store.getState())
+          console.log(this.state)
+        }}>
+          <input ref={node => {
+            input = node
+          }} />
+          <button type="submit">
+            Add Stuff
         </button>
-          </form>
-        </div>
+        </form>
+        {this.renderStuff()}
+      </div>
+    )
+  }
 
+  render() {
+    return (
+      <div>
+        {this.renderButton()}
         {this.renderCreateSubmission()}
       </div>
     )
@@ -149,11 +159,9 @@ class SubmissionForm extends React.Component {
 }
 
 
-const mapStateToProps = state => {
-  return {
-    stuff: state.stuff
-  }
-}
+const mapStateToProps = state => ({
+  stuff: state.stuff
+})
 
 const mapDispatchToProps = dispatch => {
   return {
