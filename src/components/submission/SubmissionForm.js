@@ -1,10 +1,8 @@
 import React from "react";
 import axios from 'axios';
-// import StuffApp from './stuff'
 import store from '../../store';
 import { connect } from 'react-redux';
 import doStuff from '../../actions/doStuff';
-// import stuff from '../../reducers/submission';
 
 class SubmissionForm extends React.Component {
   state = {
@@ -41,7 +39,7 @@ class SubmissionForm extends React.Component {
     event.preventDefault()
     axios.post("http://localhost:8081/submission", newSubmission)
       .then(function (response) {
-        console.log(response.data);
+        console.log(response.data);        
       })
       .catch(function (error) {
         console.log(error);
@@ -117,8 +115,8 @@ class SubmissionForm extends React.Component {
   }
 
   renderStuff(){
-    return this.props.stuff.map((stuff)=>
-    <p>{stuff}</p>)
+    return this.props.stuff.map((stuff, index)=>
+    <li key={index}>{stuff}</li>)
   }
 
   renderButton() {
@@ -143,7 +141,9 @@ class SubmissionForm extends React.Component {
             Add Stuff
         </button>
         </form>
+        <ul>
         {this.renderStuff()}
+        </ul>
       </div>
     )
   }
@@ -157,7 +157,6 @@ class SubmissionForm extends React.Component {
     )
   }
 }
-
 
 const mapStateToProps = state => ({
   stuff: state.stuff
