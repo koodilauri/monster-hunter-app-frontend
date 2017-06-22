@@ -2,18 +2,11 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import SubmissionFrom from "../submission/SubmissionForm";
+import SubmissionForm from "../submission/SubmissionForm";
 import SubmissionList from "../submission/SubmissionList";
+// import store from '../../store';
 
-import doStuff from "../../actions/doStuff";
-import store from "../../store";
-console.log(store.getState())
-let unsubscribe = store.subscribe(() =>
-  console.log(store.getState())
-)
-store.dispatch(doStuff({name:"lauri",quest:"quest1"}))
-store.dispatch(doStuff({name:"bob",quest:"quest2"}))
-unsubscribe()
+
 
 class App extends Component {
   render() {
@@ -23,7 +16,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <SubmissionFrom />        
+        <SubmissionForm />        
         <SubmissionList />
       </div>
     );

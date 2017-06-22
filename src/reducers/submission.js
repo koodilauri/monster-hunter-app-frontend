@@ -1,3 +1,7 @@
+// import { connect } from 'react-redux';
+// import doStuff from '../actions/doStuff';
+// import { SubmissionForm } from '../components/submission/SubmissionForm';
+
 const initialState = {
   stuff: []
 }
@@ -15,5 +19,7 @@ const stuff = (state = initialState, action) => {
       return state
   }
 }
+
+
 
 export default stuff
