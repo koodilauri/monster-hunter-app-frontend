@@ -4,7 +4,7 @@ import './App.css';
 
 import SubmissionForm from "../submission/SubmissionForm";
 import SubmissionList from "../submission/SubmissionList";
-// import store from '../../store';
+import store from '../../store';
 
 
 
@@ -16,7 +16,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <SubmissionForm />        
+        <SubmissionForm store={store}/>        
         <SubmissionList />
       </div>
     );

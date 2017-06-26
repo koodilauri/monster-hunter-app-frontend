@@ -39,7 +39,7 @@ class SubmissionForm extends React.Component {
     event.preventDefault()
     axios.post("http://localhost:8081/submission", newSubmission)
       .then(function (response) {
-        console.log(response.data);        
+        console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -114,13 +114,13 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  renderStuff(){
-    return this.props.stuff.map((stuff, index)=>
-    <li key={index}>{stuff}</li>)
+  renderStuff() {
+    return this.props.stuff.map((stuff, index) =>
+      <li key={index}>{stuff}</li>)
   }
 
   renderButton() {
-    let input    
+    let input
     return (
       <div>
         <form onSubmit={e => {
@@ -141,9 +141,11 @@ class SubmissionForm extends React.Component {
             Add Stuff
         </button>
         </form>
-        <ul>
-        {this.renderStuff()}
-        </ul>
+        <div>
+          <ul>
+            {this.renderStuff()}
+          </ul>
+        </div>
       </div>
     )
   }
