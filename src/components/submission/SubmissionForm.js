@@ -3,6 +3,8 @@ import axios from 'axios';
 import store from '../../store';
 import { connect } from 'react-redux';
 import doStuff from '../../actions/doStuff';
+import SubmissionList from "./SubmissionList";
+
 
 class SubmissionForm extends React.Component {
   constructor(props) {
@@ -40,12 +42,9 @@ class SubmissionForm extends React.Component {
   }
 
   handleSubmit = (newSubmission, event) => {
-    // const { newSubmission } = this.state;
-    console.log(this.state.newSubmission)
     event.preventDefault()
     axios.post("https://monster-hunter-app-api.herokuapp.com/submission", newSubmission)
       .then(function (response) {
-        console.log(response.data);
         newSubmission = response.data
       })
       .catch(function (error) {
@@ -148,8 +147,6 @@ class SubmissionForm extends React.Component {
           }
           store.dispatch(this.props.onStuffClick(input.value))
           input.value = ''
-          console.log(store.getState())
-          console.log(this.state)
         }}>
           <input ref={node => {
             input = node
@@ -167,13 +164,7 @@ class SubmissionForm extends React.Component {
       <div>
         {this.renderButton()}
         {this.renderCreateSubmission()}
-        <div>
-          <table>
-            <tbody>
-              {this.renderStuff()}
-            </tbody>
-          </table>
-        </div>
+        <SubmissionList stuff={this.props.stuff} />
       </div>
     )
   }
