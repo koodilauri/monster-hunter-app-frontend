@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import SubmissionForm from "../submission/SubmissionForm";
-import SubmissionList from "../submission/SubmissionList";
+// import SubmissionList from "../submission/SubmissionList";
 import store from '../../store';
 
 
@@ -17,7 +17,6 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <SubmissionForm store={store}/>        
-        <SubmissionList />
       </div>
     );
   }
