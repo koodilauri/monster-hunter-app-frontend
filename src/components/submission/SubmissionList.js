@@ -1,5 +1,7 @@
 import React from "react";
 import axios from 'axios';
+import store from '../../store';
+
 
 class SubmissionList extends React.Component{
   state={
@@ -8,7 +10,7 @@ class SubmissionList extends React.Component{
   
 
   componentDidMount() {
-    axios.get("http://localhost:8081/submission").then(res => {
+    axios.get("https://monster-hunter-app-api.herokuapp.com/submission").then(res => {
         const submissions = res.data.submissions;
         this.setState({submissions});
         
@@ -32,6 +34,7 @@ class SubmissionList extends React.Component{
 
   renderList(){
     const {submissions} =this.state;
+    console.log(store.getState(), "list")
     return(
       <div>
         <table id="submissions">
