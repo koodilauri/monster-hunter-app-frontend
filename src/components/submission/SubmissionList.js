@@ -1,5 +1,7 @@
 import React from "react";
 import axios from 'axios';
+import store from '../../store';
+
 
 class SubmissionList extends React.Component{
   state={
@@ -19,7 +21,7 @@ class SubmissionList extends React.Component{
 
   renderSubmission(submission){
     return (            
-      <tr id={submission.name.toString()}>
+      <tr key={submission.id}>
         <td className="name">{ submission.name }</td>
         <td className="quest">{ submission.quest }</td>
         <td className="time">{ submission.questtime }</td>
@@ -32,6 +34,7 @@ class SubmissionList extends React.Component{
 
   renderList(){
     const {submissions} =this.state;
+    console.log(store.getState(), "list")
     return(
       <div>
         <table id="submissions">

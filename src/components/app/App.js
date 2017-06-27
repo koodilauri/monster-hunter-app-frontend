@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import SubmissionFrom from "../submission/SubmissionForm";
+import SubmissionForm from "../submission/SubmissionForm";
 import SubmissionList from "../submission/SubmissionList";
+import store from '../../store';
+
+
 
 class App extends Component {
   render() {
@@ -13,7 +16,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to React</h2>
         </div>
-        <SubmissionFrom />        
+        <SubmissionForm store={store}/>        
         <SubmissionList />
       </div>
     );
