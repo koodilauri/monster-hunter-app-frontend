@@ -43,7 +43,14 @@ class SubmissionForm extends React.Component {
 
   handleSubmit = (newSubmission, event) => {
     event.preventDefault()
-    axios.post("https://monster-hunter-app-api.herokuapp.com/submission", newSubmission)
+    const url = () => {
+      if (process.env.NODE_ENV !== "production") {
+        return process.env.REACT_APP_API_URL_DEV
+      } else {
+        return process.env.REACT_APP_API_URL
+      }
+    }
+    axios.post(url(), newSubmission)
       .then(function (response) {
         newSubmission = response.data
       })

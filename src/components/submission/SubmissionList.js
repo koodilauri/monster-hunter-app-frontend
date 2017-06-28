@@ -10,7 +10,14 @@ class SubmissionList extends React.Component {
 
 
   componentDidMount() {
-    axios.get("https://monster-hunter-app-api.herokuapp.com/submission").then(res => {
+    const url = () => {
+      if (process.env.NODE_ENV !== "production") {
+        return process.env.REACT_APP_API_URL_DEV
+      } else {
+        return process.env.REACT_APP_API_URL
+      }
+    }
+    axios.get(url()).then(res => {
       const submissions = res.data.submissions;
       this.setState({ submissions });
 
