@@ -7,18 +7,146 @@
   height: 80px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
 .App-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+body {
+  background-color: lightgreen;
+}
+
+.main-container{
+  text-align: center;
+  margin: auto;
+}
+
+#submissions, #form-table {
+  width:912px;
+  margin: auto;
+  border-collapse: collapse;
+}
+
+button {
+  background-color: darkgreen;
+  color: white;
+  text-align: auto;
+  text-decoration: none;
+  border:none;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.counter-button {
+  padding: 2px 10px 2px 10px;
+}
+
+.submit-button {
+  padding: 10px 30px;  
+}
+
+tbody > tr > td {
+  background-color: white;
+  padding:15px 15px 15px 15px;  
+  border-bottom:2px solid lightgreen;
+  color: #505050;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  text-align: left;
+}
+
+thead>tr>td{
+  background-color: white;
+  border-bottom:2px solid lightgreen;
+  color: #505050;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  text-align: left;
+  padding: 15px 15px 16px 15px;
+}
+
+thead {
+  height: 48px;
+  /*color: #757575;*/
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+/*form{
+  background-color: white;
+  display: inline-block;
+  width: 912px;
+  border-bottom: 4px solid lightgrey;
+}*/
+
+.create-row > td{
+  border-right: 0px solid white;
+  padding: 16px 0px 16px 16px;
+}
+
+.create-row > td:last-child{
+  text-align: center;
+  /*vertical-align: top;*/
+  padding-right: 20px;
+  width: 40%;
+  padding-left: 20px;
+}
+
+.create-row > td:nth-child(2), .create-row > td:nth-child(3){
+  padding-left:10px;
+}
+
+.create-row > td:nth-child(2) > input {
+  width:200px;
+}
+
+.create-input {
+  height: 34px;
+  float: left;
+}
+
+.create-row > td:nth-child(3) > input {
+  width:50px;
+  text-align: center;
+}
+
+h1 {
+  background-color: darkgreen;
+  margin-top:0px;
+  text-align: left;
+  padding:32px;
+  line-height: 32px;
+  color: white;
+}
+
+h2 {
+  /*text-align: left;*/
+  width:912px;
+  margin: auto;
+  color: darkolivegreen;
+  padding:30px 0px 15px 0px;
+}
+
+.timer-group {
+    width: 81px;
+    height: 40px;    
+}
+
+.timer-group > div {
+    float: left;
+    width: 25px;
+    height: 20px;
+    /*border: 1px solid black;*/
+}
+
+.timer-input {
+    width: 20px;
+    height: 34px;
+    padding: 1px;
+    padding-right: 0px;
+    text-align: center;
 }
