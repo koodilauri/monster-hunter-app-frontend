@@ -16,8 +16,8 @@ class SubmissionForm extends React.Component {
         questTime: "",
         weapon: "Great Sword",
         style: "Guild",
-        minutes: 0,
-        seconds: 0
+        Min: 0,
+        Sec: 0
       },
       action: "",
       submissions: []
@@ -28,16 +28,16 @@ class SubmissionForm extends React.Component {
   handleChange = (field, event) => {
     event.preventDefault();
     const newValue = event.target.value;
-    const patt1 = /^([a-zA-Z0-9']+(-| )?)+$/i;
+    const patt1 = /^([a-zA-Z0-9']+(-| )?)*$/i;
     // const patt2 = /^([0-4]{0,1}[0-9]{0,1}(:){0,1}[0-5]{0,1}[0-9]{0,1}){1}$/i;
     const patt3 = /^([0-4]{0,1}[0-9]{0,1})$/i;
     const patt4 = /^([0-5]{0,1}[0-9]{0,1})$/i;
-    if (field === "minutes" && patt3.test(newValue)) {
+    if (field === "Min" && patt3.test(newValue)) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
     }
-    if (field === "seconds" && patt4.test(newValue)) {
+    if (field === "Sec" && patt4.test(newValue)) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
@@ -136,40 +136,40 @@ class SubmissionForm extends React.Component {
                   />
                 </td>
                 <td>
-                  {this.renderCounter(49, "minutes")}
+                  {this.renderCounter(49, "Min")}
                 </td>
                 <td>
-                  {this.renderCounter(59, "seconds")}
+                  {this.renderCounter(59, "Sec")}
                 </td>
                 <td>
-                  <select className="create-input" name="weapon"
-                    onChange={this.handleChange.bind(this, 'weapon')}>
-                    <option value="Great Sword">Great Sword</option>
-                    <option value="Long Sword">Long Sword</option>
-                    <option value="Sword & Shield">Sword & Shield</option>
-                    <option value="Dual Blades">Dual Blades</option>
-                    <option value="Hammer">Hammer</option>
-                    <option value="Hunting Horn">Hunting Horn</option>
-                    <option value="Lance">Lance</option>
-                    <option value="Gunlance">Gunlance</option>
-                    <option value="Switch Axe">Switch Axe</option>
-                    <option value="Insect Glaive">Insect Glaive</option>
-                    <option value="Charge Blade">Charge Blade</option>
-                    <option value="Light Bowgun">Light Bowgun</option>
-                    <option value="Heavy Bowgun">Heavy Bowgun</option>
-                    <option value="Bow">Bow</option>
-                  </select>
+                    <select className="create-input styled-select green semi-square" name="weapon"
+                      onChange={this.handleChange.bind(this, 'weapon')}>
+                      <option value="Great Sword">Great Sword</option>
+                      <option value="Long Sword">Long Sword</option>
+                      <option value="Sword & Shield">Sword & Shield</option>
+                      <option value="Dual Blades">Dual Blades</option>
+                      <option value="Hammer">Hammer</option>
+                      <option value="Hunting Horn">Hunting Horn</option>
+                      <option value="Lance">Lance</option>
+                      <option value="Gunlance">Gunlance</option>
+                      <option value="Switch Axe">Switch Axe</option>
+                      <option value="Insect Glaive">Insect Glaive</option>
+                      <option value="Charge Blade">Charge Blade</option>
+                      <option value="Light Bowgun">Light Bowgun</option>
+                      <option value="Heavy Bowgun">Heavy Bowgun</option>
+                      <option value="Bow">Bow</option>
+                    </select>
                 </td>
                 <td>
-                  <select className="create-input" name="style"
-                    onChange={this.handleChange.bind(this, 'style')}>
-                    <option value="Guild">Guild</option>
-                    <option value="Striker">Striker</option>
-                    <option value="Adept">Adept</option>
-                    <option value="Aerial">Aerial</option>
-                  </select>
+                    <select className="create-input styled-select green semi-square" name="style"
+                      onChange={this.handleChange.bind(this, 'style')}>
+                      <option value="Guild">Guild</option>
+                      <option value="Striker">Striker</option>
+                      <option value="Adept">Adept</option>
+                      <option value="Aerial">Aerial</option>
+                    </select>
                 </td>
-                <td><button type="submit" className="create-input submit-button">Submit</button></td>
+                <td><button type="submit" className="create-input submit-button semi-square green">Submit</button></td>
 
               </tr>
             </thead>
@@ -222,19 +222,20 @@ class SubmissionForm extends React.Component {
     return (
       <div className="timer-group">
         <div>
-          <button className="counter-button plus-button"
+          <button className="counter-button plus-button green"
             form="noForm"
             onMouseDown={this.changeTime.bind(this, "START", "inc", limit, unit)}
             onMouseUp={this.changeTime.bind(this, "STOP", "inc", limit, unit)}>+</button>
         </div>
         <div>
+          <p className="timer-unit">{unit}</p>
           <input className="timer-input"
             value={newSubmission[unit]}
             onChange={this.handleChange.bind(this, unit)}
           />
         </div>
         <div>
-          <button className="counter-button minus-button"
+          <button className="counter-button minus-button green"
             form="noForm"
             onMouseDown={this.changeTime.bind(this, "START", "dec", limit, unit)}
             onMouseUp={this.changeTime.bind(this, "STOP", "dec", limit, unit)}>-</button>

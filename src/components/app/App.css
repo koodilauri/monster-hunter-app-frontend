@@ -32,18 +32,20 @@ button {
   text-align: auto;
   text-decoration: none;
   border:none;
-  height: 40px;
   font-size: 16px;
   font-weight: 500;
   display: inline-block;
 }
 
 .counter-button {
-  padding: 2px 10px 2px 10px;
+  padding: 1px 10px;
+  margin-top: 19.5px;
 }
 
 .submit-button {
-  padding: 10px 30px;  
+  padding: 10px 5px;  
+  height: 40px;  
+  width: 100px;
 }
 
 tbody > tr > td {
@@ -88,12 +90,14 @@ thead {
   padding: 16px 0px 16px 16px;
 }
 
+.create-row > td:nth-child(4){
+  padding-left: 0px;
+}
+
 .create-row > td:last-child{
   text-align: center;
   /*vertical-align: top;*/
-  padding-right: 20px;
   width: 40%;
-  padding-left: 20px;
 }
 
 .create-row > td:nth-child(2), .create-row > td:nth-child(3){
@@ -102,6 +106,10 @@ thead {
 
 .create-row > td:nth-child(2) > input {
   width:200px;
+}
+
+.create-row > td:first-child > input {
+  width: 100px;
 }
 
 .create-input {
@@ -132,21 +140,47 @@ h2 {
 }
 
 .timer-group {
-    width: 81px;
+    width: 90px;
     height: 40px;    
+    /*border: 1px solid black;*/
+    
 }
 
 .timer-group > div {
     float: left;
-    width: 25px;
+    width: 28px;
     height: 20px;
-    /*border: 1px solid black;*/
 }
 
 .timer-input {
     width: 20px;
-    height: 34px;
-    padding: 1px;
-    padding-right: 0px;
+    height: 14.5px;
+    padding: 1px 2px 1px 2px;
     text-align: center;
+    float: initial;
 }
+.timer-unit{
+    margin:0px;
+    margin-bottom: 2px;
+    height: 15px;
+}
+
+.styled-select {
+   /*background: url(http://i62.tinypic.com/15xvbd5.png) no-repeat 96% 0;*/
+   height: 29px;
+   /*overflow: hidden;*/
+   background: transparent;
+   border: none;
+   font-size: 14px;
+   height: 34px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width: 100px;
+   color: white;
+}
+
+.semi-square {
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+}
+.green   { background-color: #779126;}
