@@ -10,6 +10,7 @@ class SubmissionList extends React.Component {
 
 
   componentDidMount() {
+    document.title="Hunters log";
     const url = () => {
       if (process.env.NODE_ENV !== "production") {
         return process.env.REACT_APP_API_URL_DEV
