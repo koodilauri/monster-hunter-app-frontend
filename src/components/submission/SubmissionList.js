@@ -65,7 +65,7 @@ class SubmissionList extends React.Component {
               <td>Style</td>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="submissions-body">
             {this.renderStuff()}
             {submissions.map((submission) => {
               return this.renderSubmission(submission)

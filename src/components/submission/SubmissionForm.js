@@ -20,12 +20,21 @@ class SubmissionForm extends React.Component {
         Sec: 0
       },
       action: "",
+      armorSet: {
+        head: "",
+        torso: "",
+        arms: "",
+        waist: "",
+        feet: "",
+        charm: "",
+        decorations: [{ decorationAmount: 1, decorationName: "placeholder" }]
+      },
       submissions: []
     }
   };
 
 
-  handleChange = (field, event) => {
+  handleChange = (field, id = 0, event) => {
     event.preventDefault();
     const newValue = event.target.value;
     const patt1 = /^([a-zA-Z0-9']+(-| )?)*$/i;
@@ -46,6 +55,25 @@ class SubmissionForm extends React.Component {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
+    }
+    if ((field === "decorationName" && patt1.test(newValue)) || (field === "decorationAmount")) {
+      this.setState({
+        armorSet: Object.assign({}, this.state.armorSet, {
+          "decorations": this.state.armorSet.decorations
+            .slice(0, id)
+            .concat(Object.assign({}, this.state.armorSet.decorations[id], { [field]: event.target.value }))
+            .concat(this.state.armorSet.decorations.slice(id + 1))
+        })
+      })
+    }
+    if (field === "deleteDecoration") {
+      this.setState({
+        armorSet: Object.assign({}, this.state.armorSet, {
+          "decorations": this.state.armorSet.decorations
+            .slice(0, id)
+            .concat(this.state.armorSet.decorations.slice(id + 1))
+        })
+      })
     }
 
   }
@@ -82,7 +110,7 @@ class SubmissionForm extends React.Component {
           })
         } else {
           this.setState({
-            action: act
+            newSubmission: Object.assign({}, this.state.newSubmission, { [unit]: 0 })
           })
         }
       }, 50);
@@ -99,7 +127,7 @@ class SubmissionForm extends React.Component {
           })
         } else {
           this.setState({
-            action: act
+            newSubmission: Object.assign({}, this.state.newSubmission, { [unit]: limit })
           })
         }
       }, 50);
@@ -109,6 +137,134 @@ class SubmissionForm extends React.Component {
     } else {
       clearInterval(action);
     }
+  }
+
+  addDecoration = (event) => {
+    this.setState({
+      armorSet: Object.assign({}, this.state.armorSet,
+        {
+          decorations: [
+            ...this.state.armorSet.decorations,
+            {
+              decorationAmount: 1,
+              decorationName: ""
+            }
+          ]
+        })
+    })
+    console.log(this.state.armorSet.decorations)
+  }
+
+  renderDecorations() {
+    const { decorations } = this.state.armorSet;
+    return decorations.map((decorations, index) => {
+      return (
+        <tr key={index} className="decoration-row">
+          <td>
+            <table className="tableception">
+              <tbody>
+                <tr>
+                  <td>
+                    <select name="amount"
+                      onChange={this.handleChange.bind(this, "decorationAmount", index)}
+                      value={this.state.armorSet.decorations[index].decorationAmount}>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      placeholder="Decoration"
+                      onChange={this.handleChange.bind(this, "decorationName", index)}
+                      value={this.state.armorSet.decorations[index].decorationName}
+                    />
+                  </td>
+                  <td>
+                    <button className="green semi-square delete-button"
+                      onClick={this.handleChange.bind(this, "deleteDecoration", index)}>Delete</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      )
+    }
+    )
+  }
+
+  renderCreateArmorset() {
+    return (
+      <div className="armor-input">
+        <table>
+          <thead>
+            <tr>
+              <td>
+                <p>Armorset</p>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  placeholder="Head"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  placeholder="Torso"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  placeholder="Arms"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  placeholder="Waist"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  placeholder="Feet"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  placeholder="Charm"
+                />
+              </td>
+            </tr>
+            {this.renderDecorations()}
+            <tr>
+              <td>
+                <button className="green semi-square"
+                  onClick={this.addDecoration}>Add decoration</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    )
   }
 
   renderCreateSubmission() {
@@ -124,7 +280,7 @@ class SubmissionForm extends React.Component {
                     name="name"
                     placeholder="Name"
                     value={newSubmission.name}
-                    onChange={this.handleChange.bind(this, 'name')}
+                    onChange={this.handleChange.bind(this, 'name', 0)}
                   />
                 </td>
                 <td>
@@ -132,7 +288,7 @@ class SubmissionForm extends React.Component {
                     name="quest"
                     placeholder="Quest"
                     value={newSubmission.quest}
-                    onChange={this.handleChange.bind(this, 'quest')}
+                    onChange={this.handleChange.bind(this, 'quest', 0)}
                   />
                 </td>
                 <td>
@@ -142,32 +298,32 @@ class SubmissionForm extends React.Component {
                   {this.renderCounter(59, "Sec")}
                 </td>
                 <td>
-                    <select className="create-input styled-select green semi-square" name="weapon"
-                      onChange={this.handleChange.bind(this, 'weapon')}>
-                      <option value="Great Sword">Great Sword</option>
-                      <option value="Long Sword">Long Sword</option>
-                      <option value="Sword & Shield">Sword & Shield</option>
-                      <option value="Dual Blades">Dual Blades</option>
-                      <option value="Hammer">Hammer</option>
-                      <option value="Hunting Horn">Hunting Horn</option>
-                      <option value="Lance">Lance</option>
-                      <option value="Gunlance">Gunlance</option>
-                      <option value="Switch Axe">Switch Axe</option>
-                      <option value="Insect Glaive">Insect Glaive</option>
-                      <option value="Charge Blade">Charge Blade</option>
-                      <option value="Light Bowgun">Light Bowgun</option>
-                      <option value="Heavy Bowgun">Heavy Bowgun</option>
-                      <option value="Bow">Bow</option>
-                    </select>
+                  <select className="create-input styled-select green semi-square" name="weapon"
+                    onChange={this.handleChange.bind(this, 'weapon', 0)}>
+                    <option value="Great Sword">Great Sword</option>
+                    <option value="Long Sword">Long Sword</option>
+                    <option value="Sword & Shield">Sword & Shield</option>
+                    <option value="Dual Blades">Dual Blades</option>
+                    <option value="Hammer">Hammer</option>
+                    <option value="Hunting Horn">Hunting Horn</option>
+                    <option value="Lance">Lance</option>
+                    <option value="Gunlance">Gunlance</option>
+                    <option value="Switch Axe">Switch Axe</option>
+                    <option value="Insect Glaive">Insect Glaive</option>
+                    <option value="Charge Blade">Charge Blade</option>
+                    <option value="Light Bowgun">Light Bowgun</option>
+                    <option value="Heavy Bowgun">Heavy Bowgun</option>
+                    <option value="Bow">Bow</option>
+                  </select>
                 </td>
                 <td>
-                    <select className="create-input styled-select green semi-square" name="style"
-                      onChange={this.handleChange.bind(this, 'style')}>
-                      <option value="Guild">Guild</option>
-                      <option value="Striker">Striker</option>
-                      <option value="Adept">Adept</option>
-                      <option value="Aerial">Aerial</option>
-                    </select>
+                  <select className="create-input styled-select green semi-square" name="style"
+                    onChange={this.handleChange.bind(this, 'style', 0)}>
+                    <option value="Guild">Guild</option>
+                    <option value="Striker">Striker</option>
+                    <option value="Adept">Adept</option>
+                    <option value="Aerial">Aerial</option>
+                  </select>
                 </td>
                 <td><button type="submit" className="create-input submit-button semi-square green">Submit</button></td>
 
@@ -231,7 +387,7 @@ class SubmissionForm extends React.Component {
           <p className="timer-unit">{unit}</p>
           <input className="timer-input"
             value={newSubmission[unit]}
-            onChange={this.handleChange.bind(this, unit)}
+            onChange={this.handleChange.bind(this, unit, 0)}
           />
         </div>
         <div>
@@ -247,7 +403,9 @@ class SubmissionForm extends React.Component {
   render() {
     return (
       <div>
-
+        <div id="sidebarwrapper">
+          {this.renderCreateArmorset()}
+        </div>
         {this.renderCreateSubmission()}
         <SubmissionList stuff={this.props.stuff} />
       </div>
