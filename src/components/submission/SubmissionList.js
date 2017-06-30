@@ -57,11 +57,11 @@ class SubmissionList extends React.Component {
         <table id="submissions">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Quest</th>
-              <th>Time</th>
-              <th>Weapon</th>
-              <th>Style</th>
+              <td>Name</td>
+              <td>Quest</td>
+              <td>Time</td>
+              <td>Weapon</td>
+              <td>Style</td>
             </tr>
           </thead>
           <tbody>

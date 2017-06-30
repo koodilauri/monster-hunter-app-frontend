@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import doStuff from '../../actions/doStuff';
 import SubmissionList from "./SubmissionList";
 
-
 class SubmissionForm extends React.Component {
   constructor(props) {
     super(props);
@@ -16,8 +15,11 @@ class SubmissionForm extends React.Component {
         quest: "",
         questTime: "",
         weapon: "Great Sword",
-        style: "Guild"
+        style: "Guild",
+        Min: 0,
+        Sec: 0
       },
+      action: "",
       submissions: []
     }
   };
@@ -26,9 +28,16 @@ class SubmissionForm extends React.Component {
   handleChange = (field, event) => {
     event.preventDefault();
     const newValue = event.target.value;
-    const patt1 = /^([a-zA-Z0-9']+(-| )?)+$/i;
-    const patt2 = /^([0-4]{0,1}[0-9]{0,1}(:){0,1}[0-5]{0,1}[0-9]{0,1}){1}$/i;
-    if (field === "questTime" && patt2.test(newValue)) {
+    const patt1 = /^([a-zA-Z0-9']+(-| )?)*$/i;
+    // const patt2 = /^([0-4]{0,1}[0-9]{0,1}(:){0,1}[0-5]{0,1}[0-9]{0,1}){1}$/i;
+    const patt3 = /^([0-4]{0,1}[0-9]{0,1})$/i;
+    const patt4 = /^([0-5]{0,1}[0-9]{0,1})$/i;
+    if (field === "Min" && patt3.test(newValue)) {
+      this.setState({
+        newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
+      });
+    }
+    if (field === "Sec" && patt4.test(newValue)) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
@@ -51,80 +60,122 @@ class SubmissionForm extends React.Component {
       }
     }
     axios.post(url(), newSubmission)
-      .then(function (response) {
-        newSubmission = response.data
+      .then((response) => {
+        store.dispatch(this.props.onStuffClick(response.data))
+        console.log("response: ", response.data)
       })
       .catch(function (error) {
         console.log(error);
       });
-    store.dispatch(this.props.onStuffClick(newSubmission))
+  }
+
+  changeTime = (type, mod, limit, unit, event) => {
+    event.preventDefault()
+    const { action } = this.state;
+    let act;
+    if (type === "START" && mod === "inc") {
+      act = setInterval(() => {
+        if (limit > this.state.newSubmission[unit]) {
+          console.log(limit > this.state.newSubmission[unit])
+          this.setState({
+            newSubmission: Object.assign({}, this.state.newSubmission, { [unit]: this.state.newSubmission[unit] + 1 })
+          })
+        } else {
+          this.setState({
+            action: act
+          })
+        }
+      }, 50);
+      this.setState({
+        action: act
+      })
+
+    } if (type === "START" && mod === "dec") {
+      act = setInterval(() => {
+        if (0 < this.state.newSubmission[unit]) {
+          console.log(limit > this.state.newSubmission[unit])
+          this.setState({
+            newSubmission: Object.assign({}, this.state.newSubmission, { [unit]: this.state.newSubmission[unit] - 1 })
+          })
+        } else {
+          this.setState({
+            action: act
+          })
+        }
+      }, 50);
+      this.setState({
+        action: act
+      })
+    } else {
+      clearInterval(action);
+    }
   }
 
   renderCreateSubmission() {
     const { newSubmission } = this.state;
     return (
-      <form onSubmit={this.handleSubmit.bind(this, newSubmission)}>
-        <table>
-          <thead>
-            <tr className="create-row">
-              <td>
-                <input className="create-input"
-                  name="name"
-                  placeholder="Name"
-                  value={newSubmission.name}
-                  onChange={this.handleChange.bind(this, 'name')}
-                />
-              </td>
-              <td>
-                <input className="create-input"
-                  name="quest"
-                  placeholder="Quest"
-                  value={newSubmission.quest}
-                  onChange={this.handleChange.bind(this, 'quest')}
-                />
-              </td>
-              <td>
-                <input className="create-input"
-                  name="questTime"
-                  placeholder="00:00"
-                  value={newSubmission.questTime}
-                  onChange={this.handleChange.bind(this, 'questTime')}
-                />
-              </td>
-              <td>
-                <select className="create-input" name="weapon"
-                  onChange={this.handleChange.bind(this, 'weapon')}>
-                  <option value="Great Sword">Great Sword</option>
-                  <option value="Long Sword">Long Sword</option>
-                  <option value="Sword & Shield">Sword & Shield</option>
-                  <option value="Dual Blades">Dual Blades</option>
-                  <option value="Hammer">Hammer</option>
-                  <option value="Hunting Horn">Hunting Horn</option>
-                  <option value="Lance">Lance</option>
-                  <option value="Gunlance">Gunlance</option>
-                  <option value="Switch Axe">Switch Axe</option>
-                  <option value="Insect Glaive">Insect Glaive</option>
-                  <option value="Charge Blade">Charge Blade</option>
-                  <option value="Light Bowgun">Light Bowgun</option>
-                  <option value="Heavy Bowgun">Heavy Bowgun</option>
-                  <option value="Bow">Bow</option>
-                </select>
-              </td>
-              <td>
-                <select className="create-input" name="style"
-                  onChange={this.handleChange.bind(this, 'style')}>
-                  <option value="Guild">Guild</option>
-                  <option value="Striker">Striker</option>
-                  <option value="Adept">Adept</option>
-                  <option value="Aerial">Aerial</option>
-                </select>
-              </td>
-              <td><button type="submit" className="nord-button">Submit</button></td>
+      <div>
+        <form id="submissionForm" onSubmit={this.handleSubmit.bind(this, newSubmission)}>
+          <table id="form-table">
+            <thead>
+              <tr className="create-row">
+                <td>
+                  <input className="create-input"
+                    name="name"
+                    placeholder="Name"
+                    value={newSubmission.name}
+                    onChange={this.handleChange.bind(this, 'name')}
+                  />
+                </td>
+                <td>
+                  <input className="create-input"
+                    name="quest"
+                    placeholder="Quest"
+                    value={newSubmission.quest}
+                    onChange={this.handleChange.bind(this, 'quest')}
+                  />
+                </td>
+                <td>
+                  {this.renderCounter(49, "Min")}
+                </td>
+                <td>
+                  {this.renderCounter(59, "Sec")}
+                </td>
+                <td>
+                    <select className="create-input styled-select green semi-square" name="weapon"
+                      onChange={this.handleChange.bind(this, 'weapon')}>
+                      <option value="Great Sword">Great Sword</option>
+                      <option value="Long Sword">Long Sword</option>
+                      <option value="Sword & Shield">Sword & Shield</option>
+                      <option value="Dual Blades">Dual Blades</option>
+                      <option value="Hammer">Hammer</option>
+                      <option value="Hunting Horn">Hunting Horn</option>
+                      <option value="Lance">Lance</option>
+                      <option value="Gunlance">Gunlance</option>
+                      <option value="Switch Axe">Switch Axe</option>
+                      <option value="Insect Glaive">Insect Glaive</option>
+                      <option value="Charge Blade">Charge Blade</option>
+                      <option value="Light Bowgun">Light Bowgun</option>
+                      <option value="Heavy Bowgun">Heavy Bowgun</option>
+                      <option value="Bow">Bow</option>
+                    </select>
+                </td>
+                <td>
+                    <select className="create-input styled-select green semi-square" name="style"
+                      onChange={this.handleChange.bind(this, 'style')}>
+                      <option value="Guild">Guild</option>
+                      <option value="Striker">Striker</option>
+                      <option value="Adept">Adept</option>
+                      <option value="Aerial">Aerial</option>
+                    </select>
+                </td>
+                <td><button type="submit" className="create-input submit-button semi-square green">Submit</button></td>
 
-            </tr>
-          </thead>
-        </table>
-      </form>
+              </tr>
+            </thead>
+          </table>
+        </form>
+      </div>
     )
   }
 
@@ -166,10 +217,37 @@ class SubmissionForm extends React.Component {
     )
   }
 
+  renderCounter(limit, unit) {
+    const { newSubmission } = this.state;
+    return (
+      <div className="timer-group">
+        <div>
+          <button className="counter-button plus-button green"
+            form="noForm"
+            onMouseDown={this.changeTime.bind(this, "START", "inc", limit, unit)}
+            onMouseUp={this.changeTime.bind(this, "STOP", "inc", limit, unit)}>+</button>
+        </div>
+        <div>
+          <p className="timer-unit">{unit}</p>
+          <input className="timer-input"
+            value={newSubmission[unit]}
+            onChange={this.handleChange.bind(this, unit)}
+          />
+        </div>
+        <div>
+          <button className="counter-button minus-button green"
+            form="noForm"
+            onMouseDown={this.changeTime.bind(this, "START", "dec", limit, unit)}
+            onMouseUp={this.changeTime.bind(this, "STOP", "dec", limit, unit)}>-</button>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     return (
       <div>
-        {this.renderButton()}
+
         {this.renderCreateSubmission()}
         <SubmissionList stuff={this.props.stuff} />
       </div>
