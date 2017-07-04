@@ -17,7 +17,8 @@ class SubmissionForm extends React.Component {
         weapon: "Great Sword",
         style: "Guild",
         Min: 0,
-        Sec: 0
+        Sec: 0,
+
       },
       action: "",
       armorSet: {
@@ -56,6 +57,11 @@ class SubmissionForm extends React.Component {
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
     }
+    if ((field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "charm") && patt1.test(newValue)) {
+      this.setState({
+        armorSet: Object.assign({}, this.state.armorSet, { [field]: event.target.value })
+      })
+    }
     if ((field === "decorationName" && patt1.test(newValue)) || (field === "decorationAmount")) {
       this.setState({
         armorSet: Object.assign({}, this.state.armorSet, {
@@ -79,6 +85,7 @@ class SubmissionForm extends React.Component {
   }
 
   handleSubmit = (newSubmission, event) => {
+    const { armorSet } = this.state;
     event.preventDefault()
     const url = () => {
       if (process.env.NODE_ENV !== "production") {
@@ -87,9 +94,9 @@ class SubmissionForm extends React.Component {
         return process.env.REACT_APP_API_URL
       }
     }
-    axios.post(url(), newSubmission)
+    axios.post(url(), { newSubmission, armorSet })
       .then((response) => {
-        store.dispatch(this.props.onStuffClick(response.data))
+        store.dispatch(this.props.onStuffClick(response.data.newSubmission))
         console.log("response: ", response.data)
       })
       .catch(function (error) {
@@ -201,6 +208,7 @@ class SubmissionForm extends React.Component {
   }
 
   renderCreateArmorset() {
+    const { armorSet } = this.state;
     return (
       <div className="armor-input">
         <table>
@@ -215,35 +223,50 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <input
+                  name="head"
                   placeholder="Head"
+                  value={armorSet.head}
+                  onChange={this.handleChange.bind(this, 'head', 0)}
                 />
               </td>
             </tr>
             <tr>
               <td>
                 <input
+                  name="torso"
                   placeholder="Torso"
+                  value={armorSet.torso}
+                  onChange={this.handleChange.bind(this, 'torso', 0)}
                 />
               </td>
             </tr>
             <tr>
               <td>
                 <input
+                  name="arms"
                   placeholder="Arms"
+                  value={armorSet.arms}
+                  onChange={this.handleChange.bind(this, 'arms', 0)}
                 />
               </td>
             </tr>
             <tr>
               <td>
                 <input
+                  name="waist"
                   placeholder="Waist"
+                  value={armorSet.waist}
+                  onChange={this.handleChange.bind(this, 'waist', 0)}
                 />
               </td>
             </tr>
             <tr>
               <td>
                 <input
+                  name="feet"
                   placeholder="Feet"
+                  value={armorSet.feet}
+                  onChange={this.handleChange.bind(this, 'feet', 0)}
                 />
               </td>
             </tr>
@@ -251,6 +274,8 @@ class SubmissionForm extends React.Component {
               <td>
                 <input
                   placeholder="Charm"
+                  value={armorSet.charm}
+                  onChange={this.handleChange.bind(this, 'charm', 0)}
                 />
               </td>
             </tr>
@@ -378,7 +403,7 @@ class SubmissionForm extends React.Component {
     return (
       <div className="timer-group">
         <div>
-          <button className="counter-button plus-button green"
+          <button className="counter-button plus-button green semi-square"
             form="noForm"
             onMouseDown={this.changeTime.bind(this, "START", "inc", limit, unit)}
             onMouseUp={this.changeTime.bind(this, "STOP", "inc", limit, unit)}>+</button>
@@ -391,7 +416,7 @@ class SubmissionForm extends React.Component {
           />
         </div>
         <div>
-          <button className="counter-button minus-button green"
+          <button className="counter-button minus-button green semi-square"
             form="noForm"
             onMouseDown={this.changeTime.bind(this, "START", "dec", limit, unit)}
             onMouseUp={this.changeTime.bind(this, "STOP", "dec", limit, unit)}>-</button>
