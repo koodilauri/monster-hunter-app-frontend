@@ -12,7 +12,7 @@ class SubmissionForm extends React.Component {
       stuff: [],
       newSubmission: {
         name: "",
-        quest: "",
+        questName: "",
         questTime: "",
         weapon: "Great Sword",
         style: "Guild",
@@ -74,7 +74,7 @@ class SubmissionForm extends React.Component {
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
     }
-    if (field === "quest") {
+    if (field === "questName") {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
@@ -119,8 +119,8 @@ class SubmissionForm extends React.Component {
     }
     axios.post(url(), { newSubmission, armorSet })
       .then((response) => {
-        store.dispatch(this.props.onStuffClick(response.data.newSubmission))
         console.log("response: ", response.data)
+        store.dispatch(this.props.onStuffClick(response.data.newSubmission))
       })
       .catch(function (error) {
         console.log(error);
@@ -146,11 +146,12 @@ class SubmissionForm extends React.Component {
       this.setState({
         action: act
       })
-
-    } if (type === "START" && mod === "dec") {
+    } else {
+      clearInterval(action);
+    }
+    if (type === "START" && mod === "dec") {
       act = setInterval(() => {
         if (0 < this.state.newSubmission[unit]) {
-          console.log(limit > this.state.newSubmission[unit])
           this.setState({
             newSubmission: Object.assign({}, this.state.newSubmission, { [unit]: this.state.newSubmission[unit] - 1 })
           })
@@ -328,11 +329,11 @@ class SubmissionForm extends React.Component {
   }
 
   handleSelect(value, event) {
-    const { newSubmission } = this.state;
     this.setState({
-      newSubmission: Object.assign({}, this.state.newSubmission, { quest: value }),
+      newSubmission: Object.assign({}, this.state.newSubmission, { questName: value }),
       questList: []
     });
+    this.changeVisibility('hidden', 'results')
     console.log(this.state.newSubmission)
 
   }
@@ -347,14 +348,14 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  changeVisibility(action) {
+  changeVisibility(action, element) {
     if (action === "hidden") {
-      this.setState({questList: []})
-      document.getElementById("results").classList.add('hidden');
-      document.getElementById("results").classList.remove('visible');
+      this.setState({ questList: [] })
+      document.getElementById(element).classList.add('hidden');
+      document.getElementById(element).classList.remove('visible');
     } else {
-      document.getElementById("results").classList.add('visible');
-      document.getElementById("results").classList.remove('hidden');
+      document.getElementById(element).classList.add('visible');
+      document.getElementById(element).classList.remove('hidden');
     }
   }
 
@@ -376,14 +377,13 @@ class SubmissionForm extends React.Component {
                 </td>
                 <td>
                   <input className="create-input"
-                    name="quest"
+                    name="questName"
                     placeholder="Quest"
-                    value={newSubmission.quest}
-                    onChange={this.handleChange.bind(this, 'quest', 0)}
-                    onBlur={this.changeVisibility.bind(this, 'hidden')}
-                    onFocus={this.changeVisibility.bind(this, 'visible')}
+                    value={newSubmission.questName}
+                    onChange={this.handleChange.bind(this, 'questName', 0)}
+                    onFocus={this.changeVisibility.bind(this, 'visible', 'results')}
                   />
-                  <div id="results">
+                  <div id="results" className="hidden">
                     <table>
                       <tbody>
                         {questList.map((quest) => {
@@ -446,7 +446,7 @@ class SubmissionForm extends React.Component {
       <tr key={index}>
         <td>{stuff.questTime}</td>
         <td>{stuff.name}</td>
-        <td>{stuff.quest}</td>
+        <td>{stuff.questName}</td>
         <td>{stuff.weapon}</td>
         <td>{stuff.style}</td>
       </tr>
