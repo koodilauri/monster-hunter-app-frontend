@@ -347,6 +347,17 @@ class SubmissionForm extends React.Component {
     )
   }
 
+  changeVisibility(action) {
+    if (action === "hidden") {
+      this.setState({questList: []})
+      document.getElementById("results").classList.add('hidden');
+      document.getElementById("results").classList.remove('visible');
+    } else {
+      document.getElementById("results").classList.add('visible');
+      document.getElementById("results").classList.remove('hidden');
+    }
+  }
+
   renderCreateSubmission() {
     const { newSubmission, questList } = this.state;
     return (
@@ -369,8 +380,10 @@ class SubmissionForm extends React.Component {
                     placeholder="Quest"
                     value={newSubmission.quest}
                     onChange={this.handleChange.bind(this, 'quest', 0)}
+                    onBlur={this.changeVisibility.bind(this, 'hidden')}
+                    onFocus={this.changeVisibility.bind(this, 'visible')}
                   />
-                  <div className="results">
+                  <div id="results">
                     <table>
                       <tbody>
                         {questList.map((quest) => {
