@@ -360,6 +360,8 @@ class SubmissionForm extends React.Component {
                 </td>
                 <td>
                   <input className="create-input"
+                    type="text"
+                    autoComplete="off"
                     name="questName"
                     placeholder="Quest"
                     value={newSubmission.questName}
