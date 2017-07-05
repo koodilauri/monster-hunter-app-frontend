@@ -13,9 +13,9 @@ class SubmissionList extends React.Component {
     document.title="Hunters log";
     const url = () => {
       if (process.env.NODE_ENV !== "production") {
-        return process.env.REACT_APP_API_URL_DEV
+        return process.env.REACT_APP_API_URL_DEV + '/submission'
       } else {
-        return process.env.REACT_APP_API_URL
+        return process.env.REACT_APP_API_URL + '/submission'
       }
     }
     axios.get(url()).then(res => {

@@ -4,6 +4,7 @@ import store from '../../store';
 import { connect } from 'react-redux';
 import doStuff from '../../actions/doStuff';
 import SubmissionList from "./SubmissionList";
+import SearchComponent from "./Search";
 
 class SubmissionForm extends React.Component {
   constructor(props) {
@@ -30,10 +31,27 @@ class SubmissionForm extends React.Component {
         charm: "",
         decorations: [{ decorationAmount: 1, decorationName: "placeholder" }]
       },
-      submissions: []
+      submissions: [],
+      questList: []
     }
   };
 
+  // componentDidMount() {
+  //   const url = () => {
+  //     if (process.env.NODE_ENV !== "production") {
+  //       return process.env.REACT_APP_API_URL_DEV + '/questlist'
+  //     } else {
+  //       return process.env.REACT_APP_API_URL + '/questlist'
+  //     }
+  //   }
+  //   axios.get(url()).then(res => {
+  //     const questList = res.data.quests;
+  //     this.setState({ questList });
+  //     console.log(this.state.questList)
+  //   }).catch(err => {
+  //     console.log('Request failed :(')
+  //   });
+  // }
 
   handleChange = (field, id = 0, event) => {
     event.preventDefault();
@@ -89,9 +107,9 @@ class SubmissionForm extends React.Component {
     event.preventDefault()
     const url = () => {
       if (process.env.NODE_ENV !== "production") {
-        return process.env.REACT_APP_API_URL_DEV
+        return process.env.REACT_APP_API_URL_DEV + '/submission'
       } else {
-        return process.env.REACT_APP_API_URL
+        return process.env.REACT_APP_API_URL + '/submission'
       }
     }
     axios.post(url(), { newSubmission, armorSet })
@@ -216,6 +234,7 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <p>Armorset</p>
+                <SearchComponent />
               </td>
             </tr>
           </thead>
