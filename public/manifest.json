@@ -1,10 +1,10 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MH App",
+  "name": "Monster Hunter App Frontend",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "192x192",
+      "sizes": "50x50",
       "type": "image/png"
     }
   ],

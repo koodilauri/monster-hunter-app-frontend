@@ -10,11 +10,12 @@ class SubmissionList extends React.Component {
 
 
   componentDidMount() {
+    document.title="Hunters log";
     const url = () => {
       if (process.env.NODE_ENV !== "production") {
-        return process.env.REACT_APP_API_URL_DEV
+        return process.env.REACT_APP_API_URL_DEV + '/submission'
       } else {
-        return process.env.REACT_APP_API_URL
+        return process.env.REACT_APP_API_URL + '/submission'
       }
     }
     axios.get(url()).then(res => {
@@ -30,7 +31,7 @@ class SubmissionList extends React.Component {
     return (
       <tr key={submission.id}>
         <td className="name">{submission.name}</td>
-        <td className="quest">{submission.quest}</td>
+        <td className="questName">{submission.questname}</td>
         <td className="time">{submission.questtime}</td>
         <td className="weapon">{submission.weapon}</td>
         <td className="style">{submission.style}</td>
@@ -42,7 +43,7 @@ class SubmissionList extends React.Component {
     return this.props.stuff.map((stuff, index) =>
       <tr key={index}>
         <td>{stuff.name}</td>
-        <td>{stuff.quest}</td>
+        <td>{stuff.questName}</td>
         <td>{stuff.questTime}</td>
         <td>{stuff.weapon}</td>
         <td>{stuff.style}</td>
@@ -64,7 +65,7 @@ class SubmissionList extends React.Component {
               <td>Style</td>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="submissions-body">
             {this.renderStuff()}
             {submissions.map((submission) => {
               return this.renderSubmission(submission)
