@@ -13,7 +13,7 @@ class SubmissionForm extends React.Component {
       newSubmission: {
         name: "",
         questName: "",
-        questId:"",
+        questId: "",
         questTime: "",
         weapon: "Great Sword",
         style: "Guild",
@@ -36,28 +36,10 @@ class SubmissionForm extends React.Component {
     }
   };
 
-  // componentDidMount() {
-  //   const url = () => {
-  //     if (process.env.NODE_ENV !== "production") {
-  //       return process.env.REACT_APP_API_URL_DEV + '/questlist'
-  //     } else {
-  //       return process.env.REACT_APP_API_URL + '/questlist'
-  //     }
-  //   }
-  //   axios.get(url()).then(res => {
-  //     const questList = res.data.quests;
-  //     this.setState({ questList });
-  //     console.log(this.state.questList)
-  //   }).catch(err => {
-  //     console.log('Request failed :(')
-  //   });
-  // }
-
   handleChange = (field, id = 0, event) => {
     event.preventDefault();
     const newValue = event.target.value;
     const patt1 = /^([a-zA-Z0-9']+(-| )?)*$/i;
-    // const patt2 = /^([0-4]{0,1}[0-9]{0,1}(:){0,1}[0-5]{0,1}[0-9]{0,1}){1}$/i;
     const patt3 = /^([0-4]{0,1}[0-9]{0,1})$/i;
     const patt4 = /^([0-5]{0,1}[0-9]{0,1})$/i;
     if (field === "Min" && patt3.test(newValue)) {
@@ -323,7 +305,7 @@ class SubmissionForm extends React.Component {
       return response.json();
     }).then((results) => {
       if (results.items !== undefined) {
-        let items = results.items.map((res, i) => { return { id: i, value: res.value, name:res.name } })
+        let items = results.items.map((res, i) => { return { id: i, value: res.value, name: res.name } })
         this.setState({ questList: items })
       }
     });
@@ -341,11 +323,11 @@ class SubmissionForm extends React.Component {
 
   renderQuest(quest) {
     return (
-      <tr key={quest.id}>
-        <td className="name"
-          onClick={this.handleSelect.bind(this, quest)}
-        >{quest.name}</td>
-      </tr>
+      <li key={quest.id}
+        className="questname"
+        onClick={this.handleSelect.bind(this, quest)}>
+        {quest.name}
+      </li>
     )
   }
 
@@ -385,14 +367,12 @@ class SubmissionForm extends React.Component {
                     onFocus={this.changeVisibility.bind(this, 'visible', 'results')}
                   />
                   <div id="results" className="hidden">
-                    <table>
-                      <tbody>
-                        {questList.map((quest) => {
-                          return this.renderQuest(quest)
-                        }
-                        )}
-                      </tbody>
-                    </table>
+                    <ul>
+                      {questList.map((quest) => {
+                        return this.renderQuest(quest)
+                      }
+                      )}
+                    </ul>
                   </div>
                 </td>
                 <td>
