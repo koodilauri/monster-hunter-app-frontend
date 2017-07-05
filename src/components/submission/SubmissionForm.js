@@ -306,7 +306,13 @@ class SubmissionForm extends React.Component {
 
   getItemsAsync(event) {
     const search = event.target.value
-    let url = `http://localhost:8081/questlist?q=${search}&language=javascript`
+    let url
+    if (process.env.NODE_ENV !== "production") {
+      url = process.env.REACT_APP_API_URL_DEV
+    } else {
+      url = process.env.REACT_APP_API_URL
+    }
+    url = url + `/questlist?q=${search}&language=javascript`
     fetch(url).then((response) => {
       return response.json();
     }).then((results) => {
