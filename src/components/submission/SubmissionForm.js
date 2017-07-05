@@ -57,7 +57,7 @@ class SubmissionForm extends React.Component {
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
     }
-    if (field === "questName") {
+    if (field === "questName" && patt1.test(newValue)) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
@@ -229,6 +229,7 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <input
+                  autoComplete="off"
                   name="head"
                   placeholder="Head"
                   value={armorSet.head}
@@ -239,6 +240,7 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <input
+                  autoComplete="off"
                   name="torso"
                   placeholder="Torso"
                   value={armorSet.torso}
@@ -249,6 +251,7 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <input
+                  autoComplete="off"
                   name="arms"
                   placeholder="Arms"
                   value={armorSet.arms}
@@ -259,6 +262,7 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <input
+                  autoComplete="off"
                   name="waist"
                   placeholder="Waist"
                   value={armorSet.waist}
@@ -269,6 +273,7 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <input
+                  autoComplete="off"
                   name="feet"
                   placeholder="Feet"
                   value={armorSet.feet}
@@ -279,6 +284,7 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <input
+                  autoComplete="off"
                   placeholder="Charm"
                   value={armorSet.charm}
                   onChange={this.handleChange.bind(this, 'charm', 0)}
@@ -305,7 +311,7 @@ class SubmissionForm extends React.Component {
       return response.json();
     }).then((results) => {
       if (results.items !== undefined) {
-        let items = results.items.map((res, i) => { return { id: i, value: res.value, name: res.name } })
+        let items = results.items.map((res, i) => { return { id: i, value: res.value, name: res.name, giver: res.questgiver, star: res.stars } })
         this.setState({ questList: items })
       }
     });
@@ -326,7 +332,7 @@ class SubmissionForm extends React.Component {
       <li key={quest.id}
         className="questname"
         onClick={this.handleSelect.bind(this, quest)}>
-        {quest.name}
+        [{quest.giver}<span className="star">{quest.star}</span>] {quest.name}
       </li>
     )
   }
