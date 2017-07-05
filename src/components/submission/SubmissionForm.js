@@ -13,6 +13,7 @@ class SubmissionForm extends React.Component {
       newSubmission: {
         name: "",
         questName: "",
+        questId:"",
         questTime: "",
         weapon: "Great Sword",
         style: "Guild",
@@ -322,15 +323,15 @@ class SubmissionForm extends React.Component {
       return response.json();
     }).then((results) => {
       if (results.items !== undefined) {
-        let items = results.items.map((res, i) => { return { id: i, value: res.name } })
+        let items = results.items.map((res, i) => { return { id: i, value: res.value, name:res.name } })
         this.setState({ questList: items })
       }
     });
   }
 
-  handleSelect(value, event) {
+  handleSelect(quest, event) {
     this.setState({
-      newSubmission: Object.assign({}, this.state.newSubmission, { questName: value }),
+      newSubmission: Object.assign({}, this.state.newSubmission, { questName: quest.name, questId: quest.value }),
       questList: []
     });
     this.changeVisibility('hidden', 'results')
@@ -342,8 +343,8 @@ class SubmissionForm extends React.Component {
     return (
       <tr key={quest.id}>
         <td className="name"
-          onClick={this.handleSelect.bind(this, quest.value)}
-        >{quest.value}</td>
+          onClick={this.handleSelect.bind(this, quest)}
+        >{quest.name}</td>
       </tr>
     )
   }
