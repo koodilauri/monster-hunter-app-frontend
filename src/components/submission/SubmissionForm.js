@@ -4,7 +4,6 @@ import store from '../../store';
 import { connect } from 'react-redux';
 import doStuff from '../../actions/doStuff';
 import SubmissionList from "./SubmissionList";
-import SearchComponent from "./Search";
 
 class SubmissionForm extends React.Component {
   constructor(props) {
@@ -70,10 +69,16 @@ class SubmissionForm extends React.Component {
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
     }
-    if (((field === "name" || field === "quest") && patt1.test(newValue)) || (field === "weapon" || field === "style")) {
+    if (((field === "name") && patt1.test(newValue)) || (field === "weapon" || field === "style")) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
+    }
+    if (field === "quest") {
+      this.setState({
+        newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
+      });
+      this.getItemsAsync(event);
     }
     if ((field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "charm") && patt1.test(newValue)) {
       this.setState({
@@ -129,7 +134,6 @@ class SubmissionForm extends React.Component {
     if (type === "START" && mod === "inc") {
       act = setInterval(() => {
         if (limit > this.state.newSubmission[unit]) {
-          console.log(limit > this.state.newSubmission[unit])
           this.setState({
             newSubmission: Object.assign({}, this.state.newSubmission, { [unit]: this.state.newSubmission[unit] + 1 })
           })
@@ -234,7 +238,6 @@ class SubmissionForm extends React.Component {
             <tr>
               <td>
                 <p>Armorset</p>
-                <SearchComponent />
               </td>
             </tr>
           </thead>
@@ -311,8 +314,41 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  renderCreateSubmission() {
+  getItemsAsync(event) {
+    const search = event.target.value
+    let url = `http://localhost:8081/questlist?q=${search}&language=javascript`
+    fetch(url).then((response) => {
+      return response.json();
+    }).then((results) => {
+      if (results.items !== undefined) {
+        let items = results.items.map((res, i) => { return { id: i, value: res.name } })
+        this.setState({ questList: items })
+      }
+    });
+  }
+
+  handleSelect(value, event) {
     const { newSubmission } = this.state;
+    this.setState({
+      newSubmission: Object.assign({}, this.state.newSubmission, { quest: value }),
+      questList: []
+    });
+    console.log(this.state.newSubmission)
+
+  }
+
+  renderQuest(quest) {
+    return (
+      <tr key={quest.id}>
+        <td className="name"
+          onClick={this.handleSelect.bind(this, quest.value)}
+        >{quest.value}</td>
+      </tr>
+    )
+  }
+
+  renderCreateSubmission() {
+    const { newSubmission, questList } = this.state;
     return (
       <div>
         <form id="submissionForm" onSubmit={this.handleSubmit.bind(this, newSubmission)}>
@@ -334,6 +370,16 @@ class SubmissionForm extends React.Component {
                     value={newSubmission.quest}
                     onChange={this.handleChange.bind(this, 'quest', 0)}
                   />
+                  <div className="results">
+                    <table>
+                      <tbody>
+                        {questList.map((quest) => {
+                          return this.renderQuest(quest)
+                        }
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </td>
                 <td>
                   {this.renderCounter(49, "Min")}
