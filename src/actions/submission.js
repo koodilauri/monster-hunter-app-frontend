@@ -1,10 +1,8 @@
 export const GET_SUBMISSION = 'GET_SUBMISSION'
 
-const getSubmission = (stuff) => {
+export const getSubmissions = () => {
   return {
-    payload: stuff,
+    payload: { request: { method: 'GET', url: '/submission' }},
     type: GET_SUBMISSION
   }
 }
-
-export default getSubmission

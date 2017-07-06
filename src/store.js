@@ -1,6 +1,6 @@
-import reducer from './reducers/submission'
+import { submission } from './reducers/submission'
 import { createStore } from 'redux'
 
-const store = createStore(reducer);
+const store = createStore(submission);
 
 export default store

@@ -2,9 +2,9 @@ const initialState = {
   submission: []
 }
 
-const submission = (state = initialState, action) => {
+export const submission = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_SUBMISSION':
+    case 'GET_SUBMISSION_SUCCESS':
       return Object.assign({}, state, {
         submission: action.payload
       })
@@ -14,5 +14,3 @@ const submission = (state = initialState, action) => {
 }
 
 
-
-export default submission
