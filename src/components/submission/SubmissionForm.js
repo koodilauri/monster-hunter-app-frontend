@@ -2,6 +2,7 @@ import React from "react";
 import store from '../../store';
 import { connect } from 'react-redux';
 import { getSubmissions, saveSubmission } from '../../actions/submission';
+import { getQuestList } from '../../actions/questList';
 import SubmissionList from "./SubmissionList";
 import './Submission.css';
 
@@ -60,7 +61,7 @@ class SubmissionForm extends React.Component {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
-      this.getItemsAsync(event);
+    store.dispatch(this.props.onQuestInput(event.target.value))
     }
     if ((field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "charm") && patt1.test(newValue)) {
       this.setState({
@@ -289,24 +290,24 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  getItemsAsync(event) {
-    const search = event.target.value
-    let url
-    if (process.env.NODE_ENV !== "production") {
-      url = process.env.REACT_APP_API_URL_DEV
-    } else {
-      url = process.env.REACT_APP_API_URL
-    }
-    url = url + `/questlist?q=${search}&language=javascript`
-    fetch(url).then((response) => {
-      return response.json();
-    }).then((results) => {
-      if (results.items !== undefined) {
-        let items = results.items.map((res, i) => { return { id: i, value: res.value, name: res.name, giver: res.questgiver, star: res.stars } })
-        this.setState({ questList: items })
-      }
-    });
-  }
+  // getItemsAsync(event) {
+  //   const search = event.target.value
+  //   // let url
+  //   // if (process.env.NODE_ENV !== "production") {
+  //   //   url = process.env.REACT_APP_API_URL_DEV
+  //   // } else {
+  //   //   url = process.env.REACT_APP_API_URL
+  //   // }
+  //   // url = url + `/questlist?q=${search}&language=javascript`
+  //   // fetch(url).then((response) => {
+  //   //   return response.json();
+  //   // }).then((results) => {
+  //   //   if (results.items !== undefined) {
+  //   //     let items = results.items.map((res, i) => { return { id: i, value: res.value, name: res.name, giver: res.questgiver, star: res.stars } })
+  //   //     this.setState({ questList: items })
+  //   //   }
+  //   // });
+  // }
 
   handleSelect(quest, event) {
     this.setState({
@@ -317,14 +318,18 @@ class SubmissionForm extends React.Component {
 
   }
 
-  renderQuest(quest) {
-    return (
-      <li key={quest.id}
-        className="questname"
-        onClick={this.handleSelect.bind(this, quest)}>
-        [{quest.giver}<span className="star">{quest.star}</span>] {quest.name}
-      </li>
-    )
+  renderQuestList(questList) {
+    if (questList === undefined) {
+      return 0
+    } else {
+      return questList.questList.map((quest, id) =>
+        <li key={id}
+          className="questname"
+          onClick={this.handleSelect.bind(this, quest)}>
+          [{quest.giver}<span className="star">{quest.star}</span>] {quest.name}
+        </li>
+      )
+    }
   }
 
   changeVisibility(action, element) {
@@ -339,7 +344,7 @@ class SubmissionForm extends React.Component {
   }
 
   renderCreateSubmission() {
-    const { newSubmission, questList } = this.state;
+    const { newSubmission } = this.state;
     return (
       <div>
         <form id="submissionForm" onSubmit={this.handleSubmit.bind(this, newSubmission)}>
@@ -366,10 +371,7 @@ class SubmissionForm extends React.Component {
                   />
                   <div id="results" className="hidden">
                     <ul>
-                      {questList.map((quest) => {
-                        return this.renderQuest(quest)
-                      }
-                      )}
+                      {this.renderQuestList(this.props.questList)}
                     </ul>
                   </div>
                 </td>
@@ -458,13 +460,15 @@ class SubmissionForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  questList: state.questList,
   submissions: state.submissions
 })
 
 const mapDispatchToProps = dispatch => {
   return {
     onSubmissionClick: getSubmissions,
-    onSubmissionSubmit: saveSubmission
+    onSubmissionSubmit: saveSubmission,
+    onQuestInput: getQuestList
   }
 }
 

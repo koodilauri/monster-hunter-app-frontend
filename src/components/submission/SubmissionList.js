@@ -16,8 +16,8 @@ class SubmissionList extends React.Component {
 
 
   renderSubmission() {
-    if(this.props.submissions !== undefined){
-    return this.props.submissions.map((submission, index) =>
+    if(this.props.submissions.submissions !== undefined){
+    return this.props.submissions.submissions.map((submission, index) =>
       <tr key={index}>
         <td className="name">{submission.name}</td>
         <td className="questName">{submission.questname}</td>

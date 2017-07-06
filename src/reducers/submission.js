@@ -2,7 +2,7 @@ const initialState = {
   submissions: []
 }
 
-export const submission = (state = initialState, action) => {
+export const submissions = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_SUBMISSION_SUCCESS':
       return Object.assign({}, state, {
