@@ -30,7 +30,7 @@ const callApi = (action, store) => {
         type: action.type + "_FAIL",
         payload: err,
       }
-      store.dispatch(newAction);
+      // store.dispatch(newAction);
       return newAction;
     });
 };

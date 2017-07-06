@@ -1,8 +1,7 @@
 import React from "react";
-import axios from 'axios';
 import store from '../../store';
 import { connect } from 'react-redux';
-import { getSubmissions } from '../../actions/submission';
+import { getSubmissions, saveSubmission } from '../../actions/submission';
 import SubmissionList from "./SubmissionList";
 import './Submission.css';
 
@@ -93,25 +92,7 @@ class SubmissionForm extends React.Component {
   handleSubmit = (newSubmission, event) => {
     const { armorSet } = this.state;
     event.preventDefault()
-    const url = () => {
-      if (process.env.NODE_ENV !== "production") {
-        return process.env.REACT_APP_API_URL_DEV + '/submission'
-      } else {
-        return process.env.REACT_APP_API_URL + '/submission'
-      }
-    }
-    axios.post(url(), { newSubmission, armorSet })
-      .then((response) => {
-        axios.get(url()).then(res => {
-          store.dispatch(this.props.onSubmissionClick(res.data.submissions))
-        }).catch(err => {
-          console.log('Request failed :(')
-        });
-
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    store.dispatch(this.props.onSubmissionSubmit({ newSubmission, armorSet }))
   }
 
   changeTime = (type, mod, limit, unit, event) => {
@@ -470,19 +451,20 @@ class SubmissionForm extends React.Component {
           {this.renderCreateArmorset()}
         </div>
         {this.renderCreateSubmission()}
-        <SubmissionList submission={this.props.submission} onSubmissionClick={this.props.onSubmissionClick} />
+        <SubmissionList submissions={this.props.submissions} onSubmissionClick={this.props.onSubmissionClick} />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  submission: state.submission
+  submissions: state.submissions
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmissionClick: getSubmissions
+    onSubmissionClick: getSubmissions,
+    onSubmissionSubmit: saveSubmission
   }
 }
 
