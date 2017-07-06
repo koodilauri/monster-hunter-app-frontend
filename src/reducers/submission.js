@@ -1,19 +1,12 @@
-// import { connect } from 'react-redux';
-// import doStuff from '../actions/doStuff';
-// import { SubmissionForm } from '../components/submission/SubmissionForm';
-
 const initialState = {
-  stuff: []
+  submission: []
 }
 
-const stuff = (state = initialState, action) => {
+const submission = (state = initialState, action) => {
   switch (action.type) {
-    case 'DO_STUFF':
+    case 'GET_SUBMISSION':
       return Object.assign({}, state, {
-        stuff: [
-          ...state.stuff,
-          action.payload
-        ]
+        submission: action.payload
       })
     default:
       return state
@@ -22,4 +15,4 @@ const stuff = (state = initialState, action) => {
 
 
 
-export default stuff
+export default submission

@@ -2,14 +2,13 @@ import React from "react";
 import axios from 'axios';
 import store from '../../store';
 import { connect } from 'react-redux';
-import doStuff from '../../actions/doStuff';
+import getSubmission from '../../actions/submission';
 import SubmissionList from "./SubmissionList";
 
 class SubmissionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      stuff: [],
       newSubmission: {
         name: "",
         questName: "",
@@ -31,7 +30,7 @@ class SubmissionForm extends React.Component {
         charm: "",
         decorations: [{ decorationAmount: 1, decorationName: "placeholder" }]
       },
-      submissions: [],
+      submission: [],
       questList: []
     }
   };
@@ -102,8 +101,12 @@ class SubmissionForm extends React.Component {
     }
     axios.post(url(), { newSubmission, armorSet })
       .then((response) => {
-        console.log("response: ", response.data)
-        store.dispatch(this.props.onStuffClick(response.data.newSubmission))
+        axios.get(url()).then(res => {
+          store.dispatch(this.props.onSubmissionClick(res.data.submissions))
+        }).catch(err => {
+          console.log('Request failed :(')
+        });
+
       })
       .catch(function (error) {
         console.log(error);
@@ -165,7 +168,6 @@ class SubmissionForm extends React.Component {
           ]
         })
     })
-    console.log(this.state.armorSet.decorations)
   }
 
   renderDecorations() {
@@ -329,7 +331,6 @@ class SubmissionForm extends React.Component {
       questList: []
     });
     this.changeVisibility('hidden', 'results')
-    console.log(this.state.newSubmission)
 
   }
 
@@ -433,44 +434,6 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  renderStuff() {
-    // const table = document.getElementById("submissions");
-
-    return this.props.stuff.map((stuff, index) =>
-      // $("#submission > tbody").prepend(
-      <tr key={index}>
-        <td>{stuff.questTime}</td>
-        <td>{stuff.name}</td>
-        <td>{stuff.questName}</td>
-        <td>{stuff.weapon}</td>
-        <td>{stuff.style}</td>
-      </tr>
-    )
-  }
-
-  renderButton() {
-    let input
-    return (
-      <div>
-        <form onSubmit={e => {
-          e.preventDefault()
-          if (!input.value.trim()) {
-            return
-          }
-          store.dispatch(this.props.onStuffClick(input.value))
-          input.value = ''
-        }}>
-          <input ref={node => {
-            input = node
-          }} />
-          <button type="submit">
-            Add Stuff
-        </button>
-        </form>
-      </div>
-    )
-  }
-
   renderCounter(limit, unit) {
     const { newSubmission } = this.state;
     return (
@@ -505,19 +468,19 @@ class SubmissionForm extends React.Component {
           {this.renderCreateArmorset()}
         </div>
         {this.renderCreateSubmission()}
-        <SubmissionList stuff={this.props.stuff} />
+        <SubmissionList submission={this.props.submission} onSubmissionClick={this.props.onSubmissionClick} />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  stuff: state.stuff
+  submission: state.submission
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    onStuffClick: doStuff
+    onSubmissionClick: getSubmission
   }
 }
 

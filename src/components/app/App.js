@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 import SubmissionForm from "../submission/SubmissionForm";
-// import SubmissionList from "../submission/SubmissionList";
 import store from '../../store';
 require('dotenv').config()
 
