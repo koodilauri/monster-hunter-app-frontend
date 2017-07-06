@@ -6,7 +6,7 @@ export const submission = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_SUBMISSION_SUCCESS':
       return Object.assign({}, state, {
-        submission: action.payload
+        submission: action.payload.submissions
       })
     default:
       return state

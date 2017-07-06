@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+// import axios from 'axios';
 import store from '../../store';
 
 
@@ -11,21 +11,12 @@ class SubmissionList extends React.Component {
 
   componentDidMount() {
     document.title = "Hunters log";
-    let url
-    if (process.env.NODE_ENV !== "production") {
-      url = process.env.REACT_APP_API_URL_DEV + "/submission"
-    } else {
-      url = process.env.REACT_APP_API_URL + "/submission"
-    }
-    axios.get(url).then(res => {
-      store.dispatch(this.props.onSubmissionClick(res.data.submissions))
-    }).catch(err => {
-      console.log('Request failed :((', url)
-    });
+    store.dispatch(this.props.onSubmissionClick())
   }
 
 
   renderSubmission() {
+    if(this.props.submission !== undefined){
     return this.props.submission.map((submission, index) =>
       <tr key={index}>
         <td className="name">{submission.name}</td>
@@ -35,6 +26,9 @@ class SubmissionList extends React.Component {
         <td className="style">{submission.style}</td>
       </tr>
     )
+    }else{
+      return <tr></tr>
+    }
   }
 
   renderList() {
