@@ -11,7 +11,7 @@ const callApi = (action, store) => {
 
   return axios({
       method: request.method,
-      url: process.env.REACT_APP_API_URL_DEV + request.url,
+      url: process.env.REACT_APP_API_URL + request.url,
       data: request.data,
       headers: {
         "Accept": "application/json",
