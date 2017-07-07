@@ -1,7 +1,4 @@
 import React from "react";
-// import axios from 'axios';
-import store from '../../store';
-
 
 class SubmissionList extends React.Component {
   state = {
@@ -11,7 +8,7 @@ class SubmissionList extends React.Component {
 
   componentDidMount() {
     document.title = "Hunters log";
-    store.dispatch(this.props.onSubmissionClick())
+    this.props.findSubmissions()
   }
 
 

@@ -1,5 +1,4 @@
 import React from "react";
-import store from '../../store';
 import { connect } from 'react-redux';
 import { getSubmissions, saveSubmission } from '../../actions/submission';
 import { getQuestList } from '../../actions/questList';
@@ -61,7 +60,7 @@ class SubmissionForm extends React.Component {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
-    store.dispatch(this.props.onQuestInput(event.target.value))
+      this.props.onQuestInput(event.target.value)
     }
     if ((field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "charm") && patt1.test(newValue)) {
       this.setState({
@@ -93,7 +92,7 @@ class SubmissionForm extends React.Component {
   handleSubmit = (newSubmission, event) => {
     const { armorSet } = this.state;
     event.preventDefault()
-    store.dispatch(this.props.onSubmissionSubmit({ newSubmission, armorSet }))
+    this.props.onSubmissionSubmit(newSubmission, armorSet)
   }
 
   changeTime = (type, mod, limit, unit, event) => {
@@ -290,25 +289,6 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  // getItemsAsync(event) {
-  //   const search = event.target.value
-  //   // let url
-  //   // if (process.env.NODE_ENV !== "production") {
-  //   //   url = process.env.REACT_APP_API_URL_DEV
-  //   // } else {
-  //   //   url = process.env.REACT_APP_API_URL
-  //   // }
-  //   // url = url + `/questlist?q=${search}&language=javascript`
-  //   // fetch(url).then((response) => {
-  //   //   return response.json();
-  //   // }).then((results) => {
-  //   //   if (results.items !== undefined) {
-  //   //     let items = results.items.map((res, i) => { return { id: i, value: res.value, name: res.name, giver: res.questgiver, star: res.stars } })
-  //   //     this.setState({ questList: items })
-  //   //   }
-  //   // });
-  // }
-
   handleSelect(quest, event) {
     this.setState({
       newSubmission: Object.assign({}, this.state.newSubmission, { questName: quest.name, questId: quest.value }),
@@ -453,7 +433,7 @@ class SubmissionForm extends React.Component {
           {this.renderCreateArmorset()}
         </div>
         {this.renderCreateSubmission()}
-        <SubmissionList submissions={this.props.submissions} onSubmissionClick={this.props.onSubmissionClick} />
+        <SubmissionList submissions={this.props.submissions} findSubmissions={this.props.findSubmissions} />
       </div>
     )
   }
@@ -464,12 +444,21 @@ const mapStateToProps = state => ({
   submissions: state.submissions
 })
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onSubmissionClick: getSubmissions,
-    onSubmissionSubmit: saveSubmission,
-    onQuestInput: getQuestList
+const mapDispatchToProps = dispatch => ({
+  findSubmissions() {
+    dispatch(getSubmissions())
+  },
+  onSubmissionSubmit(newSubmission, armorSet) {
+    dispatch(saveSubmission({
+      newSubmission,
+      armorSet
+    }))
+  },
+  onQuestInput(search) {
+    dispatch(getQuestList(
+      search
+    ))
   }
-}
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmissionForm);
