@@ -1,10 +1,10 @@
-// // import React from "react";
-// import Redux from "redux";
-import reducer from './reducers/submission'
-import { createStore } from 'redux'
-// import { Provider } from 'react-redux'
-// import App from './components/app/App'
+import { submissions } from './reducers/submission'
+import { questList } from './reducers/questList'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { handleRequest } from './middlewares/api'
 
-const store = createStore(reducer);
+const store = createStore(combineReducers({submissions, questList}),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(handleRequest));
 
 export default store

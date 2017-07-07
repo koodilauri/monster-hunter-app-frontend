@@ -1,6 +1,6 @@
 import React from "react";
-import axios from 'axios';
-// import store from '../../store';
+// import axios from 'axios';
+import store from '../../store';
 
 
 class SubmissionList extends React.Component {
@@ -10,67 +10,42 @@ class SubmissionList extends React.Component {
 
 
   componentDidMount() {
-    document.title="Hunters log";
-    const url = () => {
-      if (process.env.NODE_ENV !== "production") {
-        return process.env.REACT_APP_API_URL_DEV + '/submission'
-      } else {
-        return process.env.REACT_APP_API_URL + '/submission'
-      }
-    }
-    axios.get(url()).then(res => {
-      const submissions = res.data.submissions;
-      this.setState({ submissions });
-
-    }).catch(err => {
-      console.log('Request failed :(')
-    });
+    document.title = "Hunters log";
+    store.dispatch(this.props.onSubmissionClick())
   }
 
-  renderSubmission(submission) {
-    return (
-      <tr key={submission.id}>
+
+  renderSubmission() {
+    if(this.props.submissions.submissions !== undefined){
+    return this.props.submissions.submissions.map((submission, index) =>
+      <tr key={index}>
         <td className="name">{submission.name}</td>
         <td className="questName">{submission.questname}</td>
         <td className="time">{submission.questtime}</td>
         <td className="weapon">{submission.weapon}</td>
         <td className="style">{submission.style}</td>
       </tr>
-
     )
-  }
-  renderStuff() {
-    return this.props.stuff.map((stuff, index) =>
-      <tr key={index}>
-        <td>{stuff.name}</td>
-        <td>{stuff.questName}</td>
-        <td>{stuff.questTime}</td>
-        <td>{stuff.weapon}</td>
-        <td>{stuff.style}</td>
-      </tr>
-    )
+    }else{
+      return <tr></tr>
+    }
   }
 
   renderList() {
-    const { submissions } = this.state;
     return (
       <div>
         <table id="submissions">
           <thead>
             <tr>
-              <td>Name</td>
-              <td>Quest</td>
-              <td>Time</td>
-              <td>Weapon</td>
-              <td>Style</td>
+              <td className="head-td">Name</td>
+              <td className="head-td">Quest</td>
+              <td className="head-td">Time</td>
+              <td className="head-td">Weapon</td>
+              <td className="head-td">Style</td>
             </tr>
           </thead>
           <tbody className="submissions-body">
-            {this.renderStuff()}
-            {submissions.map((submission) => {
-              return this.renderSubmission(submission)
-            }
-            )}
+            {this.renderSubmission()}
           </tbody>
         </table>
       </div>

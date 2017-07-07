@@ -1,15 +1,15 @@
 import React from "react";
-import axios from 'axios';
 import store from '../../store';
 import { connect } from 'react-redux';
-import doStuff from '../../actions/doStuff';
+import { getSubmissions, saveSubmission } from '../../actions/submission';
+import { getQuestList } from '../../actions/questList';
 import SubmissionList from "./SubmissionList";
+import './Submission.css';
 
 class SubmissionForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      stuff: [],
       newSubmission: {
         name: "",
         questName: "",
@@ -31,7 +31,7 @@ class SubmissionForm extends React.Component {
         charm: "",
         decorations: [{ decorationAmount: 1, decorationName: "placeholder" }]
       },
-      submissions: [],
+      submission: [],
       questList: []
     }
   };
@@ -61,7 +61,7 @@ class SubmissionForm extends React.Component {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
       });
-      this.getItemsAsync(event);
+    store.dispatch(this.props.onQuestInput(event.target.value))
     }
     if ((field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "charm") && patt1.test(newValue)) {
       this.setState({
@@ -93,21 +93,7 @@ class SubmissionForm extends React.Component {
   handleSubmit = (newSubmission, event) => {
     const { armorSet } = this.state;
     event.preventDefault()
-    const url = () => {
-      if (process.env.NODE_ENV !== "production") {
-        return process.env.REACT_APP_API_URL_DEV + '/submission'
-      } else {
-        return process.env.REACT_APP_API_URL + '/submission'
-      }
-    }
-    axios.post(url(), { newSubmission, armorSet })
-      .then((response) => {
-        console.log("response: ", response.data)
-        store.dispatch(this.props.onStuffClick(response.data.newSubmission))
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    store.dispatch(this.props.onSubmissionSubmit({ newSubmission, armorSet }))
   }
 
   changeTime = (type, mod, limit, unit, event) => {
@@ -165,7 +151,6 @@ class SubmissionForm extends React.Component {
           ]
         })
     })
-    console.log(this.state.armorSet.decorations)
   }
 
   renderDecorations() {
@@ -194,13 +179,14 @@ class SubmissionForm extends React.Component {
                   </td>
                   <td>
                     <input
+                      className="decoration-input"
                       placeholder="Decoration"
                       onChange={this.handleChange.bind(this, "decorationName", index)}
                       value={this.state.armorSet.decorations[index].decorationName}
                     />
                   </td>
                   <td>
-                    <button className="green semi-square delete-button"
+                    <button className="green semi-square delete-button button-style"
                       onClick={this.handleChange.bind(this, "deleteDecoration", index)}>Delete</button>
                   </td>
                 </tr>
@@ -220,7 +206,7 @@ class SubmissionForm extends React.Component {
         <table>
           <thead>
             <tr>
-              <td>
+              <td className="head-td">
                 <p>Armorset</p>
               </td>
             </tr>
@@ -294,7 +280,7 @@ class SubmissionForm extends React.Component {
             {this.renderDecorations()}
             <tr>
               <td>
-                <button className="green semi-square"
+                <button className="green semi-square button-style"
                   onClick={this.addDecoration}>Add decoration</button>
               </td>
             </tr>
@@ -304,24 +290,24 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  getItemsAsync(event) {
-    const search = event.target.value
-    let url
-    if (process.env.NODE_ENV !== "production") {
-      url = process.env.REACT_APP_API_URL_DEV
-    } else {
-      url = process.env.REACT_APP_API_URL
-    }
-    url = url + `/questlist?q=${search}&language=javascript`
-    fetch(url).then((response) => {
-      return response.json();
-    }).then((results) => {
-      if (results.items !== undefined) {
-        let items = results.items.map((res, i) => { return { id: i, value: res.value, name: res.name, giver: res.questgiver, star: res.stars } })
-        this.setState({ questList: items })
-      }
-    });
-  }
+  // getItemsAsync(event) {
+  //   const search = event.target.value
+  //   // let url
+  //   // if (process.env.NODE_ENV !== "production") {
+  //   //   url = process.env.REACT_APP_API_URL_DEV
+  //   // } else {
+  //   //   url = process.env.REACT_APP_API_URL
+  //   // }
+  //   // url = url + `/questlist?q=${search}&language=javascript`
+  //   // fetch(url).then((response) => {
+  //   //   return response.json();
+  //   // }).then((results) => {
+  //   //   if (results.items !== undefined) {
+  //   //     let items = results.items.map((res, i) => { return { id: i, value: res.value, name: res.name, giver: res.questgiver, star: res.stars } })
+  //   //     this.setState({ questList: items })
+  //   //   }
+  //   // });
+  // }
 
   handleSelect(quest, event) {
     this.setState({
@@ -329,18 +315,21 @@ class SubmissionForm extends React.Component {
       questList: []
     });
     this.changeVisibility('hidden', 'results')
-    console.log(this.state.newSubmission)
 
   }
 
-  renderQuest(quest) {
-    return (
-      <li key={quest.id}
-        className="questname"
-        onClick={this.handleSelect.bind(this, quest)}>
-        [{quest.giver}<span className="star">{quest.star}</span>] {quest.name}
-      </li>
-    )
+  renderQuestList(questList) {
+    if (questList === undefined) {
+      return 0
+    } else {
+      return questList.questList.map((quest, id) =>
+        <li key={id}
+          className="questname"
+          onClick={this.handleSelect.bind(this, quest)}>
+          [{quest.giver}<span className="star">{quest.star}</span>] {quest.name}
+        </li>
+      )
+    }
   }
 
   changeVisibility(action, element) {
@@ -355,23 +344,23 @@ class SubmissionForm extends React.Component {
   }
 
   renderCreateSubmission() {
-    const { newSubmission, questList } = this.state;
+    const { newSubmission } = this.state;
     return (
       <div>
         <form id="submissionForm" onSubmit={this.handleSubmit.bind(this, newSubmission)}>
           <table id="form-table">
-            <thead>
+            <thead className="form-thead">
               <tr className="create-row">
-                <td>
-                  <input className="create-input"
+                <td className="head-td create-td">
+                  <input className="create-input name-input"
                     name="name"
                     placeholder="Name"
                     value={newSubmission.name}
                     onChange={this.handleChange.bind(this, 'name', 0)}
                   />
                 </td>
-                <td>
-                  <input className="create-input"
+                <td className="head-td create-td">
+                  <input className="create-input quest-input"
                     type="text"
                     autoComplete="off"
                     name="questName"
@@ -382,20 +371,17 @@ class SubmissionForm extends React.Component {
                   />
                   <div id="results" className="hidden">
                     <ul>
-                      {questList.map((quest) => {
-                        return this.renderQuest(quest)
-                      }
-                      )}
+                      {this.renderQuestList(this.props.questList)}
                     </ul>
                   </div>
                 </td>
-                <td>
+                <td className="head-td create-td min-counter">
                   {this.renderCounter(49, "Min")}
                 </td>
-                <td>
+                <td className="head-td create-td sec-counter">
                   {this.renderCounter(59, "Sec")}
                 </td>
-                <td>
+                <td className="head-td create-td">
                   <select className="create-input styled-select green semi-square" name="weapon"
                     onChange={this.handleChange.bind(this, 'weapon', 0)}>
                     <option value="Great Sword">Great Sword</option>
@@ -414,7 +400,7 @@ class SubmissionForm extends React.Component {
                     <option value="Bow">Bow</option>
                   </select>
                 </td>
-                <td>
+                <td className="head-td create-td">
                   <select className="create-input styled-select green semi-square" name="style"
                     onChange={this.handleChange.bind(this, 'style', 0)}>
                     <option value="Guild">Guild</option>
@@ -423,7 +409,7 @@ class SubmissionForm extends React.Component {
                     <option value="Aerial">Aerial</option>
                   </select>
                 </td>
-                <td><button type="submit" className="create-input submit-button semi-square green">Submit</button></td>
+                <td className="head-td create-td create-td-last"><button type="submit" className="create-input submit-button button-style semi-square green">Submit</button></td>
 
               </tr>
             </thead>
@@ -433,63 +419,25 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  renderStuff() {
-    // const table = document.getElementById("submissions");
-
-    return this.props.stuff.map((stuff, index) =>
-      // $("#submission > tbody").prepend(
-      <tr key={index}>
-        <td>{stuff.questTime}</td>
-        <td>{stuff.name}</td>
-        <td>{stuff.questName}</td>
-        <td>{stuff.weapon}</td>
-        <td>{stuff.style}</td>
-      </tr>
-    )
-  }
-
-  renderButton() {
-    let input
-    return (
-      <div>
-        <form onSubmit={e => {
-          e.preventDefault()
-          if (!input.value.trim()) {
-            return
-          }
-          store.dispatch(this.props.onStuffClick(input.value))
-          input.value = ''
-        }}>
-          <input ref={node => {
-            input = node
-          }} />
-          <button type="submit">
-            Add Stuff
-        </button>
-        </form>
-      </div>
-    )
-  }
-
   renderCounter(limit, unit) {
     const { newSubmission } = this.state;
     return (
       <div className="timer-group">
-        <div>
-          <button className="counter-button plus-button green semi-square"
+        <div className="timer-div">
+          <button className="counter-button button-style plus-button green semi-square"
             form="noForm"
             onMouseDown={this.changeTime.bind(this, "START", "inc", limit, unit)}
             onMouseUp={this.changeTime.bind(this, "STOP", "inc", limit, unit)}>+</button>
         </div>
-        <div>
+        <div className="timer-div">
           <p className="timer-unit">{unit}</p>
           <input className="timer-input"
             value={newSubmission[unit]}
             onChange={this.handleChange.bind(this, unit, 0)}
           />
         </div>
-        <div>
-          <button className="counter-button minus-button green semi-square"
+        <div className="timer-div">
+          <button className="counter-button button-style minus-button green semi-square"
             form="noForm"
             onMouseDown={this.changeTime.bind(this, "START", "dec", limit, unit)}
             onMouseUp={this.changeTime.bind(this, "STOP", "dec", limit, unit)}>-</button>
@@ -505,19 +453,22 @@ class SubmissionForm extends React.Component {
           {this.renderCreateArmorset()}
         </div>
         {this.renderCreateSubmission()}
-        <SubmissionList stuff={this.props.stuff} />
+        <SubmissionList submissions={this.props.submissions} onSubmissionClick={this.props.onSubmissionClick} />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  stuff: state.stuff
+  questList: state.questList,
+  submissions: state.submissions
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    onStuffClick: doStuff
+    onSubmissionClick: getSubmissions,
+    onSubmissionSubmit: saveSubmission,
+    onQuestInput: getQuestList
   }
 }
 
