@@ -16,11 +16,11 @@ class SubmissionList extends React.Component {
     if(this.props.submissions.submissions !== undefined){
     return this.props.submissions.submissions.map((submission, index) =>
       <tr key={index}>
-        <td className="name">{submission.name}</td>
-        <td className="questName">{submission.questname}</td>
-        <td className="time">{submission.questtime}</td>
-        <td className="weapon">{submission.weapon}</td>
-        <td className="style">{submission.style}</td>
+        <td className="table__td--submission">{submission.name}</td>
+        <td className="table__td--submission">{submission.questname}</td>
+        <td className="table__td--submission">{submission.questtime}</td>
+        <td className="table__td--submission">{submission.weapon}</td>
+        <td className="table__td--submission">{submission.style}</td>
       </tr>
     )
     }else{
@@ -31,17 +31,17 @@ class SubmissionList extends React.Component {
   renderList() {
     return (
       <div>
-        <table id="submissions">
+        <table className="table table--submission">
           <thead>
             <tr>
-              <td className="head-td">Name</td>
-              <td className="head-td">Quest</td>
-              <td className="head-td">Time</td>
-              <td className="head-td">Weapon</td>
-              <td className="head-td">Style</td>
+              <td className="table__htd">Name</td>
+              <td className="table__htd">Quest</td>
+              <td className="table__htd">Time</td>
+              <td className="table__htd">Weapon</td>
+              <td className="table__htd">Style</td>
             </tr>
           </thead>
-          <tbody className="submissions-body">
+          <tbody className="table__tbody">
             {this.renderSubmission()}
           </tbody>
         </table>

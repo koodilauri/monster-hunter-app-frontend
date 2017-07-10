@@ -156,9 +156,9 @@ class SubmissionForm extends React.Component {
     const { decorations } = this.state.armorSet;
     return decorations.map((decorations, index) => {
       return (
-        <tr key={index} className="decoration-row">
+        <tr key={index} className="div__row--decoration">
           <td>
-            <table className="tableception">
+            <table className="table table--armorset">
               <tbody>
                 <tr>
                   <td>
@@ -178,14 +178,14 @@ class SubmissionForm extends React.Component {
                   </td>
                   <td>
                     <input
-                      className="decoration-input"
+                      className="table__input--decoration"
                       placeholder="Decoration"
                       onChange={this.handleChange.bind(this, "decorationName", index)}
                       value={this.state.armorSet.decorations[index].decorationName}
                     />
                   </td>
                   <td>
-                    <button className="green semi-square delete-button button-style"
+                    <button className="green semi-square button--delete button"
                       onClick={this.handleChange.bind(this, "deleteDecoration", index)}>Delete</button>
                   </td>
                 </tr>
@@ -201,11 +201,11 @@ class SubmissionForm extends React.Component {
   renderCreateArmorset() {
     const { armorSet } = this.state;
     return (
-      <div className="armor-input">
+      <div className="div div--armorset">
         <table>
           <thead>
             <tr>
-              <td className="head-td">
+              <td className="form__htd">
                 <p>Armorset</p>
               </td>
             </tr>
@@ -279,7 +279,7 @@ class SubmissionForm extends React.Component {
             {this.renderDecorations()}
             <tr>
               <td>
-                <button className="green semi-square button-style"
+                <button className="green semi-square button"
                   onClick={this.addDecoration}>Add decoration</button>
               </td>
             </tr>
@@ -294,7 +294,7 @@ class SubmissionForm extends React.Component {
       newSubmission: Object.assign({}, this.state.newSubmission, { questName: quest.name, questId: quest.value }),
       questList: []
     });
-    this.changeVisibility('hidden', 'results')
+    this.changeVisibility('hidden', 'form__div--result')
 
   }
 
@@ -304,7 +304,7 @@ class SubmissionForm extends React.Component {
     } else {
       return questList.questList.map((quest, id) =>
         <li key={id}
-          className="questname"
+          className="form__li--questname"
           onClick={this.handleSelect.bind(this, quest)}>
           [{quest.giver}<span className="star">{quest.star}</span>] {quest.name}
         </li>
@@ -315,11 +315,11 @@ class SubmissionForm extends React.Component {
   changeVisibility(action, element) {
     if (action === "hidden") {
       this.setState({ questList: [] })
-      document.getElementById(element).classList.add('hidden');
-      document.getElementById(element).classList.remove('visible');
+      document.getElementsByClassName(element)[0].classList.add('hidden');
+      document.getElementsByClassName(element)[0].classList.remove('visible');
     } else {
-      document.getElementById(element).classList.add('visible');
-      document.getElementById(element).classList.remove('hidden');
+      document.getElementsByClassName(element)[0].classList.add('visible');
+      document.getElementsByClassName(element)[0].classList.remove('hidden');
     }
   }
 
@@ -327,42 +327,42 @@ class SubmissionForm extends React.Component {
     const { newSubmission } = this.state;
     return (
       <div>
-        <form id="submissionForm" onSubmit={this.handleSubmit.bind(this, newSubmission)}>
-          <table id="form-table">
-            <thead className="form-thead">
-              <tr className="create-row">
-                <td className="head-td create-td">
-                  <input className="create-input name-input"
+        <form className="form form--submission" onSubmit={this.handleSubmit.bind(this, newSubmission)}>
+          <table className="form__table">
+            <thead className="form__thead">
+              <tr className="form__row">
+                <td className="form__htd form__td">
+                  <input className="form__input form__input--name"
                     name="name"
                     placeholder="Name"
                     value={newSubmission.name}
                     onChange={this.handleChange.bind(this, 'name', 0)}
                   />
                 </td>
-                <td className="head-td create-td">
-                  <input className="create-input quest-input"
+                <td className="form__htd form__td form__td--padding">
+                  <input className="form__input form__input--quest"
                     type="text"
                     autoComplete="off"
                     name="questName"
                     placeholder="Quest"
                     value={newSubmission.questName}
                     onChange={this.handleChange.bind(this, 'questName', 0)}
-                    onFocus={this.changeVisibility.bind(this, 'visible', 'results')}
+                    onFocus={this.changeVisibility.bind(this, 'visible', 'form__div--result')}
                   />
-                  <div id="results" className="hidden">
+                  <div className="form__div--result hidden">
                     <ul>
                       {this.renderQuestList(this.props.questList)}
                     </ul>
                   </div>
                 </td>
-                <td className="head-td create-td min-counter">
+                <td className="form__htd form__td form__td--padding form__min-counter">
                   {this.renderCounter(49, "Min")}
                 </td>
-                <td className="head-td create-td sec-counter">
+                <td className="form__htd form__td form__sec-counter">
                   {this.renderCounter(59, "Sec")}
                 </td>
-                <td className="head-td create-td">
-                  <select className="create-input styled-select green semi-square" name="weapon"
+                <td className="form__htd form__td">
+                  <select className="form__input form__select--style green semi-square" name="weapon"
                     onChange={this.handleChange.bind(this, 'weapon', 0)}>
                     <option value="Great Sword">Great Sword</option>
                     <option value="Long Sword">Long Sword</option>
@@ -380,8 +380,8 @@ class SubmissionForm extends React.Component {
                     <option value="Bow">Bow</option>
                   </select>
                 </td>
-                <td className="head-td create-td">
-                  <select className="create-input styled-select green semi-square" name="style"
+                <td className="form__htd form__td">
+                  <select className="form__input form__select--style green semi-square" name="style"
                     onChange={this.handleChange.bind(this, 'style', 0)}>
                     <option value="Guild">Guild</option>
                     <option value="Striker">Striker</option>
@@ -389,7 +389,7 @@ class SubmissionForm extends React.Component {
                     <option value="Aerial">Aerial</option>
                   </select>
                 </td>
-                <td className="head-td create-td create-td-last"><button type="submit" className="create-input submit-button button-style semi-square green">Submit</button></td>
+                <td className="form__htd form__td form__td--last"><button type="submit" className="form__input button-submit button semi-square green">Submit</button></td>
 
               </tr>
             </thead>
@@ -402,22 +402,22 @@ class SubmissionForm extends React.Component {
   renderCounter(limit, unit) {
     const { newSubmission } = this.state;
     return (
-      <div className="timer-group">
-        <div className="timer-div">
-          <button className="counter-button button-style plus-button green semi-square"
+      <div className="form__div--timer-group">
+        <div className="form__div--timer">
+          <button className="button--counter button button--plus green semi-square"
             form="noForm"
             onMouseDown={this.changeTime.bind(this, "START", "inc", limit, unit)}
             onMouseUp={this.changeTime.bind(this, "STOP", "inc", limit, unit)}>+</button>
         </div>
-        <div className="timer-div">
-          <p className="timer-unit">{unit}</p>
-          <input className="timer-input"
+        <div className="form__div--timer">
+          <p className="form__p--timer">{unit}</p>
+          <input className="form__input--timer"
             value={newSubmission[unit]}
             onChange={this.handleChange.bind(this, unit, 0)}
           />
         </div>
-        <div className="timer-div">
-          <button className="counter-button button-style minus-button green semi-square"
+        <div className="form__div--timer">
+          <button className="button--counter button button--minus green semi-square"
             form="noForm"
             onMouseDown={this.changeTime.bind(this, "START", "dec", limit, unit)}
             onMouseUp={this.changeTime.bind(this, "STOP", "dec", limit, unit)}>-</button>
@@ -429,7 +429,7 @@ class SubmissionForm extends React.Component {
   render() {
     return (
       <div>
-        <div id="sidebarwrapper">
+        <div className="sidebar">
           {this.renderCreateArmorset()}
         </div>
         {this.renderCreateSubmission()}
