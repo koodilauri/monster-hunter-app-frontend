@@ -1,3 +1,6 @@
+notifications:
+  slack: koodipaja:vgVozcfSx0yoT2z0nfYfsa6J
+  email: false
 language: node_js
 node_js:
 - 6
