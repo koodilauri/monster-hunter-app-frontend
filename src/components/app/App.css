@@ -1,12 +1,4 @@
-.App {
-  text-align: center;
-}
-
-body {
-  background-color: lightgreen;
-}
-
-.h1 {
+.h1--mh {
   background-color: darkgreen;
   margin-top:0px;
   text-align: left;
