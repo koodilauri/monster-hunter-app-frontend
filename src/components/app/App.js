@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div><h1 className="h1 h1--mh">Hunters log</h1></div>
+        <div><h1 className="h1 App__h1">Hunters log</h1></div>
         <SubmissionForm quest={this.props.quest} />
       </div>
     )

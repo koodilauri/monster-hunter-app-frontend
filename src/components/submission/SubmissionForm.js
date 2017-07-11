@@ -101,6 +101,12 @@ class SubmissionForm extends React.Component {
     this.props.submitSubmission(newSubmission, armorSet)
   }
 
+/**
+ * @param {boolean} start - true to start interval, otherwise stop
+ * @param {'inc' | 'dec'} mode - describes whether to increase or decrease the number
+ * @param {49 | 59} limit - max number, starts back from 0 when reached and vice versa
+ * @param {'min' | 'sec'} unit - describes which newSubmission var to change
+ */
   /* ku painaa [+] tai [-] nappulaa pohjassa niin tää alkaa 50 ms välein kasvattamaan aikaa 
   (joko minuutteja tai sekuntteja) aina yhden verran. Kun nappulaa lakkaa painamasta niin 
   clearInterval(action) lopettaa actionin. changeTime ei palauta mittään
