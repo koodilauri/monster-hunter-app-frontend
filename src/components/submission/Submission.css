@@ -49,7 +49,7 @@
   text-align: left;
 }
 
-.form__htd, .table__htd{
+.form__htd, .table__htd {
   background-color: white;
   border-bottom:2px solid lightgreen;
   color: #505050;
@@ -67,7 +67,7 @@
   font-weight: 500;
 }
 
-.form__td{
+.form__td {
   border-right: 0px solid white;
   padding: 16px 0px 16px 16px;
 }
@@ -76,11 +76,11 @@
   padding-left: 0px;
 }
 
-.form__td--last{
+.form__td--last {
   padding-right:  10px;
 }
 
-.form__td--padding{
+.form__td--padding {
   padding-left:10px;
 }
 
@@ -116,7 +116,8 @@
     text-align: center;
     float: initial;
 }
-.form__p--timer{
+
+.form__p--timer {
     margin:0px;
     margin-bottom: 2px;
     height: 15px;
@@ -138,9 +139,12 @@
    -moz-border-radius: 5px;
    border-radius: 5px;
 }
-.green   { background-color: #779126;}
 
-.table__input--decoration{
+.green {
+  background-color: #779126;
+}
+
+.table__input--decoration {
   width: 90px;
 }
 
@@ -160,10 +164,6 @@
   list-style-type: none;
   padding: 5px;
   margin-left: -40px;
-}
-
-.visible {
-  visibility: visible;
 }
 
 .hidden {

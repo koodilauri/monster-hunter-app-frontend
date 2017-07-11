@@ -1,21 +1,32 @@
-import React, { Component } from 'react';
-import './App.css';
-
-import SubmissionForm from "../submission/SubmissionForm";
-import store from '../../store';
-require('dotenv').config()
-
-
+import React, { Component } from 'react'
+import './App.css'
+import SubmissionForm from "../submission/SubmissionForm"
+import { getQuests } from '../../actions/quest'
+import { connect } from 'react-redux'
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.findQuests()
+  }
+
   render() {
     return (
       <div className="App">
-        <div><h1 className="h1">Hunters log</h1></div>
-        <SubmissionForm store={store}/>        
+        <div><h1 className="h1 App__h1">Hunters log</h1></div>
+        <SubmissionForm quest={this.props.quest} />
       </div>
-    );
+    )
   }
 }
+const mapStateToProps = state => ({
+  quest: state.quest.quest
+})
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  findQuests() {
+    dispatch(getQuests())
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
