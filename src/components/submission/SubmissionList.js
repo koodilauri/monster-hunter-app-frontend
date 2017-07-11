@@ -1,29 +1,29 @@
-import React from "react";
+import React from "react"
 
 class SubmissionList extends React.Component {
   state = {
     submissions: []
-  };
+  }
 
 
   componentDidMount() {
-    document.title = "Hunters log";
+    document.title = "Hunters log"
     this.props.findSubmissions()
   }
 
 
   renderSubmission() {
-    if(this.props.submissions.submissions !== undefined){
-    return this.props.submissions.submissions.map((submission, index) =>
-      <tr key={index}>
-        <td className="table__td--submission">{submission.name}</td>
-        <td className="table__td--submission">{submission.questname}</td>
-        <td className="table__td--submission">{submission.questtime}</td>
-        <td className="table__td--submission">{submission.weapon}</td>
-        <td className="table__td--submission">{submission.style}</td>
-      </tr>
-    )
-    }else{
+    if (this.props.submissions.submissions !== undefined) {
+      return this.props.submissions.submissions.map((submission, index) =>
+        <tr key={index}>
+          <td className="table__td--submission">{submission.name}</td>
+          <td className="table__td--submission">{submission.questname}</td>
+          <td className="table__td--submission">{submission.questtime}</td>
+          <td className="table__td--submission">{submission.weapon}</td>
+          <td className="table__td--submission">{submission.style}</td>
+        </tr>
+      )
+    } else {
       return <tr></tr>
     }
   }
@@ -58,4 +58,4 @@ class SubmissionList extends React.Component {
   }
 }
 
-export default SubmissionList;
+export default SubmissionList

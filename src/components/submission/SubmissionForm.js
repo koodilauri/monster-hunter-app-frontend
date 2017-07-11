@@ -1,13 +1,13 @@
-import React from "react";
-import { connect } from 'react-redux';
-import { getSubmissions, saveSubmission } from '../../actions/submission';
-import { getQuestList } from '../../actions/questList';
-import SubmissionList from "./SubmissionList";
-import './Submission.css';
+import React from "react"
+import { connect } from 'react-redux'
+import { getSubmissions, saveSubmission } from '../../actions/submission'
+import { getQuestList } from '../../actions/questList'
+import SubmissionList from "./SubmissionList"
+import './Submission.css'
 
 class SubmissionForm extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       newSubmission: {
         name: "",
@@ -33,33 +33,33 @@ class SubmissionForm extends React.Component {
       submission: [],
       questList: []
     }
-  };
+  }
 
   handleChange = (field, id = 0, event) => {
-    event.preventDefault();
-    const newValue = event.target.value;
-    const patt1 = /^([a-zA-Z0-9']+(-| )?)*$/i;
-    const patt3 = /^([0-4]{0,1}[0-9]{0,1})$/i;
-    const patt4 = /^([0-5]{0,1}[0-9]{0,1})$/i;
+    event.preventDefault()
+    const newValue = event.target.value
+    const patt1 = /^([a-zA-Z0-9']+(-| )?)*$/i
+    const patt3 = /^([0-4]{0,1}[0-9]{0,1})$/i
+    const patt4 = /^([0-5]{0,1}[0-9]{0,1})$/i
     if (field === "Min" && patt3.test(newValue)) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
-      });
+      })
     }
     if (field === "Sec" && patt4.test(newValue)) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
-      });
+      })
     }
     if (((field === "name") && patt1.test(newValue)) || (field === "weapon" || field === "style")) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
-      });
+      })
     }
     if (field === "questName" && patt1.test(newValue)) {
       this.setState({
         newSubmission: Object.assign({}, this.state.newSubmission, { [field]: event.target.value })
-      });
+      })
       this.props.onQuestInput(event.target.value)
     }
     if ((field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "charm") && patt1.test(newValue)) {
@@ -90,15 +90,15 @@ class SubmissionForm extends React.Component {
   }
 
   handleSubmit = (newSubmission, event) => {
-    const { armorSet } = this.state;
+    const { armorSet } = this.state
     event.preventDefault()
     this.props.onSubmissionSubmit(newSubmission, armorSet)
   }
 
   changeTime = (type, mod, limit, unit, event) => {
     event.preventDefault()
-    const { action } = this.state;
-    let act;
+    const { action } = this.state
+    let act
     if (type === "START" && mod === "inc") {
       act = setInterval(() => {
         if (limit > this.state.newSubmission[unit]) {
@@ -110,12 +110,12 @@ class SubmissionForm extends React.Component {
             newSubmission: Object.assign({}, this.state.newSubmission, { [unit]: 0 })
           })
         }
-      }, 50);
+      }, 50)
       this.setState({
         action: act
       })
     } else {
-      clearInterval(action);
+      clearInterval(action)
     }
     if (type === "START" && mod === "dec") {
       act = setInterval(() => {
@@ -128,12 +128,12 @@ class SubmissionForm extends React.Component {
             newSubmission: Object.assign({}, this.state.newSubmission, { [unit]: limit })
           })
         }
-      }, 50);
+      }, 50)
       this.setState({
         action: act
       })
     } else {
-      clearInterval(action);
+      clearInterval(action)
     }
   }
 
@@ -153,7 +153,7 @@ class SubmissionForm extends React.Component {
   }
 
   renderDecorations() {
-    const { decorations } = this.state.armorSet;
+    const { decorations } = this.state.armorSet
     return decorations.map((decorations, index) => {
       return (
         <tr key={index} className="div__row--decoration">
@@ -199,7 +199,7 @@ class SubmissionForm extends React.Component {
   }
 
   renderCreateArmorset() {
-    const { armorSet } = this.state;
+    const { armorSet } = this.state
     return (
       <div className="div div--armorset">
         <table>
@@ -293,7 +293,7 @@ class SubmissionForm extends React.Component {
     this.setState({
       newSubmission: Object.assign({}, this.state.newSubmission, { questName: quest.name, questId: quest.value }),
       questList: []
-    });
+    })
     this.changeVisibility('hidden', 'form__div--result')
 
   }
@@ -315,16 +315,16 @@ class SubmissionForm extends React.Component {
   changeVisibility(action, element) {
     if (action === "hidden") {
       this.setState({ questList: [] })
-      document.getElementsByClassName(element)[0].classList.add('hidden');
-      document.getElementsByClassName(element)[0].classList.remove('visible');
+      document.getElementsByClassName(element)[0].classList.add('hidden')
+      document.getElementsByClassName(element)[0].classList.remove('visible')
     } else {
-      document.getElementsByClassName(element)[0].classList.add('visible');
-      document.getElementsByClassName(element)[0].classList.remove('hidden');
+      document.getElementsByClassName(element)[0].classList.add('visible')
+      document.getElementsByClassName(element)[0].classList.remove('hidden')
     }
   }
 
   renderCreateSubmission() {
-    const { newSubmission } = this.state;
+    const { newSubmission } = this.state
     return (
       <div>
         <form className="form form--submission" onSubmit={this.handleSubmit.bind(this, newSubmission)}>
@@ -400,7 +400,7 @@ class SubmissionForm extends React.Component {
   }
 
   renderCounter(limit, unit) {
-    const { newSubmission } = this.state;
+    const { newSubmission } = this.state
     return (
       <div className="form__div--timer-group">
         <div className="form__div--timer">
@@ -461,4 +461,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubmissionForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SubmissionForm)
