@@ -101,7 +101,17 @@ class SubmissionForm extends React.Component {
     this.props.submitSubmission(newSubmission, armorSet)
   }
 
-
+  /**
+   * Pressing and holding the [+] or [-] button will start changing the number at
+   * 50 ms intervals (either the minutes or the seconds). When th button is no longer
+   * being pressed, the action stops with clearInterval(action). changeTime does not
+   * return any values.
+   * @param {true | false} start - true to start interval, otherwise stop
+   * @param {"inc" | "dec"} mode - describes whether to increase or decrease the number
+   * @param {49 | 59} limit - max number, starts back from 0 when reached and vice versa
+   * (49 for minutes, 59 for seconds)
+   * @param {min | sec} unit - describes which newSubmission variable to change
+   */
   changeTime = (start, mode, limit, unit, event) => {
     event.preventDefault()
     const { action } = this.state
