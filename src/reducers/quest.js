@@ -1,12 +1,12 @@
 const initialState = {
-  quest: []
+  quests: []
 }
 
 export const quest = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_QUEST_SUCCESS':
       return Object.assign({}, state, {
-        quest: action.payload.items
+        quests: action.payload.items
       })
     default:
       return state

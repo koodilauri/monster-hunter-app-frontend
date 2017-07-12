@@ -20,7 +20,7 @@ class App extends Component {
   }
 }
 const mapStateToProps = state => ({
-  quest: state.quest.quest
+  quest: state.quest.quests
 })
 
 const mapDispatchToProps = dispatch => ({
