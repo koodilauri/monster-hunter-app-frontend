@@ -55,7 +55,6 @@ class SubmissionForm extends React.Component {
   }
 
   handleChange = (field, form, id = 0, event) => {
-    console.log(this.state)
     event.preventDefault()
     const newValue = event.target.value
     if (this.validateInput(field, newValue)) {
