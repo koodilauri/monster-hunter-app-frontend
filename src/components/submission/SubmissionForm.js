@@ -102,22 +102,6 @@ class SubmissionForm extends React.Component {
   }
 
 
-  /* ku painaa [+] tai [-] nappulaa pohjassa niin tää alkaa 50 ms välein kasvattamaan aikaa 
-  (joko minuutteja tai sekuntteja) aina yhden verran. Kun nappulaa lakkaa painamasta niin 
-  clearInterval(action) lopettaa actionin. changeTime ei palauta mittään
-  
-  [start] on joko true tai false ja tarkoittaa aloitetaanko intervalli vai lopetetaanko se (true kun
-  painetaan nappia, false kun irroitetaan napista)
-  
-  [mode] on joko "inc" tai "dec" ja kertoo mennäänkö alaspäin vain ylöspäin numeroissa ("inc" kun
-  painaa [+] nappia, "dec" kun painaa [-] nappia)
-  
-  [limit] on max arvo ja kun se saavutetaan aloitetaan laskeminen taas nollasta ja sama toisinpäin kun 
-  mennään nollaan niin aloitetaan uudestaan max arvosta (minuutit on 0-49 välillä, sekunnit 0-59 välillä)
-  
-  [unit] on joko min tai sec kertoo kumpaa newSubmissionin arvoista muutetaan ("min" kun painaa Min 
-  nappia, "sec" kun painaa Sec nappia)
-   */
   changeTime = (start, mode, limit, unit, event) => {
     event.preventDefault()
     const { action } = this.state
