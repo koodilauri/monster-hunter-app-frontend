@@ -16,7 +16,8 @@
     "react-search": "^2.0.5",
     "react-select": "^1.0.0-rc.5",
     "redux": "^3.7.0",
-    "regex": "^0.1.1"
+    "regex": "^0.1.1",
+    "react-scripts": "1.0.7"
   },
   "devDependencies": {
     "eslint": "^4.2.0",
@@ -25,8 +26,7 @@
     "eslint-plugin-node": "^5.1.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.1.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "react-scripts": "1.0.7"
+    "eslint-plugin-standard": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
