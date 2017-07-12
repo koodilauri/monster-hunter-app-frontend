@@ -12,7 +12,6 @@ class SubmissionForm extends React.Component {
         name: "",
         questName: "",
         questId: "",
-        questTime: "",
         weapon: "Great Sword",
         style: "Guild",
         min: 0,
@@ -303,7 +302,7 @@ class SubmissionForm extends React.Component {
   }
 
   searchQuest(search) {
-    const list = this.props.quest.filter((quest) => {
+    const list = this.props.quests.filter((quest) => {
       return (quest.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
     })
     this.setState({
@@ -441,14 +440,14 @@ class SubmissionForm extends React.Component {
           {this.renderCreateArmorset()}
         </div>
         {this.renderCreateSubmission()}
-        <SubmissionList submission={this.props.submission} findSubmissions={this.props.findSubmissions} />
+        <SubmissionList submissions={this.props.submissions} findSubmissions={this.props.findSubmissions} />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  submission: state.submission.submissions
+  submissions: state.submission.submissions
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -9,7 +9,7 @@ class SubmissionList extends React.Component {
   }
 
   renderSubmission() {
-    return this.props.submission.map((submission = [], index) =>
+    return this.props.submissions.map((submission = [], index) =>
       <tr key={index}>
         <td className="table__td--submission">{submission.name}</td>
         <td className="table__td--submission">{submission.questname}</td>

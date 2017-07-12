@@ -14,13 +14,13 @@ class App extends Component {
     return (
       <div className="App">
         <div><h1 className="h1 App__h1">Hunters log</h1></div>
-        <SubmissionForm quest={this.props.quest} />
+        <SubmissionForm quests={this.props.quests} />
       </div>
     )
   }
 }
 const mapStateToProps = state => ({
-  quest: state.quest.quests
+  quests: state.quest.quests
 })
 
 const mapDispatchToProps = dispatch => ({
