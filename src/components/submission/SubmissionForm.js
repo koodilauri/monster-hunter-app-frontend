@@ -306,7 +306,7 @@ class SubmissionForm extends React.Component {
       return (quest.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
     })
     this.setState({
-      shownQuests: list
+      shownQuests: list.slice(0,5)
     })
   }
 
@@ -326,7 +326,7 @@ class SubmissionForm extends React.Component {
       <li key={id}
         className="form__li--questname"
         onClick={this.handleSelect.bind(this, quest)}>
-        [{quest.questgiver}<span className="star">{quest.stars}</span>] {quest.name}
+        [{quest.questgiver}{quest.stars ? "★"+quest.stars : ""}] {quest.name}
       </li>
     )
   }
