@@ -12,7 +12,6 @@ class SubmissionForm extends React.Component {
         name: "",
         questName: "",
         questId: "",
-        questTime: "",
         weapon: "Great Sword",
         style: "Guild",
         min: 0,
@@ -101,7 +100,17 @@ class SubmissionForm extends React.Component {
     this.props.submitSubmission(newSubmission, armorSet)
   }
 
-
+  /**
+   * Pressing and holding the [+] or [-] button will start changing the number at
+   * 50 ms intervals (either the minutes or the seconds). When th button is no longer
+   * being pressed, the action stops with clearInterval(action). changeTime does not
+   * return any values.
+   * @param {true | false} start - true to start interval, otherwise stop
+   * @param {"inc" | "dec"} mode - describes whether to increase or decrease the number
+   * @param {49 | 59} limit - max number, starts back from 0 when reached and vice versa
+   * (49 for minutes, 59 for seconds)
+   * @param {min | sec} unit - describes which newSubmission variable to change
+   */
   changeTime = (start, mode, limit, unit, event) => {
     event.preventDefault()
     const { action } = this.state
@@ -293,11 +302,11 @@ class SubmissionForm extends React.Component {
   }
 
   searchQuest(search) {
-    const list = this.props.quest.filter((quest) => {
+    const list = this.props.quests.filter((quest) => {
       return (quest.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
     })
     this.setState({
-      shownQuests: list
+      shownQuests: list.slice(0,5)
     })
   }
 
@@ -317,7 +326,7 @@ class SubmissionForm extends React.Component {
       <li key={id}
         className="form__li--questname"
         onClick={this.handleSelect.bind(this, quest)}>
-        [{quest.questgiver}<span className="star">{quest.stars}</span>] {quest.name}
+        [{quest.questgiver}{quest.stars ? "★"+quest.stars : ""}] {quest.name}
       </li>
     )
   }
@@ -431,14 +440,14 @@ class SubmissionForm extends React.Component {
           {this.renderCreateArmorset()}
         </div>
         {this.renderCreateSubmission()}
-        <SubmissionList submission={this.props.submission} findSubmissions={this.props.findSubmissions} />
+        <SubmissionList submissions={this.props.submissions} findSubmissions={this.props.findSubmissions} />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  submission: state.submission.submissions
+  submissions: state.submission.submissions
 })
 
 const mapDispatchToProps = dispatch => ({
