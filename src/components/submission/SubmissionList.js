@@ -1,13 +1,6 @@
 import React from "react"
 
 class SubmissionList extends React.Component {
-  state = {
-  }
-
-  componentDidMount() {
-    this.props.findSubmissions()
-  }
-
   renderSubmission() {
     return this.props.submissions.map((submission = [], index) =>
       <tr key={index}>

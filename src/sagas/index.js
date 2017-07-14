@@ -1,7 +1,16 @@
-import { all, fork, call, put, takeLatest } from 'redux-saga/effects'
+import { all, fork, call, put, takeEvery } from "redux-saga/effects"
 import axios from "axios"
-import { createRequest } from "../api/index"
-// const createRequest = require("../api/index").createRequest
+
+function createRequest(request) {
+  return axios({
+    method: request.method,
+    url: process.env.REACT_APP_API_URL + request.url,
+    data: request.data,
+    headers: {
+      "Accept": "application/json",
+    },
+  })
+}
 
 function* callApi(action) {
   yield put({ type: `${action.type}_REQUEST` })
@@ -14,7 +23,7 @@ function* callApi(action) {
 }
 
 function* handleRequest(action) {
-  yield takeLatest((action => action.payload && action.payload.request), callApi)
+  yield takeEvery((action => action.payload && action.payload.request), callApi)
 }
 
 export default function* root() {
