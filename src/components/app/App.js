@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
-import './App.css'
+import React, { Component } from "react"
+import "./App.css"
 import SubmissionForm from "../submission/SubmissionForm"
-import { getQuests } from '../../actions/quest'
-import { connect } from 'react-redux'
+import { getQuests } from "../../actions/quest"
+import { connect } from "react-redux"
 
 class App extends Component {
 

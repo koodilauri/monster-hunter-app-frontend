@@ -13,14 +13,14 @@
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
+    "react-scripts": "1.0.7",
     "react-search": "^2.0.5",
     "react-select": "^1.0.0-rc.5",
     "redux": "^3.7.0",
-    "regex": "^0.1.1",
-    "react-scripts": "1.0.7"    
+    "redux-saga": "^0.15.4",
+    "regex": "^0.1.1"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

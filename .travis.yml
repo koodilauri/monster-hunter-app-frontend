@@ -1,5 +1,5 @@
 notifications:
-  slack: koodipaja:vgVozcfSx0yoT2z0nfYfsa6J
+  slack: koodipaja:2N46fXy7krC3EstOfxLn6Lhm
   email: false
 language: node_js
 node_js:
