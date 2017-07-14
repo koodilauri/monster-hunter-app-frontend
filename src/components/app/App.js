@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <div className="App">
         <div><h1 className="h1 App__h1">Hunters log</h1></div>
-        <SubmissionForm quests={this.props.quests} submissions={this.props.submissions} />
+        <SubmissionForm quests={this.props.quests} submissions={this.props.submissions} submitSubmission={this.props.submitSubmission}/>
       </div>
     )
   }
