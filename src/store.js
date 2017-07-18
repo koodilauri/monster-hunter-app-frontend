@@ -1,10 +1,22 @@
-import { submission } from './reducers/submission'
-import { quest } from './reducers/quest'
-import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { handleRequest } from './middlewares/api'
+import reducers from './reducers'
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from "redux-saga"
+import rootSaga from "./sagas"
 
-const store = createStore(combineReducers({ submission, quest }),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(handleRequest))
+const configureStore = () => {
+  const sagaMiddleware = createSagaMiddleware()
 
-export default store
+  const createStoreWithMiddleware = applyMiddleware(sagaMiddleware)(createStore)
+
+  const store = createStoreWithMiddleware(
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  )
+
+  sagaMiddleware.run(rootSaga)
+
+  return store
+}
+
+
+export default configureStore()

@@ -1,8 +1,6 @@
 import React from "react"
-import { connect } from 'react-redux'
-import { getSubmissions, saveSubmission } from '../../actions/submission'
 import SubmissionList from "./SubmissionList"
-import './Submission.css'
+import "./Submission.css"
 
 class SubmissionForm extends React.Component {
   constructor(props) {
@@ -34,7 +32,7 @@ class SubmissionForm extends React.Component {
   }
 
   validateInput = (field, value) => {
-    const patt1 = /^([a-zA-Z0-9']+(-| )?)*$/i
+    const patt1 = /^([a-zA-Z0-9"]+(-| )?)*$/i
     const patt2 = /^([0-4]{0,1}[0-9]{0,1})$/i
     const patt3 = /^([0-5]{0,1}[0-9]{0,1})$/i
     const patt4 = /^[1-9]/i
@@ -230,7 +228,7 @@ class SubmissionForm extends React.Component {
                   name="head"
                   placeholder="Head"
                   value={armorSet.head}
-                  onChange={this.handleChange.bind(this, 'head', "armorset", 0)}
+                  onChange={this.handleChange.bind(this, "head", "armorset", 0)}
                 />
               </td>
             </tr>
@@ -241,7 +239,7 @@ class SubmissionForm extends React.Component {
                   name="torso"
                   placeholder="Torso"
                   value={armorSet.torso}
-                  onChange={this.handleChange.bind(this, 'torso', "armorset", 0)}
+                  onChange={this.handleChange.bind(this, "torso", "armorset", 0)}
                 />
               </td>
             </tr>
@@ -252,7 +250,7 @@ class SubmissionForm extends React.Component {
                   name="arms"
                   placeholder="Arms"
                   value={armorSet.arms}
-                  onChange={this.handleChange.bind(this, 'arms', "armorset", 0)}
+                  onChange={this.handleChange.bind(this, "arms", "armorset", 0)}
                 />
               </td>
             </tr>
@@ -263,7 +261,7 @@ class SubmissionForm extends React.Component {
                   name="waist"
                   placeholder="Waist"
                   value={armorSet.waist}
-                  onChange={this.handleChange.bind(this, 'waist', "armorset", 0)}
+                  onChange={this.handleChange.bind(this, "waist", "armorset", 0)}
                 />
               </td>
             </tr>
@@ -274,7 +272,7 @@ class SubmissionForm extends React.Component {
                   name="feet"
                   placeholder="Feet"
                   value={armorSet.feet}
-                  onChange={this.handleChange.bind(this, 'feet', "armorset", 0)}
+                  onChange={this.handleChange.bind(this, "feet", "armorset", 0)}
                 />
               </td>
             </tr>
@@ -284,7 +282,7 @@ class SubmissionForm extends React.Component {
                   autoComplete="off"
                   placeholder="Charm"
                   value={armorSet.charm}
-                  onChange={this.handleChange.bind(this, 'charm', "armorset", 0)}
+                  onChange={this.handleChange.bind(this, "charm", "armorset", 0)}
                 />
               </td>
             </tr>
@@ -344,7 +342,7 @@ class SubmissionForm extends React.Component {
                     name="name"
                     placeholder="Name"
                     value={newSubmission.name}
-                    onChange={this.handleChange.bind(this, 'name', "submission", 0)}
+                    onChange={this.handleChange.bind(this, "name", "submission", 0)}
                   />
                 </td>
                 <td className="form__htd form__td form__td--padding">
@@ -354,7 +352,7 @@ class SubmissionForm extends React.Component {
                     name="questName"
                     placeholder="Quest"
                     value={newSubmission.questName}
-                    onChange={this.handleChange.bind(this, 'questName', "submission", 0)}
+                    onChange={this.handleChange.bind(this, "questName", "submission", 0)}
                   />
                   <div className={this.state.shouldHide ? "hidden" : "form__div--result"}>
                     <ul>
@@ -370,7 +368,7 @@ class SubmissionForm extends React.Component {
                 </td>
                 <td className="form__htd form__td">
                   <select className="form__input form__select--style green semi-square" name="weapon"
-                    onChange={this.handleChange.bind(this, 'weapon', "submission", 0)}>
+                    onChange={this.handleChange.bind(this, "weapon", "submission", 0)}>
                     <option value="Great Sword">Great Sword</option>
                     <option value="Long Sword">Long Sword</option>
                     <option value="Sword & Shield">Sword & Shield</option>
@@ -389,7 +387,7 @@ class SubmissionForm extends React.Component {
                 </td>
                 <td className="form__htd form__td">
                   <select className="form__input form__select--style green semi-square" name="style"
-                    onChange={this.handleChange.bind(this, 'style', "submission", 0)}>
+                    onChange={this.handleChange.bind(this, "style", "submission", 0)}>
                     <option value="Guild">Guild</option>
                     <option value="Striker">Striker</option>
                     <option value="Adept">Adept</option>
@@ -440,26 +438,10 @@ class SubmissionForm extends React.Component {
           {this.renderCreateArmorset()}
         </div>
         {this.renderCreateSubmission()}
-        <SubmissionList submissions={this.props.submissions} findSubmissions={this.props.findSubmissions} />
+        <SubmissionList submissions={this.props.submissions} />
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  submissions: state.submission.submissions
-})
-
-const mapDispatchToProps = dispatch => ({
-  findSubmissions() {
-    dispatch(getSubmissions())
-  },
-  submitSubmission(newSubmission, armorSet) {
-    dispatch(saveSubmission({
-      newSubmission,
-      armorSet
-    }))
-  }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(SubmissionForm)
+export default SubmissionForm

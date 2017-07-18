@@ -4,22 +4,21 @@
   "private": true,
   "engines": {
     "node": "6.11.1",
-    "npm": "5.2.0"
+    "npm": "5.3.0"
   },
   "dependencies": {
     "axios": "^0.16.2",
     "dotenv": "^4.0.0",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
+    "react-scripts": "^1.0.7",
     "react-search": "^2.0.5",
     "react-select": "^1.0.0-rc.5",
     "redux": "^3.7.0",
-    "regex": "^0.1.1",
-    "react-scripts": "1.0.7"    
-  },
-  "devDependencies": {
+    "redux-saga": "^0.15.4",
+    "regex": "^0.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

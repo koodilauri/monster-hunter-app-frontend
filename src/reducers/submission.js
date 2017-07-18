@@ -4,11 +4,11 @@ const initialState = {
 
 export const submission = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_SUBMISSION_SUCCESS':
+    case "GET_SUBMISSION_SUCCESS":
       return Object.assign({}, state, {
         submissions: action.payload.submissions
       })
-    case 'POST_SUBMISSION_SUCCESS':
+    case "POST_SUBMISSION_SUCCESS":
       return Object.assign({}, state, {
         submissions: [
           ...state.submissions,
