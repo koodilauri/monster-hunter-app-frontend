@@ -169,3 +169,7 @@
 .hidden {
   visibility: hidden;
 }
+
+.table__input--amount{
+  width: 20px;
+}

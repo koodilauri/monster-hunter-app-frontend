@@ -18,17 +18,25 @@ class SubmissionForm extends React.Component {
       },
       action: "",
       armorSet: {
+        setName: "",
         head: "",
         torso: "",
         arms: "",
         waist: "",
         feet: "",
-        charm: "",
+        charm: {
+          slots: 0,
+          skill1: "",
+          amount1: 0,
+          skill2: "",
+          amount2: 0
+        },
         decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
       },
       shownQuests: [],
-      shouldHide: true,
-      shownArmor: []
+      shownArmor: [],
+      shownSkills: [],
+      shouldHide: true
     }
   }
 
@@ -36,8 +44,10 @@ class SubmissionForm extends React.Component {
     const patt1 = /^([a-zA-Z0-9"]+(-| )?)*$/i
     const patt2 = /^([0-4]{0,1}[0-9]{0,1})$/i
     const patt3 = /^([0-5]{0,1}[0-9]{0,1})$/i
-    const patt4 = /^[1-9]/i
-    if ((field === "name" || field === "questName" || field === "weapon" || field === "style" || field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "charm" || field === "decorationName") && patt1.test(value)) {
+    const patt4 = /^[1-9]{0,1}/
+    const patt5 = /^(-{0,1}[0-9]{0,2})$/i
+
+    if ((field === "name" || field === "questName" || field === "weapon" || field === "style" || field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "decorationName" || field === "skill1" || field === "skill2") && patt1.test(value)) {
       return true
     }
     if (field === "min" && patt2.test(value)) {
@@ -46,7 +56,10 @@ class SubmissionForm extends React.Component {
     if (field === "sec" && patt3.test(value)) {
       return true
     }
-    if ((field === "decorationAmount" && patt4.test(value)) || field === "deleteDecoration") {
+    if (((field === "decorationAmount" || field === "slots") && patt4.test(value)) || field === "deleteDecoration") {
+      return true
+    }
+    if ((field === "amount1" || field === "amount2") && patt5.test(value)) {
       return true
     }
     return false
@@ -61,6 +74,16 @@ class SubmissionForm extends React.Component {
           this.setState({
             armorSet: Object.assign({}, this.state.armorSet, { [field]: newValue })
           })
+          if (field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet") {
+            this.searchInput("armor", newValue, field)
+          }
+          break
+        case "charm":
+          console.log("löyty")
+          this.setState({
+            armorSet: Object.assign({}, this.state.armorSet, { charm: Object.assign({}, this.state.armorSet.charm, { [field]: newValue }) })
+          })
+          this.searchInput("skill", newValue)
           break
         case "decoration":
           this.setState({
@@ -86,7 +109,7 @@ class SubmissionForm extends React.Component {
             newSubmission: Object.assign({}, this.state.newSubmission, { [field]: newValue })
           })
           if (field === "questName") {
-            this.searchQuest(newValue)
+            this.searchInput("quest", newValue)
             this.setState({ shouldHide: false })
           }
       }
@@ -210,7 +233,7 @@ class SubmissionForm extends React.Component {
   }
 
   renderCreateArmorset() {
-    const { armorSet, shownArmor } = this.state
+    const { armorSet, shownArmor, shownSkills } = this.state
     return (
       <div className="div div--armorset">
         <table>
@@ -218,7 +241,7 @@ class SubmissionForm extends React.Component {
             <tr>
               <td className="form__htd">
                 <p>Armorset</p>
-                <div className={this.state.shouldHide ? "hidden" : "form__div--result"}>
+                <div>
                   <ul>
                     {this.renderArmor(shownArmor)}
                   </ul>
@@ -284,11 +307,44 @@ class SubmissionForm extends React.Component {
             </tr>
             <tr>
               <td>
+                <select name="amount"
+                  onChange={this.handleChange.bind(this, "slots", "charm", 0)}
+                  value={this.state.armorSet.charm.slots}>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </select>
+                <input
+                  className="table__input--amount"
+                  autoComplete="off"
+                  value={armorSet.charm.amount1}
+                  onChange={this.handleChange.bind(this, "amount1", "charm", 0)}
+                />
+                <select name="amount"
+                  onChange={this.handleChange.bind(this, "skill1", "charm", 0)}
+                  value={this.state.armorSet.charm.skill1}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                </select>
+                <input
+                  className="table__input--amount"
+                  autoComplete="off"
+                  value={armorSet.charm.amount2}
+                  onChange={this.handleChange.bind(this, "amount2", "charm", 0)}
+                />
                 <input
                   autoComplete="off"
-                  placeholder="Charm"
-                  value={armorSet.charm}
-                  onChange={this.handleChange.bind(this, "charm", "armorset", 0)}
+                  placeholder="Skill 2"
+                  value={armorSet.charm.skill2}
+                  onChange={this.handleChange.bind(this, "skill2", "charm", 0)}
                 />
               </td>
             </tr>
@@ -305,23 +361,60 @@ class SubmissionForm extends React.Component {
     )
   }
 
-  searchQuest(search) {
-    const list = this.props.quests.filter((quest) => {
-      return (quest.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
-    })
-    this.setState({
-      shownQuests: list.slice(0, 5)
-    })
+  searchInput(field, search, part = "") {
+    let list
+    switch (field) {
+      case "quest":
+        list = this.props.quests.filter((quest) => {
+          return (quest.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+        })
+        this.setState({
+          shownQuests: list.slice(0, 5)
+        })
+        break
+      case "armor":
+        list = this.props.armor.filter((armor) => {
+          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part)
+        })
+        this.setState({
+          shownArmor: list.slice(0, 5)
+        })
+        break
+      // case "skill":
+      //   list = this.props.skills.filter((skill) => {
+      //     return (skill.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+      //   })
+      //   this.setState({
+      //     shownSkills: list.slice(0, 5)
+      //   })
+      //   break
+      default:
+        console.log("searchInput field not found: ", field)
+    }
+
   }
 
-  handleSelect(quest, event) {
-    this.setState({
-      newSubmission: Object.assign({}, this.state.newSubmission, { questName: quest.name, questId: quest.value }),
-      shownQuests: []
-    })
-    this.setState({
-      shouldHide: true
-    })
+  handleSelect(select, field, event) {
+    switch (field) {
+      case "quest":
+        this.setState({
+          newSubmission: Object.assign({}, this.state.newSubmission, { questName: select.name, questId: select.value }),
+          shownQuests: []
+        })
+        this.setState({
+          shouldHide: true
+        })
+        break;
+      case "armor":
+        this.setState({
+          armorSet: Object.assign({}, this.state.armorSet, { [select.part.toLowerCase()]: select.name }),
+          shownArmor: []
+        })
+        break;
+      default:
+        console.log("handleSelect field not found: ", field)
+    }
+
 
   }
 
@@ -329,18 +422,17 @@ class SubmissionForm extends React.Component {
     return quests.map((quest = [], id) =>
       <li key={id}
         className="form__li--questname"
-        onClick={this.handleSelect.bind(this, quest)}>
+        onClick={this.handleSelect.bind(this, quest, "quest")}>
         [{quest.questgiver}{quest.stars ? "★" + quest.stars : ""}] {quest.name}
       </li>
     )
   }
 
-    renderArmor(armor) {
+  renderArmor(armor) {
     return armor.map((armor = [], id) =>
       <li key={id}
-        className="form__li--questname"
-        onClick={this.handleSelect.bind(this, armor)}>
-        {armor.name} {armor.slots}
+        onClick={this.handleSelect.bind(this, armor, "armor")}>
+        {armor.name}
       </li>
     )
   }
