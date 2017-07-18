@@ -27,7 +27,8 @@ class SubmissionForm extends React.Component {
         decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
       },
       shownQuests: [],
-      shouldHide: true
+      shouldHide: true,
+      shownArmor: []
     }
   }
 
@@ -209,7 +210,7 @@ class SubmissionForm extends React.Component {
   }
 
   renderCreateArmorset() {
-    const { armorSet } = this.state
+    const { armorSet, shownArmor } = this.state
     return (
       <div className="div div--armorset">
         <table>
@@ -217,6 +218,11 @@ class SubmissionForm extends React.Component {
             <tr>
               <td className="form__htd">
                 <p>Armorset</p>
+                <div className={this.state.shouldHide ? "hidden" : "form__div--result"}>
+                  <ul>
+                    {this.renderArmor(shownArmor)}
+                  </ul>
+                </div>
               </td>
             </tr>
           </thead>
@@ -304,7 +310,7 @@ class SubmissionForm extends React.Component {
       return (quest.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
     })
     this.setState({
-      shownQuests: list.slice(0,5)
+      shownQuests: list.slice(0, 5)
     })
   }
 
@@ -324,7 +330,17 @@ class SubmissionForm extends React.Component {
       <li key={id}
         className="form__li--questname"
         onClick={this.handleSelect.bind(this, quest)}>
-        [{quest.questgiver}{quest.stars ? "★"+quest.stars : ""}] {quest.name}
+        [{quest.questgiver}{quest.stars ? "★" + quest.stars : ""}] {quest.name}
+      </li>
+    )
+  }
+
+    renderArmor(armor) {
+    return armor.map((armor = [], id) =>
+      <li key={id}
+        className="form__li--questname"
+        onClick={this.handleSelect.bind(this, armor)}>
+        {armor.name} {armor.slots}
       </li>
     )
   }

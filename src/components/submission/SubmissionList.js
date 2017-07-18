@@ -1,8 +1,8 @@
 import React from "react"
 
 class SubmissionList extends React.Component {
-  renderSubmission() {
-    return this.props.submissions.map((submission = [], index) =>
+  renderSubmissions() {
+    return this.props.submissions.map((submission, index) =>
       <tr key={index}>
         <td className="table__td--submission">{submission.name}</td>
         <td className="table__td--submission">{submission.questname}</td>
@@ -27,7 +27,7 @@ class SubmissionList extends React.Component {
             </tr>
           </thead>
           <tbody className="table__tbody">
-            {this.renderSubmission()}
+            {this.renderSubmissions()}
           </tbody>
         </table>
       </div>
