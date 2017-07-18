@@ -36,7 +36,157 @@ class SubmissionForm extends React.Component {
       shownQuests: [],
       shownArmor: [],
       shownSkills: [],
-      shouldHide: true
+      shouldHide: true,
+      skills: [
+        { name: "Ammo Saver" },
+        { name: "Anti-Theft" },
+        { name: "Artillery" },
+        { name: "Attack" },
+        { name: "Bherna" },
+        { name: "Bind Res" },
+        { name: "Biology" },
+        { name: "Blast C+" },
+        { name: "Bleeding" },
+        { name: "Blight Res" },
+        { name: "Blunt" },
+        { name: "Bomb Boost" },
+        { name: "Botany" },
+        { name: "Bubble" },
+        { name: "C.beard" },
+        { name: "C.Range C+" },
+        { name: "Capturer" },
+        { name: "Carnivore" },
+        { name: "Carving" },
+        { name: "Chain Crit" },
+        { name: "Chance" },
+        { name: "Charmer" },
+        { name: "Clust S+" },
+        { name: "Cold Res" },
+        { name: "ColdBlooded" },
+        { name: "Combo Plus" },
+        { name: "Combo Rate" },
+        { name: "Constitution" },
+        { name: "Crag S+" },
+        { name: "Crisis" },
+        { name: "Crit Draw" },
+        { name: "Crit Element" },
+        { name: "Crit Status" },
+        { name: "Critical Up" },
+        { name: "D. Fencing" },
+        { name: "Dead Eye" },
+        { name: "Deadeye" },
+        { name: "Def Lock" },
+        { name: "Defense" },
+        { name: "Destroyer" },
+        { name: "Dragon Atk" },
+        { name: "Dragon Res" },
+        { name: "Dreadking" },
+        { name: "Dreadqueen" },
+        { name: "Drilltusk" },
+        { name: "Eating" },
+        { name: "Elem C+" },
+        { name: "Elemental" },
+        { name: "Evade Dist" },
+        { name: "Evasion" },
+        { name: "Exhaust C+" },
+        { name: "Expert" },
+        { name: "FastCharge" },
+        { name: "Fate" },
+        { name: "Fencing" },
+        { name: "Fire Atk" },
+        { name: "Fire Res" },
+        { name: "Frenzy Res" },
+        { name: "Furor" },
+        { name: "Gathering" },
+        { name: "Gloves Off" },
+        { name: "Gluttony" },
+        { name: "Grimclaw" },
+        { name: "Grinder" },
+        { name: "Guard" },
+        { name: "Guard Up" },
+        { name: "Guts" },
+        { name: "Handicraft" },
+        { name: "Haphazard" },
+        { name: "Health" },
+        { name: "Hearing" },
+        { name: "Heat Res" },
+        { name: "Heavy Up" },
+        { name: "Hellblade" },
+        { name: "Hero Shield" },
+        { name: "Honey" },
+        { name: "HotBlooded" },
+        { name: "Hunger" },
+        { name: "Ice Atk" },
+        { name: "Ice Res" },
+        { name: "Insight" },
+        { name: "KO" },
+        { name: "Kokoto" },
+        { name: "Lasting Pwr" },
+        { name: "Light Eater" },
+        { name: "Loading" },
+        { name: "Maestro" },
+        { name: "Mounting" },
+        { name: "Mycology" },
+        { name: "Normal S+" },
+        { name: "Normal Up" },
+        { name: "Para C+" },
+        { name: "Paralysis" },
+        { name: "Pellet S+" },
+        { name: "Pellet Up" },
+        { name: "Perception" },
+        { name: "Pierce S+" },
+        { name: "Pierce Up" },
+        { name: "Poison" },
+        { name: "Poison C+" },
+        { name: "Pokke" },
+        { name: "Potential" },
+        { name: "Power C+" },
+        { name: "Precision" },
+        { name: "Protection" },
+        { name: "Psychic" },
+        { name: "Punish Draw" },
+        { name: "Ranger" },
+        { name: "Rapid Fire" },
+        { name: "Rec Level" },
+        { name: "Rec Speed" },
+        { name: "Recoil" },
+        { name: "Redhelm" },
+        { name: "Reload Spd" },
+        { name: "Sense" },
+        { name: "Sharpener" },
+        { name: "Sharpness" },
+        { name: "Sheathing" },
+        { name: "Silverwind" },
+        { name: "Sleep" },
+        { name: "Sleep C+" },
+        { name: "Snowbaron" },
+        { name: "Speed Setup" },
+        { name: "Spirit" },
+        { name: "Stam Drain" },
+        { name: "Stam Recov" },
+        { name: "Stamina" },
+        { name: "Status" },
+        { name: "Stonefist" },
+        { name: "Stun" },
+        { name: "Survivor" },
+        { name: "Team Player" },
+        { name: "TeamLeader" },
+        { name: "Tenderizer" },
+        { name: "Thunder Atk" },
+        { name: "Thunder Res" },
+        { name: "Thunderlord" },
+        { name: "Torso Up" },
+        { name: "Transporter" },
+        { name: "Tremor Res" },
+        { name: "Unscathed" },
+        { name: "Vault" },
+        { name: "Water Atk" },
+        { name: "Water Res" },
+        { name: "Whim" },
+        { name: "Wide-Range" },
+        { name: "Wind Res" },
+        { name: "Yukumo" }
+      ]
     }
   }
 
@@ -47,7 +197,7 @@ class SubmissionForm extends React.Component {
     const patt4 = /^[1-9]{0,1}/
     const patt5 = /^(-{0,1}[0-9]{0,2})$/i
 
-    if ((field === "name" || field === "questName" || field === "weapon" || field === "style" || field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "decorationName" || field === "skill1" || field === "skill2") && patt1.test(value)) {
+    if ((field === "name" || field === "questName" || field === "weapon" || field === "style" || field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "decorationName") && patt1.test(value)) {
       return true
     }
     if (field === "min" && patt2.test(value)) {
@@ -60,6 +210,9 @@ class SubmissionForm extends React.Component {
       return true
     }
     if ((field === "amount1" || field === "amount2") && patt5.test(value)) {
+      return true
+    }
+    if (field === "skill1" || field === "skill2") {
       return true
     }
     return false
@@ -79,11 +232,9 @@ class SubmissionForm extends React.Component {
           }
           break
         case "charm":
-          console.log("löyty")
           this.setState({
             armorSet: Object.assign({}, this.state.armorSet, { charm: Object.assign({}, this.state.armorSet.charm, { [field]: newValue }) })
           })
-          this.searchInput("skill", newValue)
           break
         case "decoration":
           this.setState({
@@ -189,6 +340,12 @@ class SubmissionForm extends React.Component {
     })
   }
 
+  renderDecorationList() {
+    return this.props.decorations.map((decoration, id) =>
+      <option value={decoration.id}>{decoration.name}, size: {decoration.size}, skill: {decoration.skillname} +{decoration.bonus1}</option>
+    )
+  }
+
   renderDecorations() {
     const { decorations } = this.state.armorSet
     return decorations.map((decorations, index) =>
@@ -213,12 +370,13 @@ class SubmissionForm extends React.Component {
                   </select>
                 </td>
                 <td>
-                  <input
+                  <select
                     className="table__input--decoration"
-                    placeholder="Decoration"
                     onChange={this.handleChange.bind(this, "decorationName", "decoration", index)}
                     value={this.state.armorSet.decorations[index].decorationName}
-                  />
+                  >
+                    {this.renderDecorationList()}
+                  </select>
                 </td>
                 <td>
                   <button className="green semi-square button--delete button"
@@ -231,9 +389,16 @@ class SubmissionForm extends React.Component {
       </tr>
     )
   }
+  renderSkills() {
+    return this.state.skills.map((skill, id) =>
+      <option value={skill.name}
+        key={id}>
+        {skill.name}
+      </option>)
+  }
 
   renderCreateArmorset() {
-    const { armorSet, shownArmor, shownSkills } = this.state
+    const { armorSet, shownArmor } = this.state
     return (
       <div className="div div--armorset">
         <table>
@@ -307,7 +472,7 @@ class SubmissionForm extends React.Component {
             </tr>
             <tr>
               <td>
-                <select name="amount"
+                Slots:<select name="amount"
                   onChange={this.handleChange.bind(this, "slots", "charm", 0)}
                   value={this.state.armorSet.charm.slots}>
                   <option value="0">0</option>
@@ -315,37 +480,32 @@ class SubmissionForm extends React.Component {
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </select>
-                <input
-                  className="table__input--amount"
-                  autoComplete="off"
-                  value={armorSet.charm.amount1}
-                  onChange={this.handleChange.bind(this, "amount1", "charm", 0)}
-                />
-                <select name="amount"
-                  onChange={this.handleChange.bind(this, "skill1", "charm", 0)}
-                  value={this.state.armorSet.charm.skill1}>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                </select>
-                <input
-                  className="table__input--amount"
-                  autoComplete="off"
-                  value={armorSet.charm.amount2}
-                  onChange={this.handleChange.bind(this, "amount2", "charm", 0)}
-                />
-                <input
-                  autoComplete="off"
-                  placeholder="Skill 2"
-                  value={armorSet.charm.skill2}
-                  onChange={this.handleChange.bind(this, "skill2", "charm", 0)}
-                />
+                <div>
+                  Skill 1:<input
+                    className="table__input--amount"
+                    autoComplete="off"
+                    value={armorSet.charm.amount1}
+                    onChange={this.handleChange.bind(this, "amount1", "charm", 0)}
+                  />
+                  <select name="amount"
+                    onChange={this.handleChange.bind(this, "skill1", "charm", 0)}
+                    value={this.state.armorSet.charm.skill1}>
+                    {this.renderSkills()}
+                  </select>
+                </div>
+                <div>
+                  Skill 2:<input
+                    className="table__input--amount"
+                    autoComplete="off"
+                    value={armorSet.charm.amount2}
+                    onChange={this.handleChange.bind(this, "amount2", "charm", 0)}
+                  />
+                  <select name="amount"
+                    onChange={this.handleChange.bind(this, "skill2", "charm", 0)}
+                    value={this.state.armorSet.charm.skill2}>
+                    {this.renderSkills()}
+                  </select>
+                </div>
               </td>
             </tr>
             {this.renderDecorations()}
