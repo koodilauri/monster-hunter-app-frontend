@@ -8,7 +8,9 @@ it("renders without crashing", () => {
   const div = document.createElement("div")
   ReactDOM.render(
     <Provider store={store}>
-      <SubmissionForm quests={[]} submissions={[]} submitSubmission={()=>{}}/>
+      <SubmissionForm quests={[]} submissions={[]} submitSubmission={() => { }}
+        armor={[]} weapons={[]} skills={[]} hunterArts={[]}
+      decorations={[]} />
     </Provider>,
     div)
 })

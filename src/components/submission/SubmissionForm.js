@@ -21,34 +21,34 @@ class SubmissionForm extends React.Component {
         setName: "",
         head: {
           name: "",
-          id: 0
+          id: null
         },
         torso: {
           name: "",
-          id: 0
+          id: null
         },
         arms: {
           name: "",
-          id: 0
+          id: null
         },
         waist: {
           name: "",
-          id: 0
+          id: null
         },
         feet: {
           name: "",
-          id: 0
+          id: null
         },
         charm: {
           slots: 0,
           skill1: {
             name: "",
-            id: 0
+            id: 1
           },
           amount1: 0,
           skill2: {
             name: "",
-            id: 0
+            id: 1
           },
           amount2: 0
         },
