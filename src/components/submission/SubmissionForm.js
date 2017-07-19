@@ -33,6 +33,7 @@ class SubmissionForm extends React.Component {
         },
         decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
       },
+      armorType: "Blademaster",
       shownQuests: [],
       shownArmor: [],
       shownSkills: [],
@@ -342,7 +343,7 @@ class SubmissionForm extends React.Component {
 
   renderDecorationList() {
     return this.props.decorations.map((decoration, id) =>
-      <option value={decoration.id}>{decoration.name}, size: {decoration.size}, skill: {decoration.skillname} +{decoration.bonus1}</option>
+      <option key={id} value={decoration.id}>{decoration.name}, size: {decoration.size}, skill: {decoration.skillname} +{decoration.bonus1}</option>
     )
   }
 
@@ -406,6 +407,16 @@ class SubmissionForm extends React.Component {
             <tr>
               <td className="form__htd">
                 <p>Armorset</p>
+                <div>
+                  <label>Blademaster</label>
+                  <input type="radio" name="armortype" value="blademaster"
+                    onClick={this.handleSelect.bind(this, "Blademaster", "armortype")} />
+                </div>
+                <div>
+                  <label>Gunner</label>
+                  <input type="radio" name="armortype" value="gunner"
+                    onClick={this.handleSelect.bind(this, "Gunner", "armortype")} />
+                </div>
                 <div>
                   <ul>
                     {this.renderArmor(shownArmor)}
@@ -534,7 +545,7 @@ class SubmissionForm extends React.Component {
         break
       case "armor":
         list = this.props.armor.filter((armor) => {
-          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part)
+          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part && (armor.type ===  this.state.armorType || armor.part === "Head"))
         })
         this.setState({
           shownArmor: list.slice(0, 5)
@@ -570,7 +581,12 @@ class SubmissionForm extends React.Component {
           armorSet: Object.assign({}, this.state.armorSet, { [select.part.toLowerCase()]: select.name }),
           shownArmor: []
         })
-        break;
+        break
+      case "armortype":
+        this.setState({
+          armorType: select
+        })
+        break
       default:
         console.log("handleSelect field not found: ", field)
     }
