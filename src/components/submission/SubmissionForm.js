@@ -10,7 +10,7 @@ class SubmissionForm extends React.Component {
         name: "",
         questName: "",
         questId: "",
-        weapon: "Great Sword",
+        weapon: "",
         style: "Guild",
         min: 0,
         sec: 0,
@@ -19,16 +19,37 @@ class SubmissionForm extends React.Component {
       action: "",
       armorSet: {
         setName: "",
-        head: "",
-        torso: "",
-        arms: "",
-        waist: "",
-        feet: "",
+        head: {
+          name: "",
+          id: 0
+        },
+        torso: {
+          name: "",
+          id: 0
+        },
+        arms: {
+          name: "",
+          id: 0
+        },
+        waist: {
+          name: "",
+          id: 0
+        },
+        feet: {
+          name: "",
+          id: 0
+        },
         charm: {
           slots: 0,
-          skill1: "",
+          skill1: {
+            name: "",
+            id: 0
+          },
           amount1: 0,
-          skill2: "",
+          skill2: {
+            name: "",
+            id: 0
+          },
           amount2: 0
         },
         decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
@@ -37,168 +58,21 @@ class SubmissionForm extends React.Component {
       shownQuests: [],
       shownArmor: [],
       shownSkills: [],
-      shouldHide: true,
-      skills: [
-        { name: "Ammo Saver" },
-        { name: "Anti-Theft" },
-        { name: "Artillery" },
-        { name: "Attack" },
-        { name: "Bherna" },
-        { name: "Bind Res" },
-        { name: "Biology" },
-        { name: "Blast C+" },
-        { name: "Bleeding" },
-        { name: "Blight Res" },
-        { name: "Blunt" },
-        { name: "Bomb Boost" },
-        { name: "Botany" },
-        { name: "Bubble" },
-        { name: "C.beard" },
-        { name: "C.Range C+" },
-        { name: "Capturer" },
-        { name: "Carnivore" },
-        { name: "Carving" },
-        { name: "Chain Crit" },
-        { name: "Chance" },
-        { name: "Charmer" },
-        { name: "Clust S+" },
-        { name: "Cold Res" },
-        { name: "ColdBlooded" },
-        { name: "Combo Plus" },
-        { name: "Combo Rate" },
-        { name: "Constitution" },
-        { name: "Crag S+" },
-        { name: "Crisis" },
-        { name: "Crit Draw" },
-        { name: "Crit Element" },
-        { name: "Crit Status" },
-        { name: "Critical Up" },
-        { name: "D. Fencing" },
-        { name: "Dead Eye" },
-        { name: "Deadeye" },
-        { name: "Def Lock" },
-        { name: "Defense" },
-        { name: "Destroyer" },
-        { name: "Dragon Atk" },
-        { name: "Dragon Res" },
-        { name: "Dreadking" },
-        { name: "Dreadqueen" },
-        { name: "Drilltusk" },
-        { name: "Eating" },
-        { name: "Elem C+" },
-        { name: "Elemental" },
-        { name: "Evade Dist" },
-        { name: "Evasion" },
-        { name: "Exhaust C+" },
-        { name: "Expert" },
-        { name: "FastCharge" },
-        { name: "Fate" },
-        { name: "Fencing" },
-        { name: "Fire Atk" },
-        { name: "Fire Res" },
-        { name: "Frenzy Res" },
-        { name: "Furor" },
-        { name: "Gathering" },
-        { name: "Gloves Off" },
-        { name: "Gluttony" },
-        { name: "Grimclaw" },
-        { name: "Grinder" },
-        { name: "Guard" },
-        { name: "Guard Up" },
-        { name: "Guts" },
-        { name: "Handicraft" },
-        { name: "Haphazard" },
-        { name: "Health" },
-        { name: "Hearing" },
-        { name: "Heat Res" },
-        { name: "Heavy Up" },
-        { name: "Hellblade" },
-        { name: "Hero Shield" },
-        { name: "Honey" },
-        { name: "HotBlooded" },
-        { name: "Hunger" },
-        { name: "Ice Atk" },
-        { name: "Ice Res" },
-        { name: "Insight" },
-        { name: "KO" },
-        { name: "Kokoto" },
-        { name: "Lasting Pwr" },
-        { name: "Light Eater" },
-        { name: "Loading" },
-        { name: "Maestro" },
-        { name: "Mounting" },
-        { name: "Mycology" },
-        { name: "Normal S+" },
-        { name: "Normal Up" },
-        { name: "Para C+" },
-        { name: "Paralysis" },
-        { name: "Pellet S+" },
-        { name: "Pellet Up" },
-        { name: "Perception" },
-        { name: "Pierce S+" },
-        { name: "Pierce Up" },
-        { name: "Poison" },
-        { name: "Poison C+" },
-        { name: "Pokke" },
-        { name: "Potential" },
-        { name: "Power C+" },
-        { name: "Precision" },
-        { name: "Protection" },
-        { name: "Psychic" },
-        { name: "Punish Draw" },
-        { name: "Ranger" },
-        { name: "Rapid Fire" },
-        { name: "Rec Level" },
-        { name: "Rec Speed" },
-        { name: "Recoil" },
-        { name: "Redhelm" },
-        { name: "Reload Spd" },
-        { name: "Sense" },
-        { name: "Sharpener" },
-        { name: "Sharpness" },
-        { name: "Sheathing" },
-        { name: "Silverwind" },
-        { name: "Sleep" },
-        { name: "Sleep C+" },
-        { name: "Snowbaron" },
-        { name: "Speed Setup" },
-        { name: "Spirit" },
-        { name: "Stam Drain" },
-        { name: "Stam Recov" },
-        { name: "Stamina" },
-        { name: "Status" },
-        { name: "Stonefist" },
-        { name: "Stun" },
-        { name: "Survivor" },
-        { name: "Team Player" },
-        { name: "TeamLeader" },
-        { name: "Tenderizer" },
-        { name: "Thunder Atk" },
-        { name: "Thunder Res" },
-        { name: "Thunderlord" },
-        { name: "Torso Up" },
-        { name: "Transporter" },
-        { name: "Tremor Res" },
-        { name: "Unscathed" },
-        { name: "Vault" },
-        { name: "Water Atk" },
-        { name: "Water Res" },
-        { name: "Whim" },
-        { name: "Wide-Range" },
-        { name: "Wind Res" },
-        { name: "Yukumo" }
-      ]
+      shownWeapons: [],
+      hideQuests: true,
+      hideArmor: true,
+      hideWeapons: true
     }
   }
 
   validateInput = (field, value) => {
-    const patt1 = /^([a-zA-Z0-9"]+(-| )?)*$/i
+    const patt1 = /^([a-zA-Z0-9:"!?,.&]+(-| )?)*$/i
     const patt2 = /^([0-4]{0,1}[0-9]{0,1})$/i
     const patt3 = /^([0-5]{0,1}[0-9]{0,1})$/i
     const patt4 = /^[1-9]{0,1}/
     const patt5 = /^(-{0,1}[0-9]{0,2})$/i
 
-    if ((field === "name" || field === "questName" || field === "weapon" || field === "style" || field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "decorationName") && patt1.test(value)) {
+    if ((field === "name" || field === "questName" || field === "weapon" || field === "style" || field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet" || field === "decorationName" || field === "setName") && patt1.test(value)) {
       return true
     }
     if (field === "min" && patt2.test(value)) {
@@ -225,17 +99,31 @@ class SubmissionForm extends React.Component {
     if (this.validateInput(field, newValue)) {
       switch (form) {
         case "armorset":
-          this.setState({
-            armorSet: Object.assign({}, this.state.armorSet, { [field]: newValue })
-          })
           if (field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet") {
             this.searchInput("armor", newValue, field)
+            this.setState({
+              hideArmor: false,
+              hideQuests: true,
+              hideWeapons: true,
+              armorSet: Object.assign({}, this.state.armorSet, { [field]: { name: newValue, id: 0 } })
+            })
+          } else {
+            this.setState({
+              armorSet: Object.assign({}, this.state.armorSet, { [field]: newValue })
+            })
           }
           break
         case "charm":
-          this.setState({
-            armorSet: Object.assign({}, this.state.armorSet, { charm: Object.assign({}, this.state.armorSet.charm, { [field]: newValue }) })
-          })
+          if (field === "skill1" || field === "skill2") {
+            this.setState({
+              armorSet: Object.assign({}, this.state.armorSet, { charm: Object.assign({}, this.state.armorSet.charm, { [field]: { id: newValue, name: "" } }) })
+            })
+          }
+          if (field === "amount1" || field === "amount2" || field === "slots") {
+            this.setState({
+              armorSet: Object.assign({}, this.state.armorSet, { charm: Object.assign({}, this.state.armorSet.charm, { [field]: newValue }) })
+            })
+          }
           break
         case "decoration":
           this.setState({
@@ -262,7 +150,19 @@ class SubmissionForm extends React.Component {
           })
           if (field === "questName") {
             this.searchInput("quest", newValue)
-            this.setState({ shouldHide: false })
+            this.setState({
+              hideQuests: false,
+              hideArmor: true,
+              hideWeapons: true,
+            })
+          }
+          if (field === "weapon") {
+            this.searchInput("weapon", newValue)
+            this.setState({
+              hideWeapons: false,
+              hideQuests: true,
+              hideArmor: true,
+            })
           }
       }
     }
@@ -343,7 +243,7 @@ class SubmissionForm extends React.Component {
 
   renderDecorationList() {
     return this.props.decorations.map((decoration, id) =>
-      <option key={id} value={decoration.id}>{decoration.name}, size: {decoration.size}, skill: {decoration.skillname} +{decoration.bonus1}</option>
+      <option key={id} value={decoration.id}>{decoration.skillname} +{decoration.bonus1}, {decoration.name}, size: {decoration.size}</option>
     )
   }
 
@@ -391,10 +291,10 @@ class SubmissionForm extends React.Component {
     )
   }
   renderSkills() {
-    return this.state.skills.map((skill, id) =>
-      <option value={skill.name}
+    return this.props.skills.map((skill, id) =>
+      <option value={skill.id}
         key={id}>
-        {skill.name}
+        {skill.name} | {skill.effect}
       </option>)
   }
 
@@ -417,7 +317,9 @@ class SubmissionForm extends React.Component {
                   <input type="radio" name="armortype" value="gunner"
                     onClick={this.handleSelect.bind(this, "Gunner", "armortype")} />
                 </div>
-                <div>
+              </td>
+              <td>
+                <div className={this.state.hideArmor ? "hidden form__div--result form__div--narrow" : "form__div--result form__div--narrow"}>
                   <ul>
                     {this.renderArmor(shownArmor)}
                   </ul>
@@ -430,9 +332,20 @@ class SubmissionForm extends React.Component {
               <td>
                 <input
                   autoComplete="off"
+                  name="setName"
+                  placeholder="Set name"
+                  value={armorSet.setName}
+                  onChange={this.handleChange.bind(this, "setName", "armorset", 0)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input
+                  autoComplete="off"
                   name="head"
                   placeholder="Head"
-                  value={armorSet.head}
+                  value={armorSet.head.name}
                   onChange={this.handleChange.bind(this, "head", "armorset", 0)}
                 />
               </td>
@@ -443,7 +356,7 @@ class SubmissionForm extends React.Component {
                   autoComplete="off"
                   name="torso"
                   placeholder="Torso"
-                  value={armorSet.torso}
+                  value={armorSet.torso.name}
                   onChange={this.handleChange.bind(this, "torso", "armorset", 0)}
                 />
               </td>
@@ -454,7 +367,7 @@ class SubmissionForm extends React.Component {
                   autoComplete="off"
                   name="arms"
                   placeholder="Arms"
-                  value={armorSet.arms}
+                  value={armorSet.arms.name}
                   onChange={this.handleChange.bind(this, "arms", "armorset", 0)}
                 />
               </td>
@@ -465,7 +378,7 @@ class SubmissionForm extends React.Component {
                   autoComplete="off"
                   name="waist"
                   placeholder="Waist"
-                  value={armorSet.waist}
+                  value={armorSet.waist.name}
                   onChange={this.handleChange.bind(this, "waist", "armorset", 0)}
                 />
               </td>
@@ -476,7 +389,7 @@ class SubmissionForm extends React.Component {
                   autoComplete="off"
                   name="feet"
                   placeholder="Feet"
-                  value={armorSet.feet}
+                  value={armorSet.feet.name}
                   onChange={this.handleChange.bind(this, "feet", "armorset", 0)}
                 />
               </td>
@@ -498,9 +411,9 @@ class SubmissionForm extends React.Component {
                     value={armorSet.charm.amount1}
                     onChange={this.handleChange.bind(this, "amount1", "charm", 0)}
                   />
-                  <select name="amount"
+                  <select name="skill1"
                     onChange={this.handleChange.bind(this, "skill1", "charm", 0)}
-                    value={this.state.armorSet.charm.skill1}>
+                    value={this.state.armorSet.charm.skill1.id}>
                     {this.renderSkills()}
                   </select>
                 </div>
@@ -511,9 +424,9 @@ class SubmissionForm extends React.Component {
                     value={armorSet.charm.amount2}
                     onChange={this.handleChange.bind(this, "amount2", "charm", 0)}
                   />
-                  <select name="amount"
+                  <select name="skill2"
                     onChange={this.handleChange.bind(this, "skill2", "charm", 0)}
-                    value={this.state.armorSet.charm.skill2}>
+                    value={this.state.armorSet.charm.skill2.id}>
                     {this.renderSkills()}
                   </select>
                 </div>
@@ -545,20 +458,20 @@ class SubmissionForm extends React.Component {
         break
       case "armor":
         list = this.props.armor.filter((armor) => {
-          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part && (armor.type ===  this.state.armorType || armor.part === "Head"))
+          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part && (armor.type === this.state.armorType || armor.part === "Head"))
         })
         this.setState({
           shownArmor: list.slice(0, 5)
         })
         break
-      // case "skill":
-      //   list = this.props.skills.filter((skill) => {
-      //     return (skill.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
-      //   })
-      //   this.setState({
-      //     shownSkills: list.slice(0, 5)
-      //   })
-      //   break
+      case "weapon":
+        list = this.props.weapons.filter((weapon) => {
+          return (weapon.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+        })
+        this.setState({
+          shownWeapons: list.slice(0, 6)
+        })
+        break
       default:
         console.log("searchInput field not found: ", field)
     }
@@ -570,21 +483,25 @@ class SubmissionForm extends React.Component {
       case "quest":
         this.setState({
           newSubmission: Object.assign({}, this.state.newSubmission, { questName: select.name, questId: select.value }),
-          shownQuests: []
-        })
-        this.setState({
-          shouldHide: true
+          hideQuests: true
         })
         break;
       case "armor":
         this.setState({
-          armorSet: Object.assign({}, this.state.armorSet, { [select.part.toLowerCase()]: select.name }),
-          shownArmor: []
+          armorSet: Object.assign({}, this.state.armorSet, { [select.part.toLowerCase()]: { name: select.name, id: select.id } }),
+          shownArmor: [],
+          hideArmor: true
         })
         break
       case "armortype":
         this.setState({
           armorType: select
+        })
+        break
+      case "weapon":
+        this.setState({
+          newSubmission: Object.assign({}, this.state.newSubmission, { weapon: select.name }),
+          hideWeapons: true
         })
         break
       default:
@@ -597,9 +514,19 @@ class SubmissionForm extends React.Component {
   renderQuests(quests) {
     return quests.map((quest = [], id) =>
       <li key={id}
-        className="form__li--questname"
+        className="form__li"
         onClick={this.handleSelect.bind(this, quest, "quest")}>
         [{quest.questgiver}{quest.stars ? "★" + quest.stars : ""}] {quest.name}
+      </li>
+    )
+  }
+
+  renderWeapons(weapons) {
+    return weapons.map((weapon = [], id) =>
+      <li key={id}
+        className="form__li"
+        onClick={this.handleSelect.bind(this, weapon, "weapon")}>
+        {weapon.name}
       </li>
     )
   }
@@ -607,14 +534,16 @@ class SubmissionForm extends React.Component {
   renderArmor(armor) {
     return armor.map((armor = [], id) =>
       <li key={id}
+        className="form__li"
+        title={armor.defense}
         onClick={this.handleSelect.bind(this, armor, "armor")}>
-        {armor.name}
+        {armor.name}, Rarity:{armor.rarity}
       </li>
     )
   }
 
   renderCreateSubmission() {
-    const { newSubmission, shownQuests } = this.state
+    const { newSubmission, shownQuests, shownWeapons } = this.state
     return (
       <div>
         <form className="form form--submission" onSubmit={this.handleSubmit.bind(this, newSubmission)}>
@@ -638,7 +567,7 @@ class SubmissionForm extends React.Component {
                     value={newSubmission.questName}
                     onChange={this.handleChange.bind(this, "questName", "submission", 0)}
                   />
-                  <div className={this.state.shouldHide ? "hidden" : "form__div--result"}>
+                  <div className={this.state.hideQuests ? "hidden form__div--result" : "form__div--result"}>
                     <ul>
                       {this.renderQuests(shownQuests)}
                     </ul>
@@ -651,23 +580,19 @@ class SubmissionForm extends React.Component {
                   {this.renderCounter(59, "sec")}
                 </td>
                 <td className="form__htd form__td">
-                  <select className="form__input form__select--style green semi-square" name="weapon"
-                    onChange={this.handleChange.bind(this, "weapon", "submission", 0)}>
-                    <option value="Great Sword">Great Sword</option>
-                    <option value="Long Sword">Long Sword</option>
-                    <option value="Sword & Shield">Sword & Shield</option>
-                    <option value="Dual Blades">Dual Blades</option>
-                    <option value="Hammer">Hammer</option>
-                    <option value="Hunting Horn">Hunting Horn</option>
-                    <option value="Lance">Lance</option>
-                    <option value="Gunlance">Gunlance</option>
-                    <option value="Switch Axe">Switch Axe</option>
-                    <option value="Insect Glaive">Insect Glaive</option>
-                    <option value="Charge Blade">Charge Blade</option>
-                    <option value="Light Bowgun">Light Bowgun</option>
-                    <option value="Heavy Bowgun">Heavy Bowgun</option>
-                    <option value="Bow">Bow</option>
-                  </select>
+                  <input className="form__input form__input--weapon"
+                    type="text"
+                    autoComplete="off"
+                    name="weapon"
+                    placeholder="Weapon"
+                    value={newSubmission.weapon}
+                    onChange={this.handleChange.bind(this, "weapon", "submission", 0)}
+                  />
+                  <div className={this.state.hideWeapons ? "hidden form__div--result" : "form__div--result"}>
+                    <ul>
+                      {this.renderWeapons(shownWeapons)}
+                    </ul>
+                  </div>
                 </td>
                 <td className="form__htd form__td">
                   <select className="form__input form__select--style green semi-square" name="style"
