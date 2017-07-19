@@ -6,6 +6,7 @@ import { getArmor } from "../../actions/armor"
 import { getHunterArts } from "../../actions/hunterArt"
 import { getSkills } from "../../actions/skill"
 import { getWeapons } from "../../actions/weapon"
+import { getDecorations } from "../../actions/decoration"
 import { getSubmissions, saveSubmission } from "../../actions/submission"
 import { connect } from "react-redux"
 
@@ -18,6 +19,7 @@ class App extends Component {
     this.props.findHunterArts()
     this.props.findSkills()
     this.props.findWeapons()
+    this.props.findDecorations()
   }
 
   render() {
@@ -25,7 +27,8 @@ class App extends Component {
       <div className="App">
         <div><h1 className="h1 App__h1">Hunters log</h1></div>
         <SubmissionForm quests={this.props.quests} submissions={this.props.submissions} submitSubmission={this.props.submitSubmission}
-        armor={this.props.armor} weapons={this.props.weapons} skills={this.props.skills} hunterArt={this.props.hunterArts}/>
+          armor={this.props.armor} weapons={this.props.weapons} skills={this.props.skills} hunterArts={this.props.hunterArts}
+          decorations={this.props.decorations} />
       </div>
     )
   }
@@ -34,9 +37,10 @@ const mapStateToProps = state => ({
   quests: state.quest.quests,
   submissions: state.submission.submissions,
   armor: state.armor.armor,
-  hunterArt: state.hunterArt.hunterArts,
+  hunterArts: state.hunterArt.hunterArts,
   skills: state.skill.skills,
-  weapons: state.weapon.weapons
+  weapons: state.weapon.weapons,
+  decorations: state.decoration.decorations
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -52,17 +56,20 @@ const mapDispatchToProps = dispatch => ({
       armorSet
     }))
   },
-    findArmor() {
+  findArmor() {
     dispatch(getArmor())
   },
-    findHunterArts() {
+  findHunterArts() {
     dispatch(getHunterArts())
   },
-    findSkills() {
+  findSkills() {
     dispatch(getSkills())
   },
-    findWeapons() {
+  findWeapons() {
     dispatch(getWeapons())
+  },
+  findDecorations() {
+    dispatch(getDecorations())
   }
 })
 
