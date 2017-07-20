@@ -9,6 +9,7 @@ export const submission = (state = initialState, action) => {
         submissions: action.payload.submissions
       })
     case "POST_SUBMISSION_SUCCESS":
+    console.log(action.payload)
       return Object.assign({}, state, {
         submissions: [
           ...state.submissions,
