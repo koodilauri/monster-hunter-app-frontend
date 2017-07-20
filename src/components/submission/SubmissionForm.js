@@ -104,7 +104,7 @@ class SubmissionForm extends React.Component {
               hideArmor: false,
               hideQuests: true,
               hideWeapons: true,
-              armorSet: Object.assign({}, this.state.armorSet, { [field]: { name: newValue, id: 0 } })
+              armorSet: Object.assign({}, this.state.armorSet, { [field]: { name: newValue, id: this.state.armorSet[field].id } })
             })
           } else {
             this.setState({
@@ -206,22 +206,48 @@ class SubmissionForm extends React.Component {
     else valid = false
     if (!this.validateInput("min", newSubmission.min)) { valid = false }
     if (!this.validateInput("sec", newSubmission.sec)) { valid = false }
-    // if (armorSet.charm.skill2.id === "null") {
-    //   console.log(armorSet)
-    //   this.setState({
-    //     armorSet: Object.assign({}, this.state.armorSet, { charm: Object.assign({}, armorSet.charm, { skill2: { id: null } }) })
-    //   })
-    // }
-    // console.log(armorSet)
+
+    if (!this.validateArmorPiece("head", armorSet.head.name, armorSet.head.id, 1)) valid = false
+    if (!this.validateArmorPiece("torso", armorSet.torso.name, armorSet.torso.id, 2)) valid = false
+    if (!this.validateArmorPiece("arms", armorSet.arms.name, armorSet.arms.id, 3)) valid = false
+    if (!this.validateArmorPiece("waist", armorSet.waist.name, armorSet.waist.id, 4)) valid = false
+    if (!this.validateArmorPiece("feet", armorSet.feet.name, armorSet.feet.id, 5)) valid = false
 
     return valid
+  }
+
+  validateArmorPiece(part, name, id, empty_id) {
+    const { armorSet } = this.state
+    if (name === "") {
+      this.setState({
+        armorset: Object.assign({}, armorSet, { [part]: { name: "Empty", id: empty_id } })
+      })
+      console.log("empty name")
+      return true
+    }
+    let list = this.props.armor.filter((armor) => {
+      return (armor.name.toLowerCase() === name.toLowerCase() && armor.part.toLowerCase() === part && (armor.type === this.state.armorType || armor.part === "Head" || armor.type === "Both") && armor.id === id)
+    })
+    if (list.length === 1 && list[0].id === id && list[0].name === name) {
+      console.log("real nae")
+      return true
+    }
+    else {
+      this.setState({
+        armorSet: Object.assign({}, this.state.armorSet, { [part]: { name: "Empty", id: empty_id } }),
+        shownArmor: [],
+        hideArmor: true
+      })
+      console.log("false, emptying")
+    }
+    return false
   }
 
   handleSubmit = (newSubmission, event) => {
     const { armorSet } = this.state
     event.preventDefault()
     if (this.validateForm(newSubmission, armorSet)) {
-      console.log("valid form", armorSet)
+      console.log("valid form")
       this.props.submitSubmission(newSubmission, armorSet)
     }
     else console.log("invalid form")
@@ -511,7 +537,7 @@ class SubmissionForm extends React.Component {
         break
       case "armor":
         list = this.props.armor.filter((armor) => {
-          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part && (armor.type === this.state.armorType || armor.part === "Head"))
+          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part && (armor.type === this.state.armorType || armor.part === "Head" || armor.type === "Both"))
         })
         this.setState({
           shownArmor: list.slice(0, 5)
