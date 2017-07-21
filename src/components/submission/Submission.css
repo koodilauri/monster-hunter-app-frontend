@@ -5,7 +5,7 @@
 }
 
 .table--submission, .form__table {
-  width:912px;
+  width:70%;
   margin: auto;
   border-collapse: collapse;
 }
@@ -173,6 +173,10 @@
   padding: 5px;
   margin-left: -40px;
 }
+.form__li:hover{
+  background-color: grey;
+  color: white;
+}
 
 .form__div--armorlist {
   margin-bottom: -1000px;
@@ -184,4 +188,14 @@
 
 .table__input--amount{
   width: 20px;
+}
+
+.block-error {
+  background-color: red;
+  width: 20%;
+  margin-left: 40%;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: white;
+  border: 1px solid black;
 }

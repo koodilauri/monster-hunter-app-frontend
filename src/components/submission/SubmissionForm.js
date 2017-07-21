@@ -11,6 +11,7 @@ class SubmissionForm extends React.Component {
         questName: "",
         questId: "",
         weapon: "",
+        weaponId: "",
         style: "Guild",
         min: 0,
         sec: 0,
@@ -21,34 +22,32 @@ class SubmissionForm extends React.Component {
         setName: "",
         head: {
           name: "",
-          id: null
+          id: 1
         },
         torso: {
           name: "",
-          id: null
+          id: 2
         },
         arms: {
           name: "",
-          id: null
+          id: 3
         },
         waist: {
           name: "",
-          id: null
+          id: 4
         },
         feet: {
           name: "",
-          id: null
+          id: 5
         },
         charm: {
           slots: 0,
           skill1: {
-            name: "",
             id: 1
           },
           amount1: 0,
           skill2: {
-            name: "",
-            id: 1
+            id: 149
           },
           amount2: 0
         },
@@ -61,7 +60,11 @@ class SubmissionForm extends React.Component {
       shownWeapons: [],
       hideQuests: true,
       hideArmor: true,
-      hideWeapons: true
+      hideWeapons: true,
+      errorMessage: {
+        message: "",
+        hide: true
+      }
     }
   }
 
@@ -100,13 +103,13 @@ class SubmissionForm extends React.Component {
       switch (form) {
         case "armorset":
           if (field === "head" || field === "torso" || field === "arms" || field === "waist" || field === "feet") {
-            this.searchInput("armor", newValue, field)
             this.setState({
               hideArmor: false,
               hideQuests: true,
               hideWeapons: true,
-              armorSet: Object.assign({}, this.state.armorSet, { [field]: { name: newValue, id: 0 } })
+              armorSet: Object.assign({}, this.state.armorSet, { [field]: { name: newValue, id: this.state.armorSet[field].id } })
             })
+            this.searchInput("armor", newValue, field)
           } else {
             this.setState({
               armorSet: Object.assign({}, this.state.armorSet, { [field]: newValue })
@@ -116,7 +119,7 @@ class SubmissionForm extends React.Component {
         case "charm":
           if (field === "skill1" || field === "skill2") {
             this.setState({
-              armorSet: Object.assign({}, this.state.armorSet, { charm: Object.assign({}, this.state.armorSet.charm, { [field]: { id: newValue, name: "" } }) })
+              armorSet: Object.assign({}, this.state.armorSet, { charm: Object.assign({}, this.state.armorSet.charm, { [field]: { id: newValue } }) })
             })
           }
           if (field === "amount1" || field === "amount2" || field === "slots") {
@@ -145,33 +148,101 @@ class SubmissionForm extends React.Component {
           })
           break
         default:
-          this.setState({
-            newSubmission: Object.assign({}, this.state.newSubmission, { [field]: newValue })
-          })
+          if (field === "min" || field === "sec") {
+            this.setState({
+              newSubmission: Object.assign({}, this.state.newSubmission, { [field]: Number(newValue) })
+            })
+          } else {
+            this.setState({
+              newSubmission: Object.assign({}, this.state.newSubmission, { [field]: newValue })
+            })
+          }
           if (field === "questName") {
-            this.searchInput("quest", newValue)
             this.setState({
               hideQuests: false,
               hideArmor: true,
               hideWeapons: true,
             })
+            this.searchInput("quest", newValue)
           }
           if (field === "weapon") {
-            this.searchInput("weapon", newValue)
             this.setState({
               hideWeapons: false,
               hideQuests: true,
               hideArmor: true,
             })
+            this.searchInput("weapon", newValue)
           }
       }
     }
   }
 
+  validateForm(newSubmission, armorSet) {
+    let valid = ""
+    let list
+    list = this.props.quests.filter((quest) =>
+      (quest.name.toLowerCase().indexOf(newSubmission.questName.toLowerCase()) !== -1 && quest.value === newSubmission.questId)
+    )
+
+    if (list.length === 1 && list[0].value === newSubmission.questId) {
+      if (list[0].name !== newSubmission.questName) valid += "Quest"
+    } else valid += "Quest,"
+
+    list = this.props.weapons.filter((weapon) =>
+      (weapon.name.toLowerCase().indexOf(newSubmission.weapon.toLowerCase()) !== -1 && weapon.id === newSubmission.weaponId)
+    )
+
+    if (list.length === 1 && list[0].id === newSubmission.weaponId) {
+      if (list[0].name !== newSubmission.weapon) valid += " Weapon,"
+    } else valid += " Weapon,"
+
+    if (newSubmission.style === "Guild" || newSubmission.style === "Striker" || newSubmission.style === "Adept" || newSubmission.style === "Aerial") { }
+    else valid += " Weapon style,"
+    if (!this.validateInput("min", newSubmission.min)) { valid += " Min," }
+    if (!this.validateInput("sec", newSubmission.sec)) { valid += " Sec," }
+
+    if (!this.validateArmorPiece("head", armorSet.head.name, armorSet.head.id, 1)) valid += " Head,"
+    if (!this.validateArmorPiece("torso", armorSet.torso.name, armorSet.torso.id, 2)) valid += " Torso,"
+    if (!this.validateArmorPiece("arms", armorSet.arms.name, armorSet.arms.id, 3)) valid += " Arms,"
+    if (!this.validateArmorPiece("waist", armorSet.waist.name, armorSet.waist.id, 4)) valid += " Waist,"
+    if (!this.validateArmorPiece("feet", armorSet.feet.name, armorSet.feet.id, 5)) valid += " Feet,"
+    return valid
+  }
+
+  validateArmorPiece(part, name, id, empty_id) {
+    if ((name === "" || name === "Empty") && this.state.armorSet[part].id === empty_id) return true
+    if (name === "" && this.state.armorSet[part].id !== empty_id) {
+      this.setState({
+        armorSet: Object.assign({}, this.state.armorSet, { [part]: { name: "Empty", id: empty_id } }),
+        shownArmor: [],
+        hideArmor: true
+      })
+      return true
+    }
+    else {
+      let list = this.props.armor.filter((armor) => {
+        return (armor.name.toLowerCase() === name.toLowerCase() && armor.part.toLowerCase() === part && (armor.type === this.state.armorType || armor.part === "Head" || armor.type === "Both") && armor.id === id)
+      })
+      if (list.length === 1 && list[0].id === id && list[0].name === name) {
+        return true
+      }
+    }
+
+    return false
+  }
+
   handleSubmit = (newSubmission, event) => {
-    const { armorSet } = this.state
     event.preventDefault()
-    this.props.submitSubmission(newSubmission, armorSet)
+    const msg = this.validateForm(newSubmission, this.state.armorSet)
+    if (msg === "") {
+      this.setState({
+        errorMessage: { message: msg, hide: true }
+      })
+      this.props.submitSubmission(newSubmission, this.state.armorSet)
+    }
+    else this.setState({
+      errorMessage: { message: msg + " invalid, please check again.", hide: false }
+    })
   }
 
   /**
@@ -294,7 +365,7 @@ class SubmissionForm extends React.Component {
     return this.props.skills.map((skill, id) =>
       <option value={skill.id}
         key={id}>
-        {skill.name} | {skill.effect}
+        {skill.name}
       </option>)
   }
 
@@ -452,15 +523,17 @@ class SubmissionForm extends React.Component {
         list = this.props.quests.filter((quest) => {
           return (quest.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
         })
-        this.setState({
+        if (list.length === 1 && list[0].name.toLowerCase() === search.toLowerCase()) this.handleSelect(list[0], "quest")
+        else this.setState({
           shownQuests: list.slice(0, 5)
         })
         break
       case "armor":
         list = this.props.armor.filter((armor) => {
-          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part && (armor.type === this.state.armorType || armor.part === "Head"))
+          return (armor.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 && armor.part.toLowerCase() === part && (armor.type === this.state.armorType || armor.part === "Head" || armor.type === "Both"))
         })
-        this.setState({
+        if (list.length === 1 && list[0].name.toLowerCase() === search.toLowerCase()) this.handleSelect(list[0], "armor")
+        else this.setState({
           shownArmor: list.slice(0, 5)
         })
         break
@@ -468,7 +541,8 @@ class SubmissionForm extends React.Component {
         list = this.props.weapons.filter((weapon) => {
           return (weapon.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
         })
-        this.setState({
+        if (list.length === 1 && list[0].name.toLowerCase() === search.toLowerCase()) this.handleSelect(list[0], "weapon")
+        else this.setState({
           shownWeapons: list.slice(0, 6)
         })
         break
@@ -483,7 +557,8 @@ class SubmissionForm extends React.Component {
       case "quest":
         this.setState({
           newSubmission: Object.assign({}, this.state.newSubmission, { questName: select.name, questId: select.value }),
-          hideQuests: true
+          hideQuests: true,
+          shownQuests: []
         })
         break;
       case "armor":
@@ -500,8 +575,9 @@ class SubmissionForm extends React.Component {
         break
       case "weapon":
         this.setState({
-          newSubmission: Object.assign({}, this.state.newSubmission, { weapon: select.name }),
-          hideWeapons: true
+          newSubmission: Object.assign({}, this.state.newSubmission, { weapon: select.name, weaponId: select.id }),
+          hideWeapons: true,
+          shownWeapons: []
         })
         break
       default:
@@ -514,6 +590,7 @@ class SubmissionForm extends React.Component {
   renderQuests(quests) {
     return quests.map((quest = [], id) =>
       <li key={id}
+        title={quest.goal}
         className="form__li"
         onClick={this.handleSelect.bind(this, quest, "quest")}>
         [{quest.questgiver}{quest.stars ? "★" + quest.stars : ""}] {quest.name}
@@ -646,6 +723,7 @@ class SubmissionForm extends React.Component {
         <div className="sidebar">
           {this.renderCreateArmorset()}
         </div>
+        <div className={this.state.errorMessage.hide ? "hidden block-error" : "block-error"}>{this.state.errorMessage.message}</div>
         {this.renderCreateSubmission()}
         <SubmissionList submissions={this.props.submissions} />
       </div>
