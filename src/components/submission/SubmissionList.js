@@ -7,7 +7,7 @@ class SubmissionList extends React.Component {
         <td className="table__td--submission">{submission.name}</td>
         <td className="table__td--submission">{submission.questname}</td>
         <td className="table__td--submission">{submission.questtime}</td>
-        <td className="table__td--submission">{submission.weapon}</td>
+        <td className="table__td--submission">{submission.weaponname}</td>
         <td className="table__td--submission">{submission.style}</td>
       </tr>
     )
