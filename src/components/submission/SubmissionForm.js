@@ -590,6 +590,7 @@ class SubmissionForm extends React.Component {
   renderQuests(quests) {
     return quests.map((quest = [], id) =>
       <li key={id}
+        title={quest.goal}
         className="form__li"
         onClick={this.handleSelect.bind(this, quest, "quest")}>
         [{quest.questgiver}{quest.stars ? "★" + quest.stars : ""}] {quest.name}
