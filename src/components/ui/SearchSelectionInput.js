@@ -26,27 +26,16 @@ class SearchSelectionInput extends Component {
         menuVisible: true,
         searchVisible: true,
       })
-    } else if (type === "selectItem") {
-
     }
   }
 
-  filterSearchItems(searched) {
+  handleSearch = (e) => {
+    const searched = e.target.value
     const filtered = this.props.items.filter(item => item.name.toLowerCase().includes(searched))
     this.setState({
+      searchValue: searched,
       shownItems: filtered
     })
-  }
-
-  handleSearch(type, e) {
-    if (type === "search") {
-      const searched = e.target.value
-      const filtered = this.props.items.filter(item => item.name.toLowerCase().includes(searched))
-      this.setState({
-        searchValue: searched,
-        shownItems: filtered
-      })
-    }
   }
 
   handleSelect(index, e) {
@@ -72,7 +61,7 @@ class SearchSelectionInput extends Component {
           className="search-menu--input"
           value={searchVisible ? searchValue : selectedItem.name}
           onClick={this.handleClick.bind(this, "openSearchMenu")}
-          onChange={this.handleSearch.bind(this, "search")}
+          onChange={this.handleSearch}
         />
         <div className={menuVisible ? "search-menu" : "search-menu hidden"}>
           { shownItems.map((item, index) => 
