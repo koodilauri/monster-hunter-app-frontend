@@ -10,8 +10,8 @@ export const initialValues = {
     name: ""
   },
   style: "Guild",
-  min: 0,
-  sec: 0,
+  minutes: 0,
+  seconds: 0,
 }
 
 export const validations = {
@@ -19,8 +19,7 @@ export const validations = {
   properties: {
     name: {
       type: "string",
-      pattern: "alpha",
-      minLength: 1,
+      pattern: /^[a-zA-Z0-9_]+$/,
       error: "Name must be all letters and at least 1 character long"
     },
     quest: {

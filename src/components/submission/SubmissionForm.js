@@ -15,43 +15,57 @@ class SubmissionForm extends Component {
 
   state = {
     newSubmission: initialValues,
-    selectedQuest: {},
-    selectedWeapon: {},
+    errors: {
+      name: [],
+    },
     styles: ["Guild", "Striker", "Adept", "Aerial"]
+  }
+
+  validateInput(field, value) {
+    const validation = validations.properties[field]
+    const result = inspector.validate(validation, value)
+    return result.error
+  }
+
+  validateForm() {
+    let valid = true
+    const newErrors = Object.keys(this.state.newSubmission).reduce((accumulated, key) => {
+      const value = this.state.newSubmission[key]
+      const errors = this.validateInput(key, value)
+      if (errors.length > 0) valid = false
+      accumulated[key] = this.validateInput(key, value)
+      return accumulated
+    }, {})
+    return { valid, errors: newErrors }
   }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state.newSubmission)
+    console.log(this.state)
+    const result = this.validateForm()
+    this.setState({ errors: result.errors })
+    if (result.valid) {
+      this.props.saveSubmission(this.state.newSubmission)
+    }
+    console.log(this.state)
   }
 
   handleChange(field, e) {
+    const newValue = e.target.value
+    let stateChange = Object.assign({}, this.state)
+    stateChange.newSubmission[field] = newValue
+    stateChange.errors[field] = this.validateInput(field, newValue)
+    this.setState(stateChange)
+  }
+
+  selectItem = (type, item) => {
+    console.log("valittu item ", type)
     let stateChange = Object.assign({}, this.state.newSubmission)
-    stateChange[field] = e.target.value
+    stateChange[type] = item
     this.setState({ newSubmission: stateChange })
-    // const validation = validations.properties[field]
-    // const result = inspector.validate(validation, e.target.value)
-    // let stateChange = Object.assign({}, this.state)
-    // stateChange[field] = e.target.value
-    // stateChange.errors[field] = result.error
-    // this.setState(stateChange)
   }
 
-  selectQuest = (quest) => {
-    console.log("valittu quest", quest)
-    this.setState({
-      selectedQuest: quest
-    })
-  }
-
-  selectWeapon = (weapon) => {
-    console.log("valittu weapon", weapon)
-    this.setState({
-      selectedWeapon: weapon
-    })
-  }
-
-  setTime(unit, amount) {
+  setTime = (unit, amount) => {
     console.log("aika asetettu " + unit + " " + amount)
     let stateChange = Object.assign({}, this.state.newSubmission)
     stateChange[unit] = amount
@@ -59,7 +73,7 @@ class SubmissionForm extends Component {
   }
 
   render() {
-    const { newSubmission, styles } = this.state
+    const { newSubmission, errors, styles } = this.state
     const { quests, weapons } = this.props
     return (
       <form className="submission-form--container" onSubmit={this.handleSubmit}>
@@ -72,10 +86,15 @@ class SubmissionForm extends Component {
               value={newSubmission.name}
               onChange={this.handleChange.bind(this, "name")}
             />
+            <div>
+              { errors.name.map((error, i) => 
+                <div key={i}>{error.message}</div>
+              )}
+            </div>
           </div>
-          <SearchSelectionInput items={quests} selectItem={this.selectQuest}/>
+          <SearchSelectionInput items={quests} selectItem={this.selectItem} item="quest"/>
           <SelectTimeInput setTime={this.setTime}/>
-          <SearchSelectionInput items={weapons} selectItem={this.selectWeapon}/>
+          <SearchSelectionInput items={weapons} selectItem={this.selectItem} item="weapon"/>
           <div>
             <select
               name="style"
@@ -102,7 +121,7 @@ const mapDispatchToProps = dispatch => ({
   getQuests() {
     dispatch(getQuests())
   },
-  submitSubmission(newSubmission, armorSet) {
+  saveSubmission(newSubmission, armorSet) {
     dispatch(saveSubmission({
       newSubmission,
       armorSet
