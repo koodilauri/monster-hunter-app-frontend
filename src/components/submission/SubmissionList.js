@@ -1,5 +1,4 @@
 import React from "react"
-import { connect } from "react-redux"
 
 class SubmissionList extends React.Component {
   renderSubmissions() {
@@ -36,11 +35,4 @@ class SubmissionList extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  submissions: state.submission.submissions,
-})
-
-const mapDispatchToProps = dispatch => ({
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(SubmissionList)
+export default SubmissionList

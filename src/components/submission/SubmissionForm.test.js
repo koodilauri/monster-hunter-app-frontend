@@ -4,7 +4,7 @@ import { Provider } from "react-redux"
 import SubmissionForm from "./SubmissionForm"
 import store from "../../store"
 
-xit("renders without crashing", () => {
+it("renders without crashing", () => {
   const div = document.createElement("div")
   ReactDOM.render(
     <Provider store={store}>
