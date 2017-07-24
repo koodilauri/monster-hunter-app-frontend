@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import "./SubmissionList.css"
 
 class SubmissionList extends React.Component {
   renderSubmissions() {
@@ -16,8 +17,8 @@ class SubmissionList extends React.Component {
 
   render() {
     return (
-      <div>
-        <table className="table table--submission">
+      <div className="container">
+        <table className="table table-striped table-bordered table-hover table--submission">
           <thead>
             <tr>
               <td className="table__htd">Name</td>
@@ -31,6 +32,7 @@ class SubmissionList extends React.Component {
             {this.renderSubmissions()}
           </tbody>
         </table>
+
       </div>
     )
   }

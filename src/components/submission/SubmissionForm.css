@@ -1,9 +1,16 @@
-.submission-form--container {
+  .submission-form--container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  border: 1px solid black;
 }
 
 .submission-form--body {
   display: flex;
   flex-direction: row;
 }
+
+.child {
+  margin: auto;
+  padding: 1px;
+}  

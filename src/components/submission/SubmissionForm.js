@@ -6,7 +6,7 @@ import { saveSubmission } from "../../actions/submission"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import SelectTimeInput from "../ui/SelectTimeInput"
 
-import inspector from "schema-inspector"
+// import inspector from "schema-inspector"
 import { initialValues, validations } from "./submission.schema"
 
 import "./SubmissionForm.css"
@@ -14,7 +14,8 @@ import "./SubmissionForm.css"
 class SubmissionForm extends Component {
 
   state = {
-    newSubmission: initialValues,
+    newSubmission: initialValues.newSubmission,
+    armorSet: initialValues.armorSet,
     selectedQuest: {},
     selectedWeapon: {},
     styles: ["Guild", "Striker", "Adept", "Aerial"]
@@ -22,7 +23,8 @@ class SubmissionForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state.newSubmission)
+    console.log(this.state)
+    this.props.submitSubmission(this.state.newSubmission, this.state.armorSet, this.state.selectedQuest, this.state.selectedWeapon)
   }
 
   handleChange(field, e) {
@@ -62,31 +64,32 @@ class SubmissionForm extends Component {
     const { newSubmission, styles } = this.state
     const { quests, weapons } = this.props
     return (
-      <form className="submission-form--container" onSubmit={this.handleSubmit}>
-        <div className="submission-form--body">
-          <div>
+      <form className="submission-form--container form-inline" onSubmit={this.handleSubmit}>
+        <div className="submission-form--body row">
+          <div className="form-group child">
             <input
               name="name"
               type="text"
+              className="form-control"
               placeholder="Name"
               value={newSubmission.name}
               onChange={this.handleChange.bind(this, "name")}
             />
           </div>
-          <SearchSelectionInput items={quests} selectItem={this.selectQuest}/>
-          <SelectTimeInput setTime={this.setTime}/>
-          <SearchSelectionInput items={weapons} selectItem={this.selectWeapon}/>
-          <div>
+          <SearchSelectionInput items={quests} selectItem={this.selectQuest} />
+          <SelectTimeInput setTime={this.setTime} />
+          <SearchSelectionInput items={weapons} selectItem={this.selectWeapon} />
+          <div className="form-group child">
             <select
               name="style"
               onChange={this.handleChange.bind(this, "style")}
             >
-              { styles.map(style => <option key={style} value={style}>{style}</option>)}
+              {styles.map(style => <option key={style} value={style}>{style}</option>)}
             </select>
           </div>
-        </div>
-        <div>
-          <button type="submit">Submit</button>
+          <div className="form-group child">
+            <button type="submit" className="btn btn-primary disabled">Submit</button>
+          </div>
         </div>
       </form>
     )
@@ -102,10 +105,12 @@ const mapDispatchToProps = dispatch => ({
   getQuests() {
     dispatch(getQuests())
   },
-  submitSubmission(newSubmission, armorSet) {
+  submitSubmission(newSubmission, armorSet, selectedQuest, selectedWeapon) {
     dispatch(saveSubmission({
       newSubmission,
-      armorSet
+      armorSet,
+      selectedQuest,
+      selectedWeapon
     }))
   }
 })

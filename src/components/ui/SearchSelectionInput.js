@@ -31,7 +31,7 @@ class SearchSelectionInput extends Component {
 
   handleSearch = (e) => {
     const searched = e.target.value
-    const filtered = this.props.items.filter(item => item.name.toLowerCase().includes(searched))
+    const filtered = this.props.items.filter(item => item.name.toLowerCase().includes(searched.toLowerCase()))
     this.setState({
       searchValue: searched,
       shownItems: filtered
@@ -51,14 +51,14 @@ class SearchSelectionInput extends Component {
   render() {
     const { menuVisible, searchVisible, searchValue, shownItems, selectedItem } = this.state
     return (
-      <div>
+      <div className="form-group child">
         <input
           name="search-input"
           type="text"
           placeholder="Select"
           autoComplete="off"
           tabIndex="0"
-          className="search-menu--input"
+          className="search-menu--input form-control"
           value={searchVisible ? searchValue : selectedItem.name}
           onClick={this.handleClick.bind(this, "openSearchMenu")}
           onChange={this.handleSearch}
@@ -67,7 +67,7 @@ class SearchSelectionInput extends Component {
           { shownItems.map((item, index) => 
             <div
               key={index}
-              className="search-menu--item"
+              className="search-menu--item active"
               onClick={this.handleSelect.bind(this, index)}
             >{item.name}</div>
           )}

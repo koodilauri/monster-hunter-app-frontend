@@ -1,17 +1,54 @@
 
 export const initialValues = {
-  name: "",
-  quest: {
-    id: -1,
-    name: ""
+  newSubmission: {
+    name: "",
+    quest: {
+      id: -1,
+      name: ""
+    },
+    weapon: {
+      id: -1,
+      name: ""
+    },
+    style: "Guild",
+    min: 0,
+    sec: 0
   },
-  weapon: {
-    id: -1,
-    name: ""
+  armorSet: {
+    setName: "",
+    head: {
+      name: "",
+      id: 1
+    },
+    torso: {
+      name: "",
+      id: 2
+    },
+    arms: {
+      name: "",
+      id: 3
+    },
+    waist: {
+      name: "",
+      id: 4
+    },
+    feet: {
+      name: "",
+      id: 5
+    },
+    charm: {
+      slots: 0,
+      skill1: {
+        id: 1
+      },
+      amount1: 0,
+      skill2: {
+        id: 149
+      },
+      amount2: 0
+    },
+    decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
   },
-  style: "Guild",
-  min: 0,
-  sec: 0,
 }
 
 export const validations = {

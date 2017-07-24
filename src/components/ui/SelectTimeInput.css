@@ -1,4 +1,5 @@
-.select-time--container {
+.select-time{
+  width: 40px;
 }
 
 .select-time__input::-webkit-inner-spin-button,
@@ -6,4 +7,13 @@
   -webkit-appearance: none !important;
   margin: 0 !important;
   -moz-appearance:textfield !important;
+}
+
+ .select-time__input{
+  width: 30px;
+  margin:0px;
+} 
+
+.button-timer{
+  margin:0px;
 }
