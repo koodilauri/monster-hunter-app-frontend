@@ -1,0 +1,9 @@
+.submission-form--container {
+  display: flex;
+  flex-direction: row;
+}
+
+.submission-form--body {
+  display: flex;
+  flex-direction: row;
+}

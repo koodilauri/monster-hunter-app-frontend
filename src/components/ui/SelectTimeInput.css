@@ -1,0 +1,9 @@
+.select-time--container {
+}
+
+.select-time__input::-webkit-inner-spin-button,
+.select-time__input::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+  -moz-appearance:textfield !important;
+}
