@@ -13,7 +13,6 @@ import SubmissionForm from "../submission/SubmissionForm"
 import SubmissionList from "../submission/SubmissionList"
 
 // import "./App.css"
-import "../css/bootstrap.min.css"
 
 class App extends Component {
 

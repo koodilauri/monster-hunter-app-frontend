@@ -18,21 +18,22 @@ class SubmissionList extends React.Component {
   render() {
     return (
       <div className="container">
-        <table className="table table-striped table-bordered table-hover table--submission">
-          <thead>
-            <tr>
-              <td className="table__htd">Name</td>
-              <td className="table__htd">Quest</td>
-              <td className="table__htd">Time</td>
-              <td className="table__htd">Weapon</td>
-              <td className="table__htd">Style</td>
-            </tr>
-          </thead>
-          <tbody className="table__tbody">
-            {this.renderSubmissions()}
-          </tbody>
-        </table>
-
+        <div className="col-md-12">
+          <table className="table table-striped table-bordered table-hover table--submission">
+            <thead>
+              <tr>
+                <td className="table__htd">Name</td>
+                <td className="table__htd">Quest</td>
+                <td className="table__htd">Time</td>
+                <td className="table__htd">Weapon</td>
+                <td className="table__htd">Style</td>
+              </tr>
+            </thead>
+            <tbody className="table__tbody">
+              {this.renderSubmissions()}
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }

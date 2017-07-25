@@ -2,15 +2,38 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  border: 1px solid black;
+  background-color: #eff0f1;
+   /* border: 1px solid black;  */
+   width: 85%;
+    padding: 10px; 
+    margin-bottom: 1%; 
 }
 
 .submission-form--body {
   display: flex;
   flex-direction: row;
+  /* margin: auto;
+  width: 100%; */
+   /* border: 1px solid black;   */
+  /* margin-left: 10%; */
 }
 
-.child {
-  margin: auto;
-  padding: 1px;
-}  
+ .child {
+   margin: 0px 5px 0px 5px;   
+  /* padding-left: 10px; */
+}   
+
+.submission-form--input {
+  /* margin: 0px 5px 0px 5px; */
+  width: 100%;
+  height: 40px;
+   padding-left: 10px; 
+}
+
+.submission-form--input__name {
+  margin-left: 0%;
+}
+
+.submission-form--select{
+    margin: 5px 0px 0px 0px;
+}

@@ -51,14 +51,14 @@ class SearchSelectionInput extends Component {
   render() {
     const { menuVisible, searchVisible, searchValue, shownItems, selectedItem } = this.state
     return (
-      <div className="form-group child">
+      <div className="form-group search-container">
         <input
           name="search-input"
           type="text"
           placeholder="Select"
           autoComplete="off"
           tabIndex="0"
-          className="search-menu--input form-control"
+          className="submission-form--input search-menu--input "
           value={searchVisible ? searchValue : selectedItem.name}
           onClick={this.handleClick.bind(this, "openSearchMenu")}
           onChange={this.handleSearch}

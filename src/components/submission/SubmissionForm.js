@@ -6,10 +6,8 @@ import { saveSubmission } from "../../actions/submission"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import SelectTimeInput from "../ui/SelectTimeInput"
 
-// import inspector from "schema-inspector"
+import inspector from "schema-inspector"
 import { initialValues, validations } from "./submission.schema"
-
-import "./SubmissionForm.css"
 
 class SubmissionForm extends Component {
 
@@ -76,39 +74,44 @@ class SubmissionForm extends Component {
     const { newSubmission, errors, styles } = this.state
     const { quests, weapons } = this.props
     return (
-      <form className="submission-form--container form-inline" onSubmit={this.handleSubmit}>
-        <div className="submission-form--body row">
-          <div className="form-group child">
-            <input
-              name="name"
-              type="text"
-              className="form-control"
-              placeholder="Name"
-              value={newSubmission.name}
-              onChange={this.handleChange.bind(this, "name")}
-            />
-            <div>
-              { errors.name.map((error, i) => 
-                <div key={i}>{error.message}</div>
-              )}
+      <div className="container submission-form--container">
+        <div className="col-md-12">
+          <form className="form-inline" onSubmit={this.handleSubmit}>
+            <div className="submission-form--body row">
+              <div className="form-group child">
+                <input
+                  name="name"
+                  type="text"
+                  className="submission-form--input submission-form--input__name"
+                  placeholder="Name"
+                  value={newSubmission.name}
+                  onChange={this.handleChange.bind(this, "name")}
+                />
+                <div>
+                  {errors.name.map((error, i) =>
+                    <div key={i}>{error.message}</div>
+                  )}
+                </div>
+              </div>
+              <SearchSelectionInput items={quests} selectItem={this.selectItem} item="quest" />
+              <SelectTimeInput setTime={this.setTime} />
+              <SearchSelectionInput items={weapons} selectItem={this.selectItem} item="weapon" />
+              <div className="form-group child">
+                <select
+                  name="style"
+                  className="submission-form--select"
+                  onChange={this.handleChange.bind(this, "style")}
+                >
+                  {styles.map(style => <option key={style} value={style}>{style}</option>)}
+                </select>
+              </div>
+              <div className="form-group child">
+                <button type="submit" className="btn btn-primary">Submit</button>
+              </div>
             </div>
-          </div>
-          <SearchSelectionInput items={quests} selectItem={this.selectItem} item="quest"/>
-          <SelectTimeInput setTime={this.setTime}/>
-          <SearchSelectionInput items={weapons} selectItem={this.selectItem} item="weapon"/>
-          <div>
-            <select
-              name="style"
-              onChange={this.handleChange.bind(this, "style")}
-            >
-              {styles.map(style => <option key={style} value={style}>{style}</option>)}
-            </select>
-          </div>
-          <div className="form-group child">
-            <button type="submit" className="btn btn-primary disabled">Submit</button>
-          </div>
+          </form>
         </div>
-      </form>
+      </div>
     )
   }
 }
@@ -125,9 +128,7 @@ const mapDispatchToProps = dispatch => ({
   saveSubmission(newSubmission, armorSet) {
     dispatch(saveSubmission({
       newSubmission,
-      armorSet,
-      selectedQuest,
-      selectedWeapon
+      armorSet
     }))
   }
 })

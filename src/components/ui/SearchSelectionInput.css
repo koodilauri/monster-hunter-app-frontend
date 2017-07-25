@@ -5,8 +5,8 @@
   flex-direction: column;
 }
 
-.search-menu--input {
-  width: 100%;
+.search-container {
+  width: 25%;
 }
 
 .search-menu--item {
