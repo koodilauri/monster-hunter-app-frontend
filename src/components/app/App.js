@@ -42,8 +42,6 @@ class App extends Component {
             </div>
           </div>
         </nav>
-        <SubmissionForm />
-        <SubmissionList />
       </div>
     )
   }

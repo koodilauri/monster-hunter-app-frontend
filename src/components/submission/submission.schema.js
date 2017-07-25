@@ -1,53 +1,13 @@
 
 export const initialValues = {
-  newSubmission: {
-    name: "",
-    quest: {
-      id: -1,
-      name: ""
-    },
-    weapon: {
-      id: -1,
-      name: ""
-    },
-    style: "Guild",
-    min: 0,
-    sec: 0
+  name: "",
+  quest: {
+    id: -1,
+    name: ""
   },
-  armorSet: {
-    setName: "",
-    head: {
-      name: "",
-      id: 1
-    },
-    torso: {
-      name: "",
-      id: 2
-    },
-    arms: {
-      name: "",
-      id: 3
-    },
-    waist: {
-      name: "",
-      id: 4
-    },
-    feet: {
-      name: "",
-      id: 5
-    },
-    charm: {
-      slots: 0,
-      skill1: {
-        id: 1
-      },
-      amount1: 0,
-      skill2: {
-        id: 149
-      },
-      amount2: 0
-    },
-    decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
+  weapon: {
+    id: -1,
+    name: ""
   },
   style: "Guild",
   minutes: 0,
@@ -59,7 +19,7 @@ export const validations = {
   properties: {
     name: {
       type: "string",
-      pattern: /^[a-zA-Z0-9_]+$/,
+      pattern: /^[a-zA-Z]+$/,
       error: "Name must be all letters and at least 1 character long"
     },
     quest: {
