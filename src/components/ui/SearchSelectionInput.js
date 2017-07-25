@@ -45,7 +45,7 @@ class SearchSelectionInput extends Component {
       searchVisible: false,
       selectedItem: item
     })
-    this.props.selectItem(item)
+    this.props.selectItem(this.props.item, item)
   }
 
   render() {

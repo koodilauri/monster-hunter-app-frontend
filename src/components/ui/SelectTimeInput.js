@@ -11,7 +11,6 @@ class SelectTimeInput extends Component {
       minutes: 49,
       seconds: 59,
     },
-    mouseDown: false,
     timeInterval: undefined,
   }
 
