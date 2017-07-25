@@ -1,7 +1,5 @@
 import React, { Component } from "react"
 
-import "./SelectTimeInput.css"
-
 class SelectTimeInput extends Component {
 
   state = {

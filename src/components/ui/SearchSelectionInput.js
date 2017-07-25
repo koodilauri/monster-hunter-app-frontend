@@ -1,7 +1,5 @@
 import React, { Component } from "react"
 
-import "./SearchSelectionInput.css"
-
 class SearchSelectionInput extends Component {
 
   state = {

@@ -1,6 +1,5 @@
 import React from "react"
 import { connect } from "react-redux"
-import "./SubmissionList.css"
 
 class SubmissionList extends React.Component {
   renderSubmissions() {
