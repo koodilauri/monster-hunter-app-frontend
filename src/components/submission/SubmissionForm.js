@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
-import { getQuests } from "../../actions/quest"
 import { saveSubmission } from "../../actions/submission"
 
 import SearchSelectionInput from "../ui/SearchSelectionInput"
@@ -31,7 +30,7 @@ class SubmissionForm extends Component {
       const value = this.state.newSubmission[key]
       const errors = this.validateInput(key, value)
       if (errors.length > 0) valid = false
-      accumulated[key] = this.validateInput(key, value)
+      accumulated[key] = errors
       return accumulated
     }, {})
     return { valid, errors: newErrors }
@@ -122,9 +121,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getQuests() {
-    dispatch(getQuests())
-  },
   saveSubmission(newSubmission, armorSet) {
     dispatch(saveSubmission({
       newSubmission,
