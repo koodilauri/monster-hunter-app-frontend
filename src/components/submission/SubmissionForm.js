@@ -12,7 +12,7 @@ import { initialValues, validations } from "./submission.schema"
 class SubmissionForm extends Component {
 
   state = {
-    newSubmission: initialValues,
+    newSubmission: initialValues.newSubmission,
     errors: {
       name: [],
     },
