@@ -1,26 +1,20 @@
- .select-time--container{
-   display: flex;
-   flex-direction: row;
-   flex-wrap: nowrap;
-   margin-top:1px;
-  /* border: 1px solid black; */
-}
+.select-time--container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-top: 1px;
+  /* border: 1px solid black; */ }
 
 .select-time__input::-webkit-inner-spin-button,
 .select-time__input::-webkit-outer-spin-button {
   -webkit-appearance: none !important;
   margin: 0 !important;
-  -moz-appearance:textfield !important;
-}
+  -moz-appearance: textfield !important; }
 
-.select-time__input{
-   margin:0px; 
+.select-time__input {
+  margin: 0px;
   width: 30px;
   height: 30px;
   padding: 1px 2px 1px 2px;
   text-align: center;
-  float: initial;
-}  
-
-.button-timer{
-} 
+  float: initial; }
