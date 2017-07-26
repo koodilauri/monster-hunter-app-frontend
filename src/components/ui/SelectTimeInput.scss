@@ -4,6 +4,15 @@
    flex-wrap: nowrap;
    margin-top:1px;
   /* border: 1px solid black; */
+
+  .select-time__input{
+    margin:0px; 
+    width: 30px;
+    height: 30px;
+    padding: 1px 2px 1px 2px;
+    text-align: center;
+    float: initial;
+  }  
 }
 
 .select-time__input::-webkit-inner-spin-button,
@@ -13,14 +22,6 @@
   -moz-appearance:textfield !important;
 }
 
-.select-time__input{
-   margin:0px; 
-  width: 30px;
-  height: 30px;
-  padding: 1px 2px 1px 2px;
-  text-align: center;
-  float: initial;
-}  
 
 .button-timer{
 } 

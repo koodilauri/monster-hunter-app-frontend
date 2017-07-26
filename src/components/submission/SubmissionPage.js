@@ -9,6 +9,7 @@ import { getWeapons } from "../../actions/weapon"
 import { getDecorations } from "../../actions/decoration"
 import { getSubmissions } from "../../actions/submission"
 
+import StyleAndArts from "./StyleAndArts"
 import ArmorSetForm from "./ArmorSetForm"
 import SubmissionForm from "./SubmissionForm"
 import SubmissionList from "./SubmissionList"
@@ -22,6 +23,7 @@ class SubmissionPage extends Component {
   render() {
     return (
       <div>
+        <StyleAndArts />
         <ArmorSetForm />
         <SubmissionForm />
         <SubmissionList />

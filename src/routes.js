@@ -10,15 +10,13 @@ export default () => (
       <Route path='' render={() =>
         <main className="main-container">
           <Route path='/' exact component={NavBar} />
-
-           {Object.keys(image).map((key, index) =>
-            <img src={image[key]} alt={key} key={index}/>
-          )} 
+          <div className="container">
+            {Object.keys(image).map((key, index) =>
+              <img src={image[key]} alt={key} key={index} />
+            )}
             <img src={require("./images/Log_Icon.png")} alt="log" />
-
+          </div>
           <Route path='/' exact component={SubmissionPage} />
-          {/* <Route path='/' exact component={App} />
-          <Route path='/submission' exact component={SubmissionPage} /> */}
         </main>
       } />
     </Switch>
