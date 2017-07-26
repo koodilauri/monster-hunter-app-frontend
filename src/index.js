@@ -5,10 +5,12 @@ import Routes from "./routes"
 import { Provider } from "react-redux"
 import store from "./store"
 
-// import 'custom-bootstrap/build/index.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import "./components/submission/SubmissionForm.css"
+import "./components/submission/SubmissionList.css"
+import "./components/ui/SelectTimeInput.css"
+import "./components/ui/SearchSelectionInput.css"
 
 ReactDOM.render(
   <Provider store={store}>
