@@ -1,26 +1,29 @@
 import React from "react"
+import { connect } from "react-redux"
 import "./StyleAndArt.css"
+import SearchSelectionInput from "../ui/SearchSelectionInput"
+
 class StyleAndArts extends React.Component {
   state = {
     selectedStyle: "Guild",
-    styles: ["Guild", "Striker", "Adept", "Aerial"],
-    hunterArts: [{
-      id: 1,
-      name: "art1",
-      gaugesize: 250,
-      description: "",
-      weapon: "General"
-    },
-    {
-      id: 1,
-      name: "art2",
-      gaugesize: 250,
-      description: "",
-      weapon: "General"
-    }]
+    styles: ["Guild", "Striker", "Adept", "Aerial"]
+    // hunterArts: [{
+    //   id: 1,
+    //   name: "art1",
+    //   gaugesize: 250,
+    //   description: "",
+    //   weapon: "General"
+    // },
+    // {
+    //   id: 1,
+    //   name: "art2",
+    //   gaugesize: 250,
+    //   description: "",
+    //   weapon: "General"
+    // }]
   }
 
-  handleChange1(field, e) {
+  handleChange(field, e) {
     const newValue = e.target.value
     let stateChange = Object.assign({}, this.state)
     stateChange[field] = newValue
@@ -42,37 +45,41 @@ class StyleAndArts extends React.Component {
       default:
         break
     }
+    console.log(this.state.hunterArts)
+  }
+
+  selectItem = (type, item) => {
+    console.log("valittu item ", type)
+    let stateChange = Object.assign({}, this.state.newSubmission)
+    stateChange[type] = item
+    this.setState({ newSubmission: stateChange })
   }
 
   changeHunterArt(amount) {
     const { hunterArts } = this.state
     let l = hunterArts.length
-    console.log("starting arts: ", l, ", target is: ", amount)
-    while (l !== amount) {
-      if (l < amount) l += this.addHunterArt()
-      if (l > amount) l += this.removeHunterArt()
-      console.log("changed arts to: ", l)
-    }
+    if (l < amount) this.addHunterArt(amount - l)
+    if (l > amount) this.removeHunterArt(amount)
   }
 
-  addHunterArt() {
+  addHunterArt(length) {
     const { hunterArts } = this.state
+    let data = [];
+    for (let i = 0; i < length; i++) {
+      data.push({ id: 1, name: "", gaugesize: 250, description: "", weapon: "General" });
+    }
     this.setState({
-      hunterArts: [
-        ...hunterArts,
-        { id: 1, name: "", gaugesize: 250, description: "", weapon: "General" }
-      ]
+      hunterArts: hunterArts.concat(data)
     })
     return 1
   }
 
-  removeHunterArt() {
+  removeHunterArt(index) {
     const { hunterArts } = this.state
     this.setState({
       hunterArts: hunterArts
-        .slice(0, hunterArts.length - 1)
+        .slice(0, index)
     })
-    return -1
   }
 
   renderArts() {
@@ -98,6 +105,7 @@ class StyleAndArts extends React.Component {
   }
 
   render() {
+    const {hunterArts} = this.props
     return (
       <div>
         <table className="table-style-art">
@@ -113,8 +121,7 @@ class StyleAndArts extends React.Component {
               <td>
                 <select
                   name="selectedStyle"
-                  onChange={this.handleChange1.bind(this, "selectedStyle")}
-
+                  onChange={this.handleChange.bind(this, "selectedStyle")}
                 >
                   {this.state.styles.map(style => <option key={style} value={style}>{style}</option>)}
                 </select>
@@ -125,7 +132,41 @@ class StyleAndArts extends React.Component {
                 Hunter Arts
             </th>
             </tr>
-            {this.renderArts()}
+            <tr>
+              <td>
+              <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="hunterArts" />
+              </td>
+            </tr>
+            {/* <tr>
+              <td>
+                {hunterArts[0].gaugesize}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {hunterArts[1] ? <input value={hunterArts[1].name}
+                onChange={this.handleChange.bind(this, "art")}
+                ></input> : "---"}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {hunterArts[1] ? hunterArts[1].gaugesize : "---"}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {hunterArts[2] ? <input value={hunterArts[2].name}
+                onChange={this.handleChange.bind(this, "art")}
+                ></input> : "---"}
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {hunterArts[2] ? hunterArts[2].gaugesize : "---"}
+              </td>
+            </tr> */}
           </tbody>
         </table>
       </div>
@@ -133,4 +174,11 @@ class StyleAndArts extends React.Component {
   }
 }
 
-export default StyleAndArts
+const mapStateToProps = state => ({
+  hunterArts: state.hunterArt.hunterArts,
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(StyleAndArts)
