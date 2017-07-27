@@ -1,12 +1,12 @@
 const initialState = {
-  armor: []
+  armors: []
 }
 
 export const armor = (state = initialState, action) => {
   switch (action.type) {
     case "GET_ARMOR_SUCCESS":
       return Object.assign({}, state, {
-        armor: action.payload.armor
+        armors: action.payload.armor
       })
     default:
       return state

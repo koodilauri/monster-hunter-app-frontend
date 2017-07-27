@@ -1,6 +1,6 @@
 export const GET_ARMOR = 'GET_ARMOR'
 
-export const getArmor = () => {
+export const getArmors = () => {
   return {
     payload: {
       request: {

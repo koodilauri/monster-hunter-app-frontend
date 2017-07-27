@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 
 import { getQuests } from "../../actions/quest"
-import { getArmor } from "../../actions/armor"
+import { getArmors } from "../../actions/armor"
 import { getHunterArts } from "../../actions/hunterArt"
 import { getSkills } from "../../actions/skill"
 import { getWeapons } from "../../actions/weapon"
@@ -39,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
   getAll() {
     dispatch(getQuests())
     dispatch(getSubmissions())
-    dispatch(getArmor())
+    dispatch(getArmors())
     dispatch(getHunterArts())
     dispatch(getSkills())
     dispatch(getWeapons())
