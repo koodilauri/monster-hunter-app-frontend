@@ -7,11 +7,13 @@ import SelectTimeInput from "../ui/SelectTimeInput"
 
 import inspector from "schema-inspector"
 import { initialValues, validations } from "./submission.schema"
+import {initialValues as armorSetValues} from "./armorset.schema"
 
 class SubmissionForm extends Component {
 
   state = {
     newSubmission: initialValues,
+    armorSet: armorSetValues,
     errors: {
       name: [],
     },
@@ -42,7 +44,7 @@ class SubmissionForm extends Component {
     const result = this.validateForm()
     this.setState({ errors: result.errors })
     if (result.valid) {
-      this.props.saveSubmission(this.state.newSubmission)
+      this.props.saveSubmission(this.state.newSubmission, this.state.armorSet)
     }
     console.log(this.state)
   }

@@ -23,7 +23,7 @@ export const initialValues = {
   charm: {
     slots: 0,
     skill1: {
-      id: 1
+      id: 149
     },
     amount1: 0,
     skill2: {
