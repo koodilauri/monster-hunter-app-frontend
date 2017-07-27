@@ -6,21 +6,21 @@ import SearchSelectionInput from "../ui/SearchSelectionInput"
 class StyleAndArts extends React.Component {
   state = {
     selectedStyle: "Guild",
-    styles: ["Guild", "Striker", "Adept", "Aerial"]
-    // hunterArts: [{
-    //   id: 1,
-    //   name: "art1",
-    //   gaugesize: 250,
-    //   description: "",
-    //   weapon: "General"
-    // },
-    // {
-    //   id: 1,
-    //   name: "art2",
-    //   gaugesize: 250,
-    //   description: "",
-    //   weapon: "General"
-    // }]
+    styles: ["Guild", "Striker", "Adept", "Aerial"],
+    selectedHunterArts: [{
+      id: -1,
+      name: "art1",
+      gaugesize: 0,
+      description: "",
+      weapon: "General"
+    },
+    {
+      id: -1,
+      name: "art2",
+      gaugesize: 0,
+      description: "",
+      weapon: "General"
+    }]
   }
 
   handleChange(field, e) {
@@ -45,67 +45,68 @@ class StyleAndArts extends React.Component {
       default:
         break
     }
-    console.log(this.state.hunterArts)
   }
 
-  selectItem = (type, item) => {
-    console.log("valittu item ", type)
-    let stateChange = Object.assign({}, this.state.newSubmission)
-    stateChange[type] = item
-    this.setState({ newSubmission: stateChange })
+  selectItem = (id, item) => {
+    this.setState({
+      selectedHunterArts: this.state.selectedHunterArts
+        .slice(0, id)
+        .concat(Object.assign({}, { id: item.id, name: item.name, gaugesize: item.gaugesize, description: item.description, weapon: item.weapon }))
+        .concat(this.state.selectedHunterArts.slice(Number(id) + 1))
+    })
   }
 
   changeHunterArt(amount) {
-    const { hunterArts } = this.state
-    let l = hunterArts.length
+    const { selectedHunterArts } = this.state
+    let l = selectedHunterArts.length
     if (l < amount) this.addHunterArt(amount - l)
     if (l > amount) this.removeHunterArt(amount)
   }
 
   addHunterArt(length) {
-    const { hunterArts } = this.state
+    const { selectedHunterArts } = this.state
     let data = [];
     for (let i = 0; i < length; i++) {
-      data.push({ id: 1, name: "", gaugesize: 250, description: "", weapon: "General" });
+      data.push({ id: -1, name: "", gaugesize: 0, description: "", weapon: "General" });
     }
     this.setState({
-      hunterArts: hunterArts.concat(data)
+      selectedHunterArts: selectedHunterArts.concat(data)
     })
-    return 1
   }
 
   removeHunterArt(index) {
-    const { hunterArts } = this.state
+    const { selectedHunterArts } = this.state
     this.setState({
-      hunterArts: hunterArts
+      selectedHunterArts: selectedHunterArts
         .slice(0, index)
     })
   }
 
-  renderArts() {
-    return this.state.hunterArts.map((art, id) =>
-      <div key={id}>
-        <tr>
-          <td>
-            <input
-              value={art.name}
-              placeholder="art"
-            >
-            </input>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {art.gaugesize}
-          </td>
-        </tr>
-      </div>
-    )
+  // renderArts() {
+  //   return this.state.hunterArts.map((art, id) =>
+  //     <div key={id}>
+  //       <tr>
+  //         <td>
+  //           <input
+  //             value={art.name}
+  //             placeholder="art"
+  //           >
+  //           </input>
+  //         </td>
+  //       </tr>
+  //       <tr>
+  //         <td>
+  //           {art.gaugesize}
+  //         </td>
+  //       </tr>
+  //     </div>
+  //   )
 
-  }
+  // }
 
   render() {
-    const {hunterArts} = this.props
+    const { hunterArts } = this.props
+    const { selectedHunterArts } = this.state
     return (
       <div>
         <table className="table-style-art">
@@ -134,39 +135,39 @@ class StyleAndArts extends React.Component {
             </tr>
             <tr>
               <td>
-              <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="hunterArts" />
-              </td>
-            </tr>
-            {/* <tr>
-              <td>
-                {hunterArts[0].gaugesize}
+                <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="0" />
               </td>
             </tr>
             <tr>
               <td>
-                {hunterArts[1] ? <input value={hunterArts[1].name}
-                onChange={this.handleChange.bind(this, "art")}
-                ></input> : "---"}
+                {selectedHunterArts[0].gaugesize}
               </td>
             </tr>
             <tr>
               <td>
-                {hunterArts[1] ? hunterArts[1].gaugesize : "---"}
+                {selectedHunterArts[1] ?
+                  <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="1" />
+                  : "---"}
               </td>
             </tr>
             <tr>
               <td>
-                {hunterArts[2] ? <input value={hunterArts[2].name}
-                onChange={this.handleChange.bind(this, "art")}
-                ></input> : "---"}
+                {selectedHunterArts[1] ? selectedHunterArts[1].gaugesize : "---"}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                {selectedHunterArts[2] ?
+                  <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="2" />
+                  : "---"}
 
               </td>
             </tr>
             <tr>
               <td>
-                {hunterArts[2] ? hunterArts[2].gaugesize : "---"}
+                {selectedHunterArts[2] ? selectedHunterArts[2].gaugesize : "---"}
               </td>
-            </tr> */}
+            </tr>
           </tbody>
         </table>
       </div>
