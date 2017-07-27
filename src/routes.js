@@ -12,9 +12,9 @@ export default () => (
           <Route path='/' exact component={NavBar} />
           <div className="container">
             {Object.keys(image).map((key, index) =>
-              <img src={image[key]} alt={key} key={index} />
+              <img src={image[key]} alt={key} width="21" height="21" key={index} />
             )}
-            <img src={require("./images/Log_Icon.png")} alt="log" />
+            <img src={require("./images/Log_Icon.png")} width="21" height="21" alt="log" />
           </div>
           <Route path='/' exact component={SubmissionPage} />
         </main>

@@ -18,6 +18,7 @@ import torso from "./Torso_Icon.png"
 import arms from "./Arms_Icon.png"
 import waist from "./Waist_Icon.png"
 import feet from "./Feet_Icon.png"
+import decoration from "./Decoration_Icon.png"
 
 const image = {
   log: log,
@@ -39,7 +40,8 @@ const image = {
   torso:torso,
   arms:arms,
   waist:waist,
-  feet:feet
+  feet:feet,
+  decoration:decoration
 }
 
 export default image

@@ -77,7 +77,7 @@ class SubmissionForm extends Component {
         <div className="col-md-12">
           <form className="form-inline" onSubmit={this.handleSubmit}>
             <div className="submission-form--body row">
-              <div className="form-group child">
+              <div className="form-group ">
                 <input
                   name="name"
                   type="text"
@@ -95,7 +95,7 @@ class SubmissionForm extends Component {
               <SearchSelectionInput items={quests} selectItem={this.selectItem} item="quest" />
               <SelectTimeInput setTime={this.setTime} />
               <SearchSelectionInput items={weapons} selectItem={this.selectItem} item="weapon" />
-              <div className="form-group child">
+              <div className="form-group ">
                 <select
                   name="style"
                   className="submission-form--select"
@@ -104,7 +104,7 @@ class SubmissionForm extends Component {
                   {styles.map(style => <option key={style} value={style}>{style}</option>)}
                 </select>
               </div>
-              <div className="form-group child">
+              <div className="form-group ">
                 <button type="submit" className="btn btn-primary">Submit</button>
               </div>
             </div>
