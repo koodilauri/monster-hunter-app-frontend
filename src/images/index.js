@@ -13,6 +13,11 @@ import lightBowgun from "./Light_Bowgun_Icon.png"
 import longSword from "./Long_Sword_Icon.png"
 import switchAxe from "./Switch_Axe_Icon.png"
 import swordAndShield from "./Sword_and_Shield_Icon.png"
+import helm from "./Helm_Icon.png"
+import torso from "./Torso_Icon.png"
+import arms from "./Arms_Icon.png"
+import waist from "./Waist_Icon.png"
+import feet from "./Feet_Icon.png"
 
 const image = {
   log: log,
@@ -29,7 +34,12 @@ const image = {
   lightBowgun:lightBowgun,
   longSword:longSword,
   switchAxe:switchAxe,
-  swordAndShield:swordAndShield
+  swordAndShield:swordAndShield,
+  helm:helm,
+  torso:torso,
+  arms:arms,
+  waist:waist,
+  feet:feet
 }
 
 export default image
