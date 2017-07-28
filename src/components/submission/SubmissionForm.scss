@@ -1,6 +1,6 @@
 .submission-form--container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   background-color: #eff0f1;
    /* border: 1px solid black;  */
@@ -38,7 +38,13 @@
   font-size: 14px;
   height: 34px;
   padding: 5px;
-  width: 100%;
+  width: 70px;
   color: #fff;
   background-color: grey;  
+}
+
+@media (max-width: 630px) {
+  .submission-form--body {
+    flex-direction: column;
+  }
 }
