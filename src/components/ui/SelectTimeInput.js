@@ -61,7 +61,7 @@ class SelectTimeInput extends Component {
   renderTime(unit) {
     const value = this.state[unit]
     return (
-      <div className=" select-time--container">
+      <div className="select-time--container">
         <div className="">
           <button
             type="button"
@@ -90,7 +90,7 @@ class SelectTimeInput extends Component {
 
   render() {
     return (
-      <div className="select-time--container">
+      <div className="form-group flex-row">
         {this.renderTime("minutes")}
         {this.renderTime("seconds")}
       </div>

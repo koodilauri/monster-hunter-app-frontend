@@ -75,43 +75,39 @@ class SubmissionForm extends Component {
     const { newSubmission, errors, styles } = this.state
     const { quests, weapons } = this.props
     return (
-      <div className="container submission-form--container">
-        <div className="col-md-12">
-          <form className="form-inline" onSubmit={this.handleSubmit}>
-            <div className="submission-form--body row">
-              <div className="form-group ">
-                <input
-                  name="name"
-                  type="text"
-                  className="submission-form--input submission-form--input__name"
-                  placeholder="Name"
-                  value={newSubmission.name}
-                  onChange={this.handleChange.bind(this, "name")}
-                />
-                <div>
-                  {errors.name.map((error, i) =>
-                    <div key={i}>{error.message}</div>
-                  )}
-                </div>
-              </div>
-              <SearchSelectionInput items={quests} selectItem={this.selectItem} item="quest" />
-              <SelectTimeInput setTime={this.setTime} />
-              <SearchSelectionInput items={weapons} selectItem={this.selectItem} item="weapon" />
-              <div className="form-group ">
-                <select
-                  name="style"
-                  className="submission-form--select"
-                  onChange={this.handleChange.bind(this, "style")}
-                >
-                  {styles.map(style => <option key={style} value={style}>{style}</option>)}
-                </select>
-              </div>
-              <div className="form-group ">
-                <button type="submit" className="btn btn-primary">Submit</button>
-              </div>
+      <div className="submission-form--container">
+        <form className="submission-form" onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <input
+              name="name"
+              type="text"
+              className="form-control"
+              placeholder="Name"
+              value={newSubmission.name}
+              onChange={this.handleChange.bind(this, "name")}
+            />
+            <div>
+              {errors.name.map((error, i) =>
+                <div key={i}>{error.message}</div>
+              )}
             </div>
-          </form>
-        </div>
+          </div>
+          <SearchSelectionInput items={quests} selectItem={this.selectItem} item="quest" />
+          <SelectTimeInput setTime={this.setTime} />
+          <SearchSelectionInput items={weapons} selectItem={this.selectItem} item="weapon" />
+          <div className="form-group">
+            <select
+              name="style"
+              className="form-control"
+              onChange={this.handleChange.bind(this, "style")}
+            >
+              {styles.map(style => <option key={style} value={style}>{style}</option>)}
+            </select>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary">Submit</button>
+          </div>
+        </form>
       </div>
     )
   }

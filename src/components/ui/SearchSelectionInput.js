@@ -56,7 +56,7 @@ class SearchSelectionInput extends Component {
           placeholder="Select"
           autoComplete="off"
           tabIndex="0"
-          className="submission-form--input search-menu--input "
+          className="form-control"
           value={searchVisible ? searchValue : selectedItem.name}
           onClick={this.handleClick.bind(this, "openSearchMenu")}
           onChange={this.handleSearch}
