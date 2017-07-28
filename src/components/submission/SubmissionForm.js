@@ -7,7 +7,7 @@ import SelectTimeInput from "../ui/SelectTimeInput"
 
 import inspector from "schema-inspector"
 import { initialValues, validations } from "./submission.schema"
-import {initialValues as armorSetValues} from "./armorset.schema"
+import { initialValues as armorSetValues } from "./armorset.schema"
 
 class SubmissionForm extends Component {
 

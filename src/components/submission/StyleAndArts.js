@@ -113,6 +113,11 @@ class StyleAndArts extends React.Component {
           <thead>
             <tr>
               <th>
+                Style and Hunter Arts
+            </th>
+            </tr>
+            <tr>
+              <th>
                 Style
             </th>
             </tr>
