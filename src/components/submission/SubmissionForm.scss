@@ -4,18 +4,19 @@
   flex-wrap: wrap;
   background-color: #eff0f1;
    /* border: 1px solid black;  */
-  width: 85%;
-  padding: 10px; 
-  margin-bottom: 1%;
 }
 
-.submission-form--body {
+.submission-form {
   display: flex;
   flex-direction: row;
-  /* margin: auto;
-  width: 100%; */
-   /* border: 1px solid black;   */
-  /* margin-left: 10%; */
+  align-self: center;
+}
+
+@media (max-width: 740px) {
+  .submission-form {
+    flex-direction: column;
+      align-self: stretch;
+  }
 }
 
 .submission-form--input {
@@ -41,10 +42,4 @@
   width: 70px;
   color: #fff;
   background-color: grey;  
-}
-
-@media (max-width: 630px) {
-  .submission-form--body {
-    flex-direction: column;
-  }
 }
