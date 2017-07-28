@@ -1,4 +1,5 @@
 import React from "react"
+import { connect } from "react-redux"
 
 class SubmissionList extends React.Component {
   renderSubmissions() {
@@ -15,24 +16,33 @@ class SubmissionList extends React.Component {
 
   render() {
     return (
-      <div>
-        <table className="table table--submission">
-          <thead>
-            <tr>
-              <td className="table__htd">Name</td>
-              <td className="table__htd">Quest</td>
-              <td className="table__htd">Time</td>
-              <td className="table__htd">Weapon</td>
-              <td className="table__htd">Style</td>
-            </tr>
-          </thead>
-          <tbody className="table__tbody">
-            {this.renderSubmissions()}
-          </tbody>
-        </table>
+      <div className="container">
+        <div className="col-md-12">
+          <table className="table table-striped table-bordered table-hover table--submission">
+            <thead>
+              <tr>
+                <td className="table__htd">Name</td>
+                <td className="table__htd">Quest</td>
+                <td className="table__htd">Time</td>
+                <td className="table__htd">Weapon</td>
+                <td className="table__htd">Style</td>
+              </tr>
+            </thead>
+            <tbody className="table__tbody">
+              {this.renderSubmissions()}
+            </tbody>
+          </table>
+        </div>
       </div>
     )
   }
 }
 
-export default SubmissionList
+const mapStateToProps = state => ({
+  submissions: state.submission.submissions,
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubmissionList)
