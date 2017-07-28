@@ -64,6 +64,7 @@ class SelectTimeInput extends Component {
       <div className="form-group select-time--container">
         <div className="form-group">
           <button
+            type="button"
             className="btn btn-default button-timer"
             onMouseDown={this.startTimeInterval.bind(this, unit, true)}
             onMouseUp={this.stopTimeInterval}>+</button>
@@ -78,6 +79,7 @@ class SelectTimeInput extends Component {
         </div>
         <div className="form-group">
           <button
+            type="button"
             className="btn btn-default button-timer"
             onMouseDown={this.startTimeInterval.bind(this, unit, false)}
             onMouseUp={this.stopTimeInterval}>-</button>
