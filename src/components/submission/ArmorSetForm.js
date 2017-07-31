@@ -1,40 +1,38 @@
 import React from "react"
 import { connect } from "react-redux"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
+import DecorationsMenu from "../ui/DecorationsMenu"
 import image from "../../images/"
 import "./ArmorSetForm.css"
 
 class ArmorSetForm extends React.Component {
   state = {
+    armorType: "Blademaster",
     setName: "",
     selectedWeapon: {
-      slots: "---",
+      slots: 0,
       class: "greatsword"
     },
     selectedHead: {
-      slots: "---"
+      slots: 0
     },
     selectedTorso: {
-      slots: "---"
+      slots: 0
     },
     selectedArms: {
-      slots: "---"
+      slots: 0
     },
     selectedWaist: {
-      slots: "---"
+      slots: 0
     },
     selectedFeet: {
-      slots: "---"
+      slots: 0
     },
     heads: [],
     torsos: [],
     arms: [],
     waists: [],
     feet: []
-  }
-
-  componentDidMount() {
-    this.setLists()
   }
 
   handleChange(field, e) {
@@ -45,26 +43,26 @@ class ArmorSetForm extends React.Component {
   }
 
   selectItem = (type, item) => {
-    console.log("valittu item ", type)
+    if(item.type !== this.state.armorType && item.type !== "Both") console.log("väärä tyypi ", item.type)
     this.setState({
       [type]: item
     })
     console.log(this.state)
-    this.setLists()
   }
 
-  armorFilter = part =>
+  armorFilter = (part, type) =>
     this.props.armors.filter((armor) => {
-      return (armor.part.toLowerCase() === part && (armor.type === "Blademaster" || armor.type === "Both"))
+      return (armor.part.toLowerCase() === part && (armor.type === type || armor.type === "Both"))
     })
 
-  setLists() {
+  setLists(type) {
+    console.log("setting lists...")
     this.setState({
-      heads: this.armorFilter("head"),
-      torsos: this.armorFilter("torso"),
-      arms: this.armorFilter("arms"),
-      waists: this.armorFilter("waist"),
-      feet: this.armorFilter("feet")
+      heads: this.armorFilter("head", type),
+      torsos: this.armorFilter("torso", type),
+      arms: this.armorFilter("arms", type),
+      waists: this.armorFilter("waist", type),
+      feet: this.armorFilter("feet", type)
     })
   }
 
@@ -77,8 +75,14 @@ class ArmorSetForm extends React.Component {
     return string
   }
 
+  changeArmorType(type) {
+    this.setState({ armorType: type })
+    console.log("change armortype to " + type)
+    this.setLists(type)
+  }
+
   render() {
-    const { weapons } = this.props
+    const { weapons, decorations } = this.props
     const { heads, torsos, arms, waists, feet } = this.state
     return (
       <div>
@@ -86,7 +90,11 @@ class ArmorSetForm extends React.Component {
           <thead>
             <tr>
               <th>
-                Equipment
+                Equipment |
+                Blademaster <input type="radio" name="armorType" value="Blademaster"
+                  onClick={this.changeArmorType.bind(this, "Blademaster")} />
+                Gunner <input type="radio" name="armorType" value="Gunner"
+                  onClick={this.changeArmorType.bind(this, "Gunner")} />
               </th>
             </tr>
             <tr>
@@ -122,7 +130,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={heads} selectItem={this.selectItem} item="selectedHead" />
               </td>
               <td>
-                {this.decorationIcon(this.state.selectedHead.slots)}
+                <DecorationsMenu slots={this.state.selectedHead.slots} decorations={decorations} />
               </td>
             </tr>
             <tr>
@@ -179,6 +187,7 @@ class ArmorSetForm extends React.Component {
 const mapStateToProps = state => ({
   weapons: state.weapon.weapons,
   armors: state.armor.armors,
+  decorations: state.decoration.decorations,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -82,28 +82,6 @@ class StyleAndArts extends React.Component {
     })
   }
 
-  // renderArts() {
-  //   return this.state.hunterArts.map((art, id) =>
-  //     <div key={id}>
-  //       <tr>
-  //         <td>
-  //           <input
-  //             value={art.name}
-  //             placeholder="art"
-  //           >
-  //           </input>
-  //         </td>
-  //       </tr>
-  //       <tr>
-  //         <td>
-  //           {art.gaugesize}
-  //         </td>
-  //       </tr>
-  //     </div>
-  //   )
-
-  // }
-
   render() {
     const { hunterArts } = this.props
     const { selectedHunterArts } = this.state
