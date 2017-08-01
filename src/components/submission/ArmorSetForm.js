@@ -2,6 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import DecorationsMenu from "../ui/DecorationsMenu"
+import SelectCharm from "../ui/SelectCharm"
 import image from "../../images/"
 import "./ArmorSetForm.css"
 
@@ -28,6 +29,17 @@ class ArmorSetForm extends React.Component {
     selectedFeet: {
       slots: 0
     },
+    selectedCharm: {
+      slots: 0,
+      skill1: {
+        id: 149
+      },
+      amount1: 0,
+      skill2: {
+        id: 149
+      },
+      amount2: 0
+    },
     heads: [],
     torsos: [],
     arms: [],
@@ -38,7 +50,7 @@ class ArmorSetForm extends React.Component {
     torsoDecorations: [],
     armsDecorations: [],
     waistDecorations: [],
-    feetDecorations: []    
+    feetDecorations: []
   }
 
   handleChange(field, e) {
@@ -66,7 +78,7 @@ class ArmorSetForm extends React.Component {
 
   availibleDecorations = (part, decos, decorations) =>
     this.props.decorations.filter((decoration) =>
-      decoration.size <= this.state[part].slots 
+      decoration.size <= this.state[part].slots
     )
 
   armorFilter = (part, type) =>
@@ -159,7 +171,7 @@ class ArmorSetForm extends React.Component {
               </td>
               <td>
                 <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedTorso.slots} decorations={this.availibleDecorations("selectedTorso", "torsoDecorations", decorations)} part="torsoDecorations" />
-                
+
               </td>
             </tr>
             <tr>
@@ -191,7 +203,7 @@ class ArmorSetForm extends React.Component {
             </tr>
             <tr>
               <td>
-                Charm
+                <SelectCharm />
               </td>
               <td>
                 ---
