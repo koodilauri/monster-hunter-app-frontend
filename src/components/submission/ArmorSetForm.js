@@ -76,7 +76,7 @@ class ArmorSetForm extends React.Component {
     })
   }
 
-  availibleDecorations = (part, decos, decorations) =>
+  availableDecorations = (part, decos, decorations) =>
     this.props.decorations.filter((decoration) =>
       decoration.size <= this.state[part].slots
     )
@@ -87,7 +87,7 @@ class ArmorSetForm extends React.Component {
     })
 
   setArmorLists(type) {
-    console.log("setting lists...")
+    console.log("setting " + type + " lists... ", this.props.armors.length)
     this.setState({
       heads: this.armorFilter("head", type),
       torsos: this.armorFilter("torso", type),
@@ -112,6 +112,13 @@ class ArmorSetForm extends React.Component {
     this.setArmorLists(type)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.armors !== prevProps.armors) {
+      console.log("updating...")
+      this.setArmorLists(this.state.armorType)
+    }
+  }
+
   render() {
     const { weapons, decorations } = this.props
     const { heads, torsos, arms, waists, feet } = this.state
@@ -122,7 +129,7 @@ class ArmorSetForm extends React.Component {
             <tr>
               <th>
                 Equipment |
-                Blademaster <input type="radio" name="armorType" value="Blademaster"
+                Blademaster <input type="radio" name="armorType" value="Blademaster" defaultChecked
                   onClick={this.changeArmorType.bind(this, "Blademaster")} />
                 Gunner <input type="radio" name="armorType" value="Gunner"
                   onClick={this.changeArmorType.bind(this, "Gunner")} />
@@ -161,7 +168,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={heads} selectItem={this.selectItem} item="selectedHead" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedHead.slots} decorations={this.availibleDecorations("selectedHead", "headDecorations", decorations)} part="headDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedHead.slots} decorations={this.availableDecorations("selectedHead", "headDecorations", decorations)} part="headDecorations" />
               </td>
             </tr>
             <tr>
@@ -170,7 +177,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={torsos} selectItem={this.selectItem} item="selectedTorso" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedTorso.slots} decorations={this.availibleDecorations("selectedTorso", "torsoDecorations", decorations)} part="torsoDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedTorso.slots} decorations={this.availableDecorations("selectedTorso", "torsoDecorations", decorations)} part="torsoDecorations" />
 
               </td>
             </tr>
@@ -180,7 +187,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={arms} selectItem={this.selectItem} item="selectedArms" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedArms.slots} decorations={this.availibleDecorations("selectedArms", "armsDecorations", decorations)} part="armsDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedArms.slots} decorations={this.availableDecorations("selectedArms", "armsDecorations", decorations)} part="armsDecorations" />
               </td>
             </tr>
             <tr>
@@ -189,7 +196,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={waists} selectItem={this.selectItem} item="selectedWaist" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedWaist.slots} decorations={this.availibleDecorations("selectedWaist", "waistDecorations", decorations)} part="waistDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedWaist.slots} decorations={this.availableDecorations("selectedWaist", "waistDecorations", decorations)} part="waistDecorations" />
               </td>
             </tr>
             <tr>
@@ -198,7 +205,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={feet} selectItem={this.selectItem} item="selectedFeet" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedFeet.slots} decorations={this.availibleDecorations("selectedFeet", "feetDecorations", decorations)} part="feetDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedFeet.slots} decorations={this.availableDecorations("selectedFeet", "feetDecorations", decorations)} part="feetDecorations" />
               </td>
             </tr>
             <tr>

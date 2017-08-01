@@ -140,7 +140,7 @@ class DecorationsMenu extends React.Component {
     // if (newValue.size === 1 && this.props.slots >= 1) this.changeDecorations(this.props.slots)
   }
 
-  renderDecorationsList(list) {
+  renderDecorationOptions(list) {
     return this.state[list].map((decoration, id) =>
       <option key={id} value={decoration.id}>{decoration.skillname} +{decoration.bonus1}, {decoration.name}, size: {decoration.size}</option>
     )
@@ -153,7 +153,7 @@ class DecorationsMenu extends React.Component {
       value={this.state.selectedDecorations[id].id}
     >
       <option value="-1">---</option>
-      {this.renderDecorationsList("decolist" + id)}
+      {this.renderDecorationOptions("decolist" + id)}
     </select>
   }
 
