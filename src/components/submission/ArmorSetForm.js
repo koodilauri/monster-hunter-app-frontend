@@ -103,7 +103,7 @@ class ArmorSetForm extends React.Component {
     const { weapons, decorations } = this.props
     const { heads, torsos, arms, waists, feet } = this.state
     return (
-      <div>
+      <div className="armor-set-form--container">
         <table className="table-armorset">
           <thead>
             <tr>
