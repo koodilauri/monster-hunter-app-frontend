@@ -15,13 +15,19 @@ class DecorationsMenu extends React.Component {
         bonus2: 0,
         skillname: "---"
       }
-    ]
+    ],
+    decolist0: [],
+    decolist1: [],
+    decolist2: [],
   }
 
   componentWillReceiveProps(newProps) {
     this.setState({
       decorations: newProps.decorations,
-      freeSlots: newProps.slots
+      freeSlots: newProps.slots,
+      decolist0: newProps.decorations,
+      decolist1: newProps.decorations,
+      decolist2: newProps.decorations,
     })
     switch (newProps.slots) {
       case 3:
@@ -77,7 +83,7 @@ class DecorationsMenu extends React.Component {
   handleChange = (id, e) => {
     e.preventDefault()
     const { decorations, selectedDecorations } = this.state
-    const { slots } = this.props
+    // const { slots } = this.props
     const newValue = decorations[e.target.value - 1] || {
       id: -1,
       size: 0,
@@ -88,6 +94,15 @@ class DecorationsMenu extends React.Component {
       bonus2: 0,
       skillname: "---"
     }
+
+    this.setState({
+      selectedDecorations: selectedDecorations
+        .slice(0, id)
+        .concat(Object.assign({}, selectedDecorations[id], newValue))
+        .concat(this.state.selectedDecorations.slice(id + 1))
+    })
+
+    this.props.selectDecoration(this.props.part, newValue, this.props.slots, id, selectedDecorations)
     // if (newValue.size === 3) {
     //   id = 0
     //   this.setState({
@@ -115,15 +130,7 @@ class DecorationsMenu extends React.Component {
     //       .concat(this.state.selectedDecorations.slice(id + 1))
     //   })
     // }
-    // else 
-      this.setState({
-      selectedDecorations: selectedDecorations
-        .slice(0, id)
-        .concat(Object.assign({}, selectedDecorations[id], newValue))
-        .concat(this.state.selectedDecorations.slice(id + 1))
-    })
-
-        this.props.selectDecoration(this.props.part, newValue)
+    // else
 
     // if (newValue.size === 3) {
     //   this.changeDecorations(1)
@@ -131,13 +138,10 @@ class DecorationsMenu extends React.Component {
     // if (newValue.size === 2 && this.props.slots === 2) this.changeDecorations(1)
     // if (newValue.size === 2 && this.props.slots === 3) this.changeDecorations(2)
     // if (newValue.size === 1 && this.props.slots >= 1) this.changeDecorations(this.props.slots)
-
-
-    console.log(this.state)
   }
 
-  renderDecorationsList() {
-    return this.state.decorations.map((decoration, id) =>
+  renderDecorationsList(list) {
+    return this.state[list].map((decoration, id) =>
       <option key={id} value={decoration.id}>{decoration.skillname} +{decoration.bonus1}, {decoration.name}, size: {decoration.size}</option>
     )
   }
@@ -149,7 +153,7 @@ class DecorationsMenu extends React.Component {
       value={this.state.selectedDecorations[id].id}
     >
       <option value="-1">---</option>
-      {this.renderDecorationsList()}
+      {this.renderDecorationsList("decolist" + id)}
     </select>
   }
 

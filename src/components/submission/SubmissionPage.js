@@ -14,7 +14,7 @@ import ArmorSetForm from "./ArmorSetForm"
 import SubmissionForm from "./SubmissionForm"
 import SubmissionList from "./SubmissionList"
 
-import "./SubmissionPage.css"
+// import "./SubmissionPage.css"
 
 class SubmissionPage extends Component {
 
