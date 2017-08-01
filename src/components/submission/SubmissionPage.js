@@ -14,6 +14,8 @@ import ArmorSetForm from "./ArmorSetForm"
 import SubmissionForm from "./SubmissionForm"
 import SubmissionList from "./SubmissionList"
 
+import "./SubmissionPage.css"
+
 class SubmissionPage extends Component {
 
   componentDidMount() {
@@ -23,8 +25,10 @@ class SubmissionPage extends Component {
   render() {
     return (
       <div>
-        <StyleAndArts />
-        <ArmorSetForm />
+        <div className="flex-row">
+          <StyleAndArts />
+          <ArmorSetForm />
+        </div>
         <SubmissionForm />
         <SubmissionList />
       </div>

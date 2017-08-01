@@ -86,7 +86,7 @@ class StyleAndArts extends React.Component {
     const { hunterArts } = this.props
     const { selectedHunterArts } = this.state
     return (
-      <div>
+      <div className="style-and-arts--container">
         <table className="table-style-art">
           <thead>
             <tr>
