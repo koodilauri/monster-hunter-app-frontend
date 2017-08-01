@@ -7,7 +7,13 @@ class DecorationsMenu extends React.Component {
     selectedDecorations: [
       {
         id: -1,
-        size: 0
+        size: 0,
+        name: "---",
+        skill1id: 149,
+        skill2id: 149,
+        bonus1: 0,
+        bonus2: 0,
+        skillname: "---"
       }
     ]
   }
@@ -44,7 +50,16 @@ class DecorationsMenu extends React.Component {
     const { selectedDecorations } = this.state
     let data = [];
     for (let i = 0; i < length; i++) {
-      data.push({ id: -1, size: 0 });
+      data.push({
+        id: -1,
+        size: 0,
+        name: "---",
+        skill1id: 149,
+        skill2id: 149,
+        bonus1: 0,
+        bonus2: 0,
+        skillname: "---"
+      });
     }
     this.setState({
       selectedDecorations: selectedDecorations.concat(data)
@@ -62,14 +77,63 @@ class DecorationsMenu extends React.Component {
   handleChange = (id, e) => {
     e.preventDefault()
     const { decorations, selectedDecorations } = this.state
-    const index = e.target.value - 1
-    this.setState({
+    const { slots } = this.props
+    const newValue = decorations[e.target.value - 1] || {
+      id: -1,
+      size: 0,
+      name: "---",
+      skill1id: 149,
+      skill2id: 149,
+      bonus1: 0,
+      bonus2: 0,
+      skillname: "---"
+    }
+    // if (newValue.size === 3) {
+    //   id = 0
+    //   this.setState({
+    //     selectedDecorations: selectedDecorations
+    //       .slice(0, id)
+    //       .concat(Object.assign({}, selectedDecorations[id], newValue))
+    //       .concat(this.state.selectedDecorations.slice(id + 1))
+    //   })
+    // }
+    // else if (newValue.size === 2 && slots === 2) {
+    //   id = 0
+    //   this.setState({
+    //     selectedDecorations: selectedDecorations
+    //       .slice(0, id)
+    //       .concat(Object.assign({}, selectedDecorations[id], newValue))
+    //       .concat(this.state.selectedDecorations.slice(id + 1))
+    //   })
+    // }
+    // else if (newValue.size === 2 && id === 2) {
+    //   id--
+    //   this.setState({
+    //     selectedDecorations: selectedDecorations
+    //       .slice(0, id)
+    //       .concat(Object.assign({}, selectedDecorations[id], newValue))
+    //       .concat(this.state.selectedDecorations.slice(id + 1))
+    //   })
+    // }
+    // else 
+      this.setState({
       selectedDecorations: selectedDecorations
         .slice(0, id)
-        .concat(Object.assign({}, selectedDecorations[id], decorations[index] ))
+        .concat(Object.assign({}, selectedDecorations[id], newValue))
         .concat(this.state.selectedDecorations.slice(id + 1))
     })
-    console.log(this.state, index)
+
+        this.props.selectDecoration(this.props.part, newValue)
+
+    // if (newValue.size === 3) {
+    //   this.changeDecorations(1)
+    // }
+    // if (newValue.size === 2 && this.props.slots === 2) this.changeDecorations(1)
+    // if (newValue.size === 2 && this.props.slots === 3) this.changeDecorations(2)
+    // if (newValue.size === 1 && this.props.slots >= 1) this.changeDecorations(this.props.slots)
+
+
+    console.log(this.state)
   }
 
   renderDecorationsList() {
@@ -84,7 +148,7 @@ class DecorationsMenu extends React.Component {
       onChange={this.handleChange.bind(this, id)}
       value={this.state.selectedDecorations[id].id}
     >
-      <option value="-1">---</option>    
+      <option value="-1">---</option>
       {this.renderDecorationsList()}
     </select>
   }

@@ -32,7 +32,8 @@ class ArmorSetForm extends React.Component {
     torsos: [],
     arms: [],
     waists: [],
-    feet: []
+    feet: [],
+    headDecorations: []
   }
 
   handleChange(field, e) {
@@ -43,19 +44,36 @@ class ArmorSetForm extends React.Component {
   }
 
   selectItem = (type, item) => {
-    if(item.type !== this.state.armorType && item.type !== "Both") console.log("väärä tyypi ", item.type)
+    if (item.type !== this.state.armorType && item.type !== "Both") console.log("väärä tyypi ", item.type)
     this.setState({
       [type]: item
     })
     console.log(this.state)
   }
 
+  selectDecoration = (part, decoration) => {
+    this.setState({
+      [part]: decoration
+    })
+  }
+
+  availibleDecorations = (part, decos, decorations) => {
+    console.log("changing deco list...")
+    return this.props.decorations.filter((decoration) => {
+      let usedSlots = 0
+      // for (let i = 0; i < this.state[decos].length; i++) {
+        usedSlots += this.state[decos].size || 0
+      // }
+      console.log(usedSlots, this.state[part], this.state[decos])
+      return decoration.size <= (this.state[part].slots - usedSlots)
+    })
+  }
   armorFilter = (part, type) =>
     this.props.armors.filter((armor) => {
       return (armor.part.toLowerCase() === part && (armor.type === type || armor.type === "Both"))
     })
 
-  setLists(type) {
+  setArmorLists(type) {
     console.log("setting lists...")
     this.setState({
       heads: this.armorFilter("head", type),
@@ -78,7 +96,7 @@ class ArmorSetForm extends React.Component {
   changeArmorType(type) {
     this.setState({ armorType: type })
     console.log("change armortype to " + type)
-    this.setLists(type)
+    this.setArmorLists(type)
   }
 
   render() {
@@ -130,7 +148,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={heads} selectItem={this.selectItem} item="selectedHead" />
               </td>
               <td>
-                <DecorationsMenu slots={this.state.selectedHead.slots} decorations={decorations} />
+                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedHead.slots} decorations={this.availibleDecorations("selectedHead", "headDecorations", decorations)} part="headDecorations" />
               </td>
             </tr>
             <tr>
