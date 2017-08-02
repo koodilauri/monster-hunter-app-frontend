@@ -5,53 +5,10 @@ import DecorationsMenu from "../ui/DecorationsMenu"
 import SelectCharm from "../ui/SelectCharm"
 import image from "../../images/"
 import "./ArmorSetForm.css"
+import { initialValues } from "./armorset.schema"
 
 class ArmorSetForm extends React.Component {
-  state = {
-    armorType: "Blademaster",
-    setName: "",
-    selectedWeapon: {
-      slots: 0,
-      class: "greatsword"
-    },
-    selectedHead: {
-      slots: 0
-    },
-    selectedTorso: {
-      slots: 0
-    },
-    selectedArms: {
-      slots: 0
-    },
-    selectedWaist: {
-      slots: 0
-    },
-    selectedFeet: {
-      slots: 0
-    },
-    selectedCharm: {
-      slots: 0,
-      skill1: {
-        id: 149
-      },
-      amount1: 0,
-      skill2: {
-        id: 149
-      },
-      amount2: 0
-    },
-    heads: [],
-    torsos: [],
-    arms: [],
-    waists: [],
-    feet: [],
-    weaponDecorations: [],
-    headDecorations: [],
-    torsoDecorations: [],
-    armsDecorations: [],
-    waistDecorations: [],
-    feetDecorations: []
-  }
+  state = initialValues
 
   handleChange(field, e) {
     const newValue = e.target.value
@@ -62,23 +19,35 @@ class ArmorSetForm extends React.Component {
 
   selectItem = (type, item) => {
     this.setState({
-      [type]: item
+      [type]: Object.assign({}, this.state[type], { equipment: item })
+
     })
     console.log(this.state)
   }
 
   selectDecoration = (part, decoration, size, id, decorations) => {
+    let usedSlots = 0
+    const sizes = decorations.map((deco) => deco.size)
+    for (let i = 0; i < decorations.length; i++) {
+      if (i !== id) usedSlots += sizes[i]
+      else usedSlots += decoration.size
+    }
+    console.log("used slots: ", usedSlots)
     this.setState({
-      [part]: decorations
-        .slice(0, id)
-        .concat(Object.assign({}, decorations[id], decoration))
-        .concat(decorations.slice(id + 1))
+      [part]: Object.assign({}, this.state[part], {
+        decorations: decorations
+          .slice(0, id)
+          .concat(Object.assign({}, decorations[id], decoration))
+          .concat(decorations.slice(id + 1))
+      }, {
+          usedSlots: usedSlots
+        })
     })
   }
 
-  availableDecorations = (part, decos, decorations) =>
+  availableDecorations = (part, decorations) =>
     this.props.decorations.filter((decoration) =>
-      decoration.size <= this.state[part].slots
+      decoration.size <= this.state[part].equipment.slots
     )
 
   armorFilter = (part, type) =>
@@ -168,7 +137,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={heads} selectItem={this.selectItem} item="selectedHead" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedHead.slots} decorations={this.availableDecorations("selectedHead", "headDecorations", decorations)} part="headDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={this.state.selectedHead.usedSlots} slots={this.state.selectedHead.equipment.slots} decorations={this.availableDecorations("selectedHead", decorations)} part="selectedHead" />
               </td>
             </tr>
             <tr>
@@ -177,7 +146,7 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={torsos} selectItem={this.selectItem} item="selectedTorso" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedTorso.slots} decorations={this.availableDecorations("selectedTorso", "torsoDecorations", decorations)} part="torsoDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={this.state.selectedTorso.usedSlots} slots={this.state.selectedTorso.equipment.slots} decorations={this.availableDecorations("selectedTorso", decorations)} part="selectedTorso" />
 
               </td>
             </tr>
@@ -187,7 +156,8 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={arms} selectItem={this.selectItem} item="selectedArms" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedArms.slots} decorations={this.availableDecorations("selectedArms", "armsDecorations", decorations)} part="armsDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={this.state.selectedArms.usedSlots} slots={this.state.selectedArms.equipment.slots} decorations={this.availableDecorations("selectedArms", decorations)} part="selectedArms" />
+
               </td>
             </tr>
             <tr>
@@ -196,7 +166,8 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={waists} selectItem={this.selectItem} item="selectedWaist" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedWaist.slots} decorations={this.availableDecorations("selectedWaist", "waistDecorations", decorations)} part="waistDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={this.state.selectedWaist.usedSlots} slots={this.state.selectedWaist.equipment.slots} decorations={this.availableDecorations("selectedWaist", decorations)} part="selectedWaist" />
+
               </td>
             </tr>
             <tr>
@@ -205,15 +176,17 @@ class ArmorSetForm extends React.Component {
                 <SearchSelectionInput items={feet} selectItem={this.selectItem} item="selectedFeet" />
               </td>
               <td>
-                <DecorationsMenu selectDecoration={this.selectDecoration} slots={this.state.selectedFeet.slots} decorations={this.availableDecorations("selectedFeet", "feetDecorations", decorations)} part="feetDecorations" />
+                <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={this.state.selectedFeet.usedSlots} slots={this.state.selectedFeet.equipment.slots} decorations={this.availableDecorations("selectedFeet", decorations)} part="selectedFeet" />
+
               </td>
             </tr>
             <tr>
               <td>
-                <SelectCharm />
+                <SelectCharm selectItem={this.selectItem} item="selectedCharm" />
               </td>
               <td>
-                ---
+                <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={this.state.selectedCharm.usedSlots} slots={this.state.selectedCharm.equipment.slots} decorations={this.availableDecorations("selectedCharm", decorations)} part="selectedCharm" />
+
               </td>
             </tr>
           </tbody>

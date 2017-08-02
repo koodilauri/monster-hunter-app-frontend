@@ -3,7 +3,7 @@ import React from "react"
 class DecorationsMenu extends React.Component {
   state = {
     decorations: [],
-    freeSlots: 0,
+    usedSlots: 0,
     selectedDecorations: [
       {
         id: -1,
@@ -24,10 +24,7 @@ class DecorationsMenu extends React.Component {
   componentWillReceiveProps(newProps) {
     this.setState({
       decorations: newProps.decorations,
-      freeSlots: newProps.slots,
-      decolist0: newProps.decorations,
-      decolist1: newProps.decorations,
-      decolist2: newProps.decorations,
+      usedSlots: newProps.usedSlots
     })
     switch (newProps.slots) {
       case 3:
@@ -44,6 +41,30 @@ class DecorationsMenu extends React.Component {
 
     }
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.decorations.length !== this.props.decorations.length) {
+      console.log("new decos for component")
+      this.setState({
+        decolist0: this.props.decorations,
+        decolist1: this.props.decorations,
+        decolist2: this.props.decorations
+      })
+      //to do: initialize decos for the armor piece so old ones dont linger
+    }
+    if (prevProps.usedSlots !== this.props.usedSlots) {
+      console.log("updated: free slots ", this.props.slots - this.state.usedSlots, this.state)
+      this.setState({
+        decolist0: this.availableDecorations(this.state.selectedDecorations[0] || {size:0}, this.props.slots - this.state.usedSlots),
+        decolist1: this.availableDecorations(this.state.selectedDecorations[1] || {size:0}, this.props.slots - this.state.usedSlots),
+        decolist2: this.availableDecorations(this.state.selectedDecorations[2] || {size:0}, this.props.slots - this.state.usedSlots)
+      })
+    }
+  }
+
+  availableDecorations = (selectedDecoration, max) =>
+    this.state.decorations.filter((decoration) =>
+      decoration.size <= selectedDecoration.size || decoration.size <= max) /// shiet
 
   changeDecorations(amount) {
     const { selectedDecorations } = this.state
@@ -101,7 +122,6 @@ class DecorationsMenu extends React.Component {
         .concat(Object.assign({}, selectedDecorations[id], newValue))
         .concat(this.state.selectedDecorations.slice(id + 1))
     })
-
     this.props.selectDecoration(this.props.part, newValue, this.props.slots, id, selectedDecorations)
     // if (newValue.size === 3) {
     //   id = 0

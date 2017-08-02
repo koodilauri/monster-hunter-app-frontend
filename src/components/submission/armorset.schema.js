@@ -1,35 +1,62 @@
+
 export const initialValues = {
+  armorType: "Blademaster",
   setName: "",
-  head: {
-    name: "",
-    id: 1
+  selectedWeapon: {
+    equipment: {
+      slots: 0,
+      class: "greatsword"
+    }
   },
-  torso: {
-    name: "",
-    id: 2
-  },
-  arms: {
-    name: "",
-    id: 3
-  },
-  waist: {
-    name: "",
-    id: 4
-  },
-  feet: {
-    name: "",
-    id: 5
-  },
-  charm: {
-    slots: 0,
-    skill1: {
-      id: 149
+  selectedHead: {
+    equipment: {
+      slots: 0
     },
-    amount1: 0,
-    skill2: {
-      id: 149
-    },
-    amount2: 0
+    decorations: [],
+    usedSlots: 0
   },
-  decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
+  selectedTorso: {
+    equipment: {
+      slots: 0
+    },
+    decorations: [],
+    usedSlots: 0
+  },
+  selectedArms: {
+    equipment: {
+      slots: 0
+    },
+    decorations: [],
+    usedSlots: 0
+  },
+  selectedWaist: {
+    equipment: {
+      slots: 0
+    },
+    decorations: [],
+    usedSlots: 0
+  },
+  selectedFeet: {
+    equipment: {
+      slots: 0
+    },
+    decorations: [],
+    usedSlots: 0
+  },
+  selectedCharm: {
+    equipment: {
+      slots: 0,
+      skill1:149,
+      amount1: 0,
+      skill2: 149,
+      amount2: 0
+    },
+    decorations: [],
+    usedSlots: 0
+  },
+  heads: [],
+  torsos: [],
+  arms: [],
+  waists: [],
+  feet: []
 }
