@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import "./SelectCharm.css"
 
 class SelectCharm extends React.Component {
   state = {
@@ -30,21 +31,33 @@ class SelectCharm extends React.Component {
   render() {
     const { skills } = this.props
     return (
-      <div>
+      <div className="charm-container">
         <select onChange={this.handleChange.bind(this, "slots")}>
           <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
         </select>
-        <select onChange={this.handleChange.bind(this, "skill1")}>
+        <select 
+        value={this.state.charm.skill1}
+        onChange={this.handleChange.bind(this, "skill1")}>
           {this.renderSkills(skills)}
         </select>
-        <input onChange={this.handleChange.bind(this, "amount1")} type="number" placeholder="skill 1 amount" />
-        <select onChange={this.handleChange.bind(this, "skill2")}>
+        <input 
+        className="charm--input"
+        onChange={this.handleChange.bind(this, "amount1")} 
+        type="number" 
+        placeholder="skill 1 amount" />
+        <select 
+        value={this.state.charm.skill2}
+        onChange={this.handleChange.bind(this, "skill2")}>
           {this.renderSkills(skills)}
         </select>
-        <input onChange={this.handleChange.bind(this, "amount2")} type="number" placeholder="skill 2 amount" />
+        <input 
+        className="charm--input"        
+        onChange={this.handleChange.bind(this, "amount2")} 
+        type="number" 
+        placeholder="skill 2 amount" />
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { saveArmorSetForm } from "../../actions/armorSetForm"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import DecorationsMenu from "../ui/DecorationsMenu"
 import SelectCharm from "../ui/SelectCharm"
@@ -15,6 +16,7 @@ class ArmorSetForm extends React.Component {
     this.setState({
       [field]: newValue
     })
+    this.props.saveArmorSetForm(this.state)
   }
 
   selectItem = (type, item) => {
@@ -203,6 +205,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  saveArmorSetForm(armorSet) {
+    dispatch(saveArmorSetForm(armorSet))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArmorSetForm)

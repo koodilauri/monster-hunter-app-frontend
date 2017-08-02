@@ -162,7 +162,7 @@ class DecorationsMenu extends React.Component {
 
   renderDecorationOptions(list) {
     return this.state[list].map((decoration, id) =>
-      <option key={id} value={decoration.id}>{decoration.skillname} +{decoration.bonus1}, {decoration.name}, size: {decoration.size}</option>
+      <option key={id} value={decoration.id}>{decoration.skillname} +{decoration.bonus1}, size: {decoration.size}</option>
     )
   }
 
@@ -181,15 +181,15 @@ class DecorationsMenu extends React.Component {
     const { selectedDecorations } = this.state
     return (
       <div>
-        {selectedDecorations[0] ?
+        {selectedDecorations[0] && this.state.decolist0[0] ?
           <div>{this.renderDecorations(0)}</div>
-          : "-"}
-        {selectedDecorations[1] ?
+          : ""}
+        {selectedDecorations[1] && this.state.decolist1[0] ?
           <div>{this.renderDecorations(1)}</div>
-          : "-"}
-        {selectedDecorations[2] ?
+          : ""}
+        {selectedDecorations[2] && this.state.decolist2[0] ?
           <div>{this.renderDecorations(2)}</div>
-          : "-"}
+          : ""}
       </div>
     )
   }
