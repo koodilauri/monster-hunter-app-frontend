@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import { saveSubmission } from "../../actions/submission"
+import { updateSubmissionForm } from "../../actions/form"
 
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import SelectTimeInput from "../ui/SelectTimeInput"
@@ -88,6 +89,7 @@ class SubmissionForm extends Component {
     stateChange.newSubmission[field] = newValue
     stateChange.errors[field] = this.validateInput(field, newValue)
     this.setState(stateChange)
+    this.props.updateSubmissionForm(stateChange.newSubmission)
   }
 
   selectItem = (type, item) => {
@@ -95,6 +97,7 @@ class SubmissionForm extends Component {
     let stateChange = Object.assign({}, this.state.newSubmission)
     stateChange[type] = item
     this.setState({ newSubmission: stateChange })
+    this.props.updateSubmissionForm(stateChange)
   }
 
   setTime = (unit, amount) => {
@@ -102,6 +105,7 @@ class SubmissionForm extends Component {
     let stateChange = Object.assign({}, this.state.newSubmission)
     stateChange[unit] = amount
     this.setState({ newSubmission: stateChange })
+    this.props.updateSubmissionForm(stateChange)    
   }
 
   render() {
@@ -157,6 +161,9 @@ const mapDispatchToProps = dispatch => ({
       newSubmission,
       armorSet
     }))
+  },
+  updateSubmissionForm(newSubmission) {
+    dispatch(updateSubmissionForm(newSubmission))
   }
 })
 

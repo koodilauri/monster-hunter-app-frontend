@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { updateStyleAndArts } from "../../actions/form"
 import "./StyleAndArt.css"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 
@@ -28,7 +29,7 @@ class StyleAndArts extends React.Component {
     let stateChange = Object.assign({}, this.state)
     stateChange[field] = newValue
     this.setState(stateChange)
-
+    this.props.updateStyleAndArts({ selectedStyle: stateChange.selectedStyle })
     switch (newValue) {
       case "Guild":
         this.changeHunterArt(2)
@@ -48,12 +49,14 @@ class StyleAndArts extends React.Component {
   }
 
   selectItem = (id, item) => {
-    this.setState({
+    const newState = Object.assign({}, this.state, {
       selectedHunterArts: this.state.selectedHunterArts
         .slice(0, id)
         .concat(Object.assign({}, { id: item.id, name: item.name, gaugesize: item.gaugesize, description: item.description, weapon: item.weapon }))
         .concat(this.state.selectedHunterArts.slice(Number(id) + 1))
     })
+    this.setState(newState)
+    this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
   }
 
   changeHunterArt(amount) {
@@ -69,17 +72,21 @@ class StyleAndArts extends React.Component {
     for (let i = 0; i < length; i++) {
       data.push({ id: -1, name: "", gaugesize: 0, description: "", weapon: "General" });
     }
-    this.setState({
+    const newState = Object.assign({}, this.state, {
       selectedHunterArts: selectedHunterArts.concat(data)
     })
+    this.setState(newState)
+    this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
   }
 
   removeHunterArt(index) {
     const { selectedHunterArts } = this.state
-    this.setState({
+    const newState = Object.assign({}, this.state, {
       selectedHunterArts: selectedHunterArts
         .slice(0, index)
     })
+    this.setState(newState)
+    this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
   }
 
   render() {
@@ -163,6 +170,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  updateStyleAndArts(state) {
+    dispatch(updateStyleAndArts(state))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StyleAndArts)

@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { saveArmorSetForm } from "../../actions/armorSetForm"
+import { updateArmorSetForm } from "../../actions/form"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import DecorationsMenu from "../ui/DecorationsMenu"
 import SelectCharm from "../ui/SelectCharm"
@@ -13,18 +13,19 @@ class ArmorSetForm extends React.Component {
 
   handleChange(field, e) {
     const newValue = e.target.value
-    this.setState({
-      [field]: newValue
-    })
-    this.props.saveArmorSetForm(this.state)
+    const newState = Object.assign({}, this.state, { [field]: newValue })
+    this.setState(newState)
+    this.props.updateArmorSetForm(newState)
   }
 
   selectItem = (type, item) => {
-    this.setState({
-      [type]: Object.assign({}, this.state[type], { equipment: item })
-
+    const newState = Object.assign({}, this.state, {
+      [type]: Object.assign({}, this.state[type], {
+        equipment: item
+      })
     })
-    console.log(this.state)
+    this.setState(newState)
+    this.props.updateArmorSetForm(newState)
   }
 
   selectDecoration = (part, decoration, size, id, decorations) => {
@@ -34,8 +35,8 @@ class ArmorSetForm extends React.Component {
       if (i !== id) usedSlots += sizes[i]
       else usedSlots += decoration.size
     }
-    console.log("used slots: ", usedSlots)
-    this.setState({
+
+    const newState = Object.assign({}, this.state, {
       [part]: Object.assign({}, this.state[part], {
         decorations: decorations
           .slice(0, id)
@@ -45,6 +46,9 @@ class ArmorSetForm extends React.Component {
           usedSlots: usedSlots
         })
     })
+
+    this.setState(newState)
+    this.props.updateArmorSetForm(newState)
   }
 
   availableDecorations = (part, decorations) =>
@@ -78,14 +82,15 @@ class ArmorSetForm extends React.Component {
   }
 
   changeArmorType(type) {
-    this.setState({ armorType: type })
-    console.log("change armortype to " + type)
+    const newState = Object.assign({}, this.state, { armorType: type })
+    this.setState(newState)
+    this.props.updateArmorSetForm(newState)
     this.setArmorLists(type)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.armors !== prevProps.armors) {
-      console.log("updating...")
+      console.log("updating armors...")
       this.setArmorLists(this.state.armorType)
     }
   }
@@ -205,8 +210,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  saveArmorSetForm(armorSet) {
-    dispatch(saveArmorSetForm(armorSet))
+  updateArmorSetForm(armorSet) {
+    dispatch(updateArmorSetForm(armorSet))
   }
 })
 

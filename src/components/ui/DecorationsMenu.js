@@ -44,7 +44,7 @@ class DecorationsMenu extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.decorations.length !== this.props.decorations.length) {
-      console.log("new decos for component")
+      // console.log("new decos for component")
       this.setState({
         decolist0: this.props.decorations,
         decolist1: this.props.decorations,
@@ -53,7 +53,7 @@ class DecorationsMenu extends React.Component {
       //to do: initialize decos for the armor piece so old ones dont linger
     }
     if (prevProps.usedSlots !== this.props.usedSlots) {
-      console.log("updated: free slots ", this.props.slots - this.state.usedSlots, this.state)
+      // console.log("updated: free slots ", this.props.slots - this.state.usedSlots, this.state)
       this.setState({
         decolist0: this.availableDecorations(this.state.selectedDecorations[0] || {size:0}, this.props.slots - this.state.usedSlots),
         decolist1: this.availableDecorations(this.state.selectedDecorations[1] || {size:0}, this.props.slots - this.state.usedSlots),

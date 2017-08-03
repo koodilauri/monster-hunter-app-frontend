@@ -17,9 +17,25 @@ import SubmissionList from "./SubmissionList"
 // import "./SubmissionPage.css"
 
 class SubmissionPage extends Component {
+  state = {
+    submission: {},
+    armorset: {},
+    styleAndArts: {}
+  }
 
   componentDidMount() {
     this.props.getAll()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps !== this.props) {
+      this.setState({
+        submission: this.props.submission,
+        armorset: this.props.armorset,
+        styleAndArts : this.props.styleAndArts
+      })
+      console.log("submissionPage received new props ", this.props.submission, this.props.armorset, this.props.styleAndArts)
+    }
   }
 
   render() {
@@ -37,6 +53,9 @@ class SubmissionPage extends Component {
 }
 
 const mapStateToProps = state => ({
+  submission: state.form.submission,
+  armorset: state.form.armorset,
+  styleAndArts: state.form.styleAndArts
 })
 
 const mapDispatchToProps = dispatch => ({
