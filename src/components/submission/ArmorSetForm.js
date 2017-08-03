@@ -15,17 +15,17 @@ class ArmorSetForm extends React.Component {
     const newValue = e.target.value
     const newState = Object.assign({}, this.state, { [field]: newValue })
     this.setState(newState)
-    this.props.updateArmorSetForm(newState)
+    this.props.updateArmorSetForm({ [field]: newValue })
   }
 
   selectItem = (type, item) => {
-    const newState = Object.assign({}, this.state, {
+    const newValue = {
       [type]: Object.assign({}, this.state[type], {
         equipment: item
       })
-    })
-    this.setState(newState)
-    this.props.updateArmorSetForm(newState)
+    }
+    this.setState(Object.assign({}, this.state, newValue))
+    this.props.updateArmorSetForm(newValue)
   }
 
   selectDecoration = (part, decoration, size, id, decorations) => {
@@ -35,8 +35,7 @@ class ArmorSetForm extends React.Component {
       if (i !== id) usedSlots += sizes[i]
       else usedSlots += decoration.size
     }
-
-    const newState = Object.assign({}, this.state, {
+    const newValue = {
       [part]: Object.assign({}, this.state[part], {
         decorations: decorations
           .slice(0, id)
@@ -45,10 +44,9 @@ class ArmorSetForm extends React.Component {
       }, {
           usedSlots: usedSlots
         })
-    })
-
-    this.setState(newState)
-    this.props.updateArmorSetForm(newState)
+    }
+    this.setState(Object.assign({}, this.state, newValue))
+    this.props.updateArmorSetForm(newValue)
   }
 
   availableDecorations = (part, decorations) =>
@@ -84,7 +82,7 @@ class ArmorSetForm extends React.Component {
   changeArmorType(type) {
     const newState = Object.assign({}, this.state, { armorType: type })
     this.setState(newState)
-    this.props.updateArmorSetForm(newState)
+    this.props.updateArmorSetForm({ armorType: type })
     this.setArmorLists(type)
   }
 

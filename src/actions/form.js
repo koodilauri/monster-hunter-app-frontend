@@ -9,9 +9,9 @@ export const updateArmorSetForm = (armorSet) => {
   }
 }
 
-export const updateSubmissionForm = (submission) => {
+export const updateSubmissionForm = (newSubmission) => {
   return {
-    payload: submission,
+    payload: newSubmission,
     type: FORM_UPDATE_SUBMISSION
   }
 }

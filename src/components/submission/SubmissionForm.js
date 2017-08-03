@@ -142,7 +142,7 @@ class SubmissionForm extends Component {
             </select>
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary" disabled>Submit</button>
           </div>
         </form>
       </div>

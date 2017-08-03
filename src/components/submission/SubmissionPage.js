@@ -7,7 +7,7 @@ import { getHunterArts } from "../../actions/hunterArt"
 import { getSkills } from "../../actions/skill"
 import { getWeapons } from "../../actions/weapon"
 import { getDecorations } from "../../actions/decoration"
-import { getSubmissions } from "../../actions/submission"
+import { getSubmissions, saveSubmission } from "../../actions/submission"
 
 import StyleAndArts from "./StyleAndArts"
 import ArmorSetForm from "./ArmorSetForm"
@@ -18,8 +18,8 @@ import SubmissionList from "./SubmissionList"
 
 class SubmissionPage extends Component {
   state = {
-    submission: {},
-    armorset: {},
+    newSubmission: {},
+    armorSet: {},
     styleAndArts: {}
   }
 
@@ -30,12 +30,17 @@ class SubmissionPage extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps !== this.props) {
       this.setState({
-        submission: this.props.submission,
-        armorset: this.props.armorset,
-        styleAndArts : this.props.styleAndArts
+        newSubmission: this.props.newSubmission,
+        armorSet: this.props.armorSet,
+        styleAndArts: this.props.styleAndArts
       })
-      console.log("submissionPage received new props ", this.props.submission, this.props.armorset, this.props.styleAndArts)
     }
+  }
+  
+  handleSubmit = (e) => {
+    const {newSubmission, armorSet, styleAndArts} = this.state
+    e.preventDefault()
+    this.props.saveSubmission(newSubmission, armorSet, styleAndArts)
   }
 
   render() {
@@ -46,6 +51,8 @@ class SubmissionPage extends Component {
           <ArmorSetForm />
         </div>
         <SubmissionForm />
+        <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
+
         <SubmissionList />
       </div>
     )
@@ -53,8 +60,8 @@ class SubmissionPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  submission: state.form.submission,
-  armorset: state.form.armorset,
+  newSubmission: state.form.newSubmission,
+  armorSet: state.form.armorSet,
   styleAndArts: state.form.styleAndArts
 })
 
@@ -67,6 +74,13 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getSkills())
     dispatch(getWeapons())
     dispatch(getDecorations())
+  },
+  saveSubmission(newSubmission, armorSet, styleAndArts) {
+    dispatch(saveSubmission({
+      newSubmission,
+      armorSet,
+      styleAndArts
+    }))
   }
 })
 
