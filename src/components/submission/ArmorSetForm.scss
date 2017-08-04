@@ -1,0 +1,30 @@
+.armor-set-form--container {
+  margin: 10px 10px 10px 0;
+}
+
+.table-armorset{
+  border: 1px solid black; 
+  .table-armorset--long-column {
+    width: 80%; 
+  }
+  tr{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+  }
+  .table-armorset--single{
+    width: 100%;
+    input{
+      width: 100%;
+    }
+  }
+  td{
+    display: flex;
+    flex-direction: row;
+    .search-container{
+      width: 80%;
+      height: 100%;
+      margin:0px;
+    }
+  }
+}

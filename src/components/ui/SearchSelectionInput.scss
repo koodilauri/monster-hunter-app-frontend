@@ -1,0 +1,24 @@
+ .search-menu {
+  max-height: 200px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-container {
+}
+
+.search-menu--item {
+  background-color: #e5e5e5;
+  border-block-start: 0 solid white;
+  border-top: 1px solid black;
+  padding: 10px;
+}
+
+.search-menu--item:hover{
+  background-image: -webkit-gradient(linear, left top, left bottom, from(darkgreen),to(#91fc7e));
+  background-image: -webkit-linear-gradient(top, darkgreen, #91fc7e);
+  background-image: -moz-linear-gradient(top, darkgreen, #91fc7e);
+  background-image: linear-gradient(to bottom, darkgreen, #91fc7e);
+  color: white;
+}
