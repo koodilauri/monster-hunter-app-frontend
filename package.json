@@ -20,6 +20,7 @@
     "redux": "^3.7.0",
     "redux-saga": "^0.15.4",
     "regex": "^0.1.1",
+    "node-sass-chokidar": "0.0.3",
     "schema-inspector": "^1.6.8"
   },
   "scripts": {
@@ -33,7 +34,6 @@
   },
   "devDependencies": {
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.0.2"
   }
 }
