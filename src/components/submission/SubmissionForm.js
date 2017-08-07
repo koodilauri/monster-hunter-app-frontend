@@ -8,53 +8,17 @@ import SelectTimeInput from "../ui/SelectTimeInput"
 
 import inspector from "schema-inspector"
 import { initialValues, validations } from "./submission.schema"
-import { validations as styleAndArtsSchema } from "./styleAndArts.schema"
-import { validations as armorSetSchema } from "./armorset.schema"
-import { validations as submissionSchema } from "./submission.schema"
 
 class SubmissionForm extends Component {
 
   state = {
     newSubmission: initialValues,
-    armorSet: {
-      setName: "",
-      head: {
-        name: "",
-        id: 1
-      },
-      torso: {
-        name: "",
-        id: 2
-      },
-      arms: {
-        name: "",
-        id: 3
-      },
-      waist: {
-        name: "",
-        id: 4
-      },
-      feet: {
-        name: "",
-        id: 5
-      },
-      charm: {
-        slots: 0,
-        skill1: {
-          id: 149
-        },
-        amount1: 0,
-        skill2: {
-          id: 149
-        },
-        amount2: 0
-      },
-      decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
-    },
     errors: {
-      newSubmission: {
-        name:""
-      },
+      name: [],
+      quest: [],
+      weapon: [],
+      minutes: [],
+      seconds: [],
     },
     styles: ["Guild", "Striker", "Adept", "Aerial"]
   }
@@ -80,14 +44,11 @@ class SubmissionForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     console.log(this.state)
-    const result2 = this.props.validateForm("armorSet", armorSetSchema)
-    const result3 = this.props.validateForm("newSubmission", submissionSchema)
-    const result1 = this.props.validateForm("styleAndArts", styleAndArtsSchema)
-    this.setState({ errors: { styleandarts: result1.errors, armorset: result2.errors, newsubmission: result3.errors } })
-    if (result1.valid && result2.valid && result3.valid) {
-      this.props.saveSubmission(this.props.newSubmission, this.props.armorSet, this.props.styleAndArts)
-    }else console.log("invalid")
-    console.log(this.props.newSubmission, this.props.armorSet, this.props.styleAndArts, this.state)
+    const result = this.validateForm()
+    this.setState({ errors: result.errors })
+    if (result.valid) {
+      this.props.onSubmit(this.state.newSubmission)
+    }
   }
 
   handleChange(field, e) {
@@ -99,12 +60,13 @@ class SubmissionForm extends Component {
     this.props.updateSubmissionForm(stateChange.newSubmission)
   }
 
-  selectItem = (type, item) => {
-    console.log("valittu item ", type)
-    let stateChange = Object.assign({}, this.state.newSubmission)
-    stateChange[type] = item
-    this.setState({ newSubmission: stateChange })
-    this.props.updateSubmissionForm(stateChange)
+  selectItem = (field, item) => {
+    console.log("valittu item ", field)
+    let stateChange = Object.assign({}, this.state)
+    stateChange.newSubmission[field] = item
+    stateChange.errors[field] = this.validateInput(field, item)    
+    this.setState(stateChange)
+    this.props.updateSubmissionForm(stateChange.newSubmission)
   }
 
   setTime = (unit, amount) => {
@@ -131,14 +93,14 @@ class SubmissionForm extends Component {
               onChange={this.handleChange.bind(this, "name")}
             />
             <div>
-              {/* {errors.name.map((error, i) =>
+              { errors.name.map((error, i) =>
                 <div key={i}>{error.message}</div>
-              )} */}
+              )}
             </div>
           </div>
-          <SearchSelectionInput items={quests} selectItem={this.selectItem} item="quest" />
+          <SearchSelectionInput item="quest" items={quests} selectItem={this.selectItem} errors={errors.quest}/>
           <SelectTimeInput setTime={this.setTime} />
-          <SearchSelectionInput items={weapons} selectItem={this.selectItem} item="weapon" />
+          <SearchSelectionInput item="weapon" items={weapons} selectItem={this.selectItem} errors={errors.weapon}/>
           <div className="form-group">
             <select
               name="style"

@@ -48,6 +48,7 @@ class SearchSelectionInput extends Component {
 
   render() {
     const { menuVisible, searchVisible, searchValue, shownItems, selectedItem } = this.state
+    const { errors } = this.props
     return (
       <div className="form-group search-container">
         <input
@@ -69,6 +70,15 @@ class SearchSelectionInput extends Component {
               onClick={this.handleSelect.bind(this, index)}
             >{item.name}</div>
           )}
+        </div>
+        <div>
+          { errors ? 
+            errors.map((error, i) =>
+              <div key={i}>{error.message}</div>
+            )
+              :
+            null
+          }
         </div>
       </div>
     )
