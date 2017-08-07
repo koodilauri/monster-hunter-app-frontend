@@ -1,9 +1,7 @@
 import { initialValues as armorSet } from "../components/submission/armorset.schema"
 import { initialValues as newSubmission } from "../components/submission/submission.schema"
-const styleAndArts = {
-  selectedStyle: "",
-  selectedHunterArts: []
-}
+import { initialValues as styleAndArts } from "../components/submission/styleAndArts.schema"
+
 
 export const form = (state = { newSubmission, armorSet, styleAndArts }, action) => {
   switch (action.type) {

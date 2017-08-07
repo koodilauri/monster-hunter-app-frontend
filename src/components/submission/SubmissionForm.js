@@ -8,6 +8,9 @@ import SelectTimeInput from "../ui/SelectTimeInput"
 
 import inspector from "schema-inspector"
 import { initialValues, validations } from "./submission.schema"
+import { validations as styleAndArtsSchema } from "./styleAndArts.schema"
+import { validations as armorSetSchema } from "./armorset.schema"
+import { validations as submissionSchema } from "./submission.schema"
 
 class SubmissionForm extends Component {
 
@@ -49,7 +52,9 @@ class SubmissionForm extends Component {
       decorations: [{ decorationAmount: "1", decorationName: "placeholder" }]
     },
     errors: {
-      name: [],
+      newSubmission: {
+        name:""
+      },
     },
     styles: ["Guild", "Striker", "Adept", "Aerial"]
   }
@@ -75,12 +80,14 @@ class SubmissionForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     console.log(this.state)
-    const result = this.validateForm()
-    this.setState({ errors: result.errors })
-    if (result.valid) {
-      this.props.saveSubmission(this.state.newSubmission, this.state.armorSet)
-    }
-    console.log(this.state)
+    const result2 = this.props.validateForm("armorSet", armorSetSchema)
+    const result3 = this.props.validateForm("newSubmission", submissionSchema)
+    const result1 = this.props.validateForm("styleAndArts", styleAndArtsSchema)
+    this.setState({ errors: { styleandarts: result1.errors, armorset: result2.errors, newsubmission: result3.errors } })
+    if (result1.valid && result2.valid && result3.valid) {
+      this.props.saveSubmission(this.props.newSubmission, this.props.armorSet, this.props.styleAndArts)
+    }else console.log("invalid")
+    console.log(this.props.newSubmission, this.props.armorSet, this.props.styleAndArts, this.state)
   }
 
   handleChange(field, e) {
@@ -124,9 +131,9 @@ class SubmissionForm extends Component {
               onChange={this.handleChange.bind(this, "name")}
             />
             <div>
-              {errors.name.map((error, i) =>
+              {/* {errors.name.map((error, i) =>
                 <div key={i}>{error.message}</div>
-              )}
+              )} */}
             </div>
           </div>
           <SearchSelectionInput items={quests} selectItem={this.selectItem} item="quest" />
@@ -142,7 +149,7 @@ class SubmissionForm extends Component {
             </select>
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary" disabled>Submit</button>
+            <button type="submit" className="btn btn-primary">Submit</button>
           </div>
         </form>
       </div>
@@ -156,10 +163,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  saveSubmission(newSubmission, armorSet) {
+  saveSubmission(newSubmission, armorSet, styleAndArts) {
     dispatch(saveSubmission({
       newSubmission,
-      armorSet
+      armorSet,
+      styleAndArts
     }))
   },
   updateSubmissionForm(newSubmission) {

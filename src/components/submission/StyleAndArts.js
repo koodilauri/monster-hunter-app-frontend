@@ -3,26 +3,10 @@ import { connect } from "react-redux"
 import { updateStyleAndArts } from "../../actions/form"
 import "./StyleAndArt.css"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
+import { initialValues } from "./styleAndArts.schema"
 
 class StyleAndArts extends React.Component {
-  state = {
-    selectedStyle: "Guild",
-    styles: ["Guild", "Striker", "Adept", "Aerial"],
-    selectedHunterArts: [{
-      id: -1,
-      name: "art1",
-      gaugesize: 0,
-      description: "",
-      weapon: "General"
-    },
-    {
-      id: -1,
-      name: "art2",
-      gaugesize: 0,
-      description: "",
-      weapon: "General"
-    }]
-  }
+  state = initialValues
 
   handleChange(field, e) {
     const newValue = e.target.value
@@ -114,7 +98,10 @@ class StyleAndArts extends React.Component {
                   name="selectedStyle"
                   onChange={this.handleChange.bind(this, "selectedStyle")}
                 >
-                  {this.state.styles.map(style => <option key={style} value={style}>{style}</option>)}
+                  <option value="Guild">Guild</option>
+                  <option value="Striker">Striker</option>
+                  <option value="Adept">Adept</option>
+                  <option value="Aerial">"Aerial"</option>
                 </select>
               </td>
             </tr>

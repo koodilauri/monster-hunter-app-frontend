@@ -14,13 +14,20 @@ import ArmorSetForm from "./ArmorSetForm"
 import SubmissionForm from "./SubmissionForm"
 import SubmissionList from "./SubmissionList"
 
+import inspector from "schema-inspector"
+import { initialValues as styleValues, validations as styleAndArtsSchema } from "./styleAndArts.schema"
+import { initialValues as armorSetValues, validations as armorSetSchema } from "./armorset.schema"
+import { validations as submissionSchema } from "./submission.schema"
 // import "./SubmissionPage.css"
 
 class SubmissionPage extends Component {
   state = {
     newSubmission: {},
-    armorSet: {},
-    styleAndArts: {}
+    armorSet: armorSetValues,
+    styleAndArts: styleValues,
+    errors: {
+      name: []
+    }
   }
 
   componentDidMount() {
@@ -36,11 +43,37 @@ class SubmissionPage extends Component {
       })
     }
   }
-  
+  validateInput(field, value, schema) {
+    const validation = schema.properties[field]
+    const result = inspector.validate(validation, value)
+    return result.error
+  }
+  validateForm(form, schema) {
+    let valid = true
+    const newErrors = Object.keys(this.state[form]).reduce((accumulated, key) => {
+      const value = this.state[form][key]
+      const errors = this.validateInput(key, value, schema)
+      if (errors.length > 0) valid = false
+      accumulated[key] = errors
+      return accumulated
+    }, {})
+    return { valid, errors: newErrors }
+  }
+
   handleSubmit = (e) => {
-    const {newSubmission, armorSet, styleAndArts} = this.state
+    // const { newSubmission, armorSet, styleAndArts } = this.state
     e.preventDefault()
-    this.props.saveSubmission(newSubmission, armorSet, styleAndArts)
+    console.log(this.state)
+    const result1 = this.validateForm("styleAndArts", styleAndArtsSchema)
+    const result2 = this.validateForm("armorSet", armorSetSchema)
+    const result3 = this.validateForm("newSubmission", submissionSchema)
+    this.setState({ errors: { styleandarts: result1.errors, armorset: result2.errors, newsubmission: result3.errors } })
+    if (result1.valid && result2.valid && result3.valid) {
+      console.log("valid")
+      // this.props.saveSubmission(newSubmission, armorSet, styleAndArts)
+    } else console.log("invalid", { errors: { styleandarts: result1.errors, armorset: result2.errors, newsubmission: result3.errors } })
+    console.log(this.state.errors)
+
   }
 
   render() {
@@ -50,9 +83,13 @@ class SubmissionPage extends Component {
           <StyleAndArts />
           <ArmorSetForm />
         </div>
-        <SubmissionForm />
-        <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
-
+        <SubmissionForm newSubmission={this.props.newSubmission} armorSet={this.props.armorSet} styleAndArts={this.props.styleAndArts} validateForm={this.validateForm.bind(this)} />
+        {/* <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button> */}
+        {/* {Object.keys(this.state.errors).map((key, index) =>
+          this.state.errors[key].map((err, i) =>
+            <div key={i}>{err.message}</div>
+          )
+        )} */}
         <SubmissionList />
       </div>
     )
