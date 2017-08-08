@@ -9,17 +9,16 @@ import {
   updateFormErrors,
 } from "../actions/form"
 
-const validateFormUpdate = (action, store) => {
-  const { form, field, value } = action.payload
-  const validation = validations[form].properties[field]
-  const result = inspector.validate(validation, value)
-  store.dispatch(updateFormFieldWithErrors(form, field, value, result.error))
-}
-
 const validateInput = (form, field, value) => {
   const validation = validations[form].properties[field]
   const result = inspector.validate(validation, value)
   return result.error
+}
+
+const validateFormUpdate = (action, store) => {
+  const { form, field, value } = action.payload
+  const errors = validateInput(form, field, value)
+  store.dispatch(updateFormFieldWithErrors(form, field, value, errors))
 }
 
 const validateFormFields = (action, store) => {
@@ -34,11 +33,7 @@ const validateFormFields = (action, store) => {
     return accumulated
   }, {})
 
-  store.dispatch(updateFormErrors({
-    form,
-    newErrors,
-    valid,
-  }))
+  store.dispatch(updateFormErrors(form, newErrors, valid))
 }
 
 export const handleFormUpdate = store => next => action => {

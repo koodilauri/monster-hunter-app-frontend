@@ -5,7 +5,6 @@ export const FORM_VALIDATE = "FORM_VALIDATE"
 export const FORM_UPDATE_FIELD_WITH_ERRORS = "FORM_UPDATE_FIELD_WITH_ERRORS"
 export const FORM_UPDATE_ERRORS = "FORM_UPDATE_ERRORS"
 
-
 /**
  * Action creators called by components
  */
@@ -40,11 +39,11 @@ export const updateFormFieldWithErrors = (form, field, value, errors) => ({
   }
 })
 
-export const updateFormErrors = (form) => ({
+export const updateFormErrors = (form, errors, valid) => ({
   type: FORM_UPDATE_ERRORS,
   payload: {
-    form: form.form,
-    newErrors: form.newErrors,
-    valid: form.valid,
+    form,
+    errors,
+    valid,
   }
 })

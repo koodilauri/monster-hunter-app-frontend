@@ -6,87 +6,33 @@ import { updateFormField, validateForm } from "../../actions/form"
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import SelectTimeInput from "../ui/SelectTimeInput"
 
-// import inspector from "schema-inspector"
-// import { initialValues, validations } from "./submission.schema"
-
 class SubmissionForm extends Component {
 
   state = {
     styles: ["Guild", "Striker", "Adept", "Aerial"],
-    errors: {
-      name:[]
-    }
   }
-
-  // validateInput(field, value) {
-  //   const validation = validations.properties[field]
-  //   const result = inspector.validate(validation, value)
-  //   return result.error
-  // }
-
-  // validateForm() {
-  //   let valid = true
-  //   const newErrors = Object.keys(this.state.newSubmission).reduce((accumulated, key) => {
-  //     const value = this.state.newSubmission[key]
-  //     const errors = this.validateInput(key, value)
-  //     if (errors.length > 0) valid = false
-  //     accumulated[key] = errors
-  //     return accumulated
-  //   }, {})
-  //   return { valid, errors: newErrors }
-  // }
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.validateForm("submission")
-    // this.props.validateForm("armorSet")
-    this.props.validateForm("styleAndArts")
-    const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
-    if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
-      // this.props.onSubmit()
-      console.log("all forms are valid")
-    }
-    else{
-      console.log("forms are not valid")
-      this.setState({
-        errors:this.props.submissionForm.errors
-      })
-    }
+    this.props.submit()
   }
 
   handleChange(field, e) {
-    // const newValue = e.target.value
-    // let stateChange = Object.assign({}, this.state)
-    // stateChange.newSubmission[field] = newValue
-    // stateChange.errors[field] = this.validateInput(field, newValue)
-    // this.setState(stateChange)
-    // this.props.updateSubmissionForm(stateChange.newSubmission)
     this.props.updateFormField("submission", field, e.target.value)
   }
 
   selectItem = (field, item) => {
-    // console.log("valittu item ", field)
-    // let stateChange = Object.assign({}, this.state)
-    // stateChange.newSubmission[field] = item
-    // stateChange.errors[field] = this.validateInput(field, item)    
-    // this.setState(stateChange)
-    // this.props.updateSubmissionForm(stateChange.newSubmission)
     this.props.updateFormField("submission", field, item)
   }
 
   setTime = (unit, amount) => {
-    // console.log("aika asetettu " + unit + " " + amount)
-    // let stateChange = Object.assign({}, this.state.newSubmission)
-    // stateChange[unit] = amount
-    // this.setState({ newSubmission: stateChange })
-    // this.props.updateSubmissionForm(stateChange)
     this.props.updateFormField("submission", unit, amount)
   }
 
   render() {
-    const { styles, errors } = this.state
+    const { styles } = this.state
     const { submissionForm, quests, weapons } = this.props
-    // const errors = submissionForm.errors
+    const { values, errors } = submissionForm
     return (
       <div className="submission-form--container">
         <form className="submission-form" onSubmit={this.handleSubmit}>
@@ -96,7 +42,7 @@ class SubmissionForm extends Component {
               type="text"
               className="form-control"
               placeholder="Name"
-              value={submissionForm.name}
+              value={values.name}
               onChange={this.handleChange.bind(this, "name")}
             />
             <div>

@@ -8,6 +8,7 @@ import { getSkills } from "../../actions/skill"
 import { getWeapons } from "../../actions/weapon"
 import { getDecorations } from "../../actions/decoration"
 import { getSubmissions, saveSubmission } from "../../actions/submission"
+import { validateForm } from "../../actions/form"
 
 import StyleAndArts from "./StyleAndArts"
 import ArmorSetForm from "./ArmorSetForm"
@@ -24,12 +25,16 @@ class SubmissionPage extends Component {
 
   validateForms() {
     // TODO tässä validoi formit
+    this.props.validateForm("submission")
+    this.props.validateForm("armorSet")
+    this.props.validateForm("styleAndArts")
     return {
       valid: false
     }
   }
 
   handleSubmit = () => {
+    console.log("lol")
     const result = this.validateForms()
     if (result.valid) {
       const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
@@ -43,10 +48,10 @@ class SubmissionPage extends Component {
     return (
       <div>
         <div className="flex-row">
-          <StyleAndArts ref="styleAndArts" validate={this.asdf}/>
-          <ArmorSetForm ref="armorSetForm" />
+          <StyleAndArts />
+          <ArmorSetForm />
         </div>
-        <SubmissionForm onSubmit={this.handleSubmit} />
+        <SubmissionForm submit={this.handleSubmit} />
         <SubmissionList />
       </div>
     )
@@ -75,7 +80,10 @@ const mapDispatchToProps = dispatch => ({
       armorSet,
       styleAndArts
     }))
-  }
+  },
+  validateForm(form) {
+    dispatch(validateForm(form))
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmissionPage)
