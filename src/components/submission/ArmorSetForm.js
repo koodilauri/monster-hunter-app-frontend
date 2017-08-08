@@ -62,10 +62,9 @@ class ArmorSetForm extends React.Component {
   }
 
   availableDecorations = (part, decorations) =>
-    this.props.decorations.filter((decoration) =>{
-      console.log(this.props.armorSetForm.values[part].equipment.slots)
-      return decoration.size <= this.props.armorSetForm.values[part].equipment.slots
-    })
+    this.props.decorations.filter((decoration) =>
+      decoration.size <= this.props.armorSetForm.values[part].equipment.slots
+    )
 
   armorFilter = (part, type) =>
     this.props.armors.filter((armor) => {
