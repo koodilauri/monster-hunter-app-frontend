@@ -17,7 +17,7 @@ import SubmissionList from "./SubmissionList"
 import inspector from "schema-inspector"
 import { validations as styleAndArtsSchema } from "./styleAndArts.schema"
 import { validations as armorSetSchema } from "./armorset.schema"
-import { validations as submissionSchema } from "./submission.schema"
+import { validations as newSubmissionSchema } from "./submission.schema"
 // import "./SubmissionPage.css"
 
 class SubmissionPage extends Component {
@@ -42,8 +42,8 @@ class SubmissionPage extends Component {
   }
   validateForm(form, schema) {
     let valid = true
-    const newErrors = Object.keys(this.state[form]).reduce((accumulated, key) => {
-      const value = this.state[form][key]
+    const newErrors = Object.keys(this.props[form]).reduce((accumulated, key) => {
+      const value = this.props[form][key]
       const errors = this.validateInput(key, value, schema)
       if (errors.length > 0) valid = false
       accumulated[key] = errors
@@ -53,14 +53,21 @@ class SubmissionPage extends Component {
   }
 
   validateForms() {
-    // TODO tässä validoi formit
+    const { newSubmission, armorSet, styleAndArts } = this.props
+    console.log(newSubmission, armorSet, styleAndArts, this.state)
+    const result1 = this.validateForm("newSubmission", newSubmissionSchema)
+    const result2 = this.validateForm("armorSet", armorSetSchema)
+    const result3 = this.validateForm("styleAndArts", styleAndArtsSchema)
+    if (result1.valid && result2.valid && result3.valid) return true
+    else return false
   }
 
   handleSubmit = () => {
-    const result = this.validateForms()
-    if (result.valid) {
+    const valid = this.validateForms()
+    if (valid) {
       const { newSubmission, armorSet, styleAndArts } = this.props
-      this.props.saveSubmission(newSubmission, armorSet, styleAndArts)
+      console.log("valid, posted...")
+      // this.props.saveSubmission(newSubmission, armorSet, styleAndArts)
     }
   }
 
@@ -71,7 +78,7 @@ class SubmissionPage extends Component {
           <StyleAndArts />
           <ArmorSetForm />
         </div>
-        <SubmissionForm onSubmit={this.handleSubmit} />
+        <SubmissionForm onSubmit={this.handleSubmit.bind(this)} />
         <SubmissionList />
       </div>
     )

@@ -6,7 +6,33 @@ import SearchSelectionInput from "../ui/SearchSelectionInput"
 import { initialValues } from "./styleAndArts.schema"
 
 class StyleAndArts extends React.Component {
-  state = initialValues
+  state = {
+    selectedStyle: initialValues.selectedStyle,
+    selectedHunterArts:initialValues.selectedHunterArts,
+    hunterArts: [],
+    weapon: {}
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.hunterArts !== this.props.hunterArts){
+      this.setState({
+        hunterArts: this.props.hunterArts
+      })
+    }
+    if (prevProps.weapon.class !== this.props.weapon.class) {
+      const arts = this.filterHunterArts(this.props.weapon.class)
+      console.log("new weapon class chosen...", arts, this.props.weapon)
+      this.setState({
+        weapon: this.props.weapon,
+        hunterArts: arts 
+      })
+    }
+  }
+
+  filterHunterArts = (type) =>
+    this.props.hunterArts.filter((art) =>
+      (art.weapon === type || art.weapon === "General")
+    )
 
   handleChange(field, e) {
     const newValue = e.target.value
@@ -74,79 +100,53 @@ class StyleAndArts extends React.Component {
   }
 
   render() {
-    const { hunterArts } = this.props
+    const { hunterArts } = this.state
     const { selectedHunterArts } = this.state
     return (
       <div className="style-and-arts--container">
-        <table className="table-style-art">
-          <thead>
-            <tr>
-              <th>
-                Style and Hunter Arts
-            </th>
-            </tr>
-            <tr>
-              <th>
-                Style
-            </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <select
-                  name="selectedStyle"
-                  onChange={this.handleChange.bind(this, "selectedStyle")}
-                >
-                  <option value="Guild">Guild</option>
-                  <option value="Striker">Striker</option>
-                  <option value="Adept">Adept</option>
-                  <option value="Aerial">"Aerial"</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                Hunter Arts
-            </th>
-            </tr>
-            <tr>
-              <td>
-                <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="0" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[0].gaugesize}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[1] ?
-                  <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="1" />
-                  : "---"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[1] ? selectedHunterArts[1].gaugesize : "---"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[2] ?
-                  <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="2" />
-                  : "---"}
-
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[2] ? selectedHunterArts[2].gaugesize : "---"}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="style-and-arts--row style-and-arts--head">
+          Style and Hunter Arts
+        </div>
+        <div className="style-and-arts--row  style-and-arts--head">
+          Style
+        </div>
+        <div className="style-and-arts--row">
+          <select
+            name="selectedStyle"
+            className="form-control"
+            onChange={this.handleChange.bind(this, "selectedStyle")}
+          >
+            <option value="Guild">Guild</option>
+            <option value="Striker">Striker</option>
+            <option value="Adept">Adept</option>
+            <option value="Aerial">Aerial</option>
+          </select>
+        </div>
+        <div className="style-and-arts--row  style-and-arts--head">
+          Hunter Arts
+        </div>
+        <div className="style-and-arts--row">
+          <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="0" />
+        </div>
+        <div className="style-and-arts--row">
+          {selectedHunterArts[0].gaugesize}
+        </div>
+        <div className="style-and-arts--row">
+          {selectedHunterArts[1] ?
+            <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="1" />
+            : "---"}
+        </div>
+        <div className="style-and-arts--row">
+          {selectedHunterArts[1] ? selectedHunterArts[1].gaugesize : "---"}
+        </div>
+        <div className="style-and-arts--row">
+          {selectedHunterArts[2] ?
+            <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="2" />
+            : "---"}
+        </div>
+        <div className="style-and-arts--row">
+          {selectedHunterArts[2] ? selectedHunterArts[2].gaugesize : "---"}
+        </div>
       </div>
     )
   }
@@ -154,6 +154,7 @@ class StyleAndArts extends React.Component {
 
 const mapStateToProps = state => ({
   hunterArts: state.hunterArt.hunterArts,
+  weapon: state.form.armorSet.selectedWeapon.equipment
 })
 
 const mapDispatchToProps = dispatch => ({

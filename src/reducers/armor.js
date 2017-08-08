@@ -2,7 +2,7 @@ const initialState = {
   armors: []
 }
 
-export const armor = (state = initialState, action) => {
+const armor = (state = initialState, action) => {
   switch (action.type) {
     case "GET_ARMOR_SUCCESS":
       return Object.assign({}, state, {
@@ -12,3 +12,5 @@ export const armor = (state = initialState, action) => {
       return state
   }
 }
+
+export default armor

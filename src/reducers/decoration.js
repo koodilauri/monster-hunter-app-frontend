@@ -2,7 +2,7 @@ const initialState = {
   decorations: []
 }
 
-export const decoration = (state = initialState, action) => {
+const decoration = (state = initialState, action) => {
   switch (action.type) {
     case "GET_DECORATION_SUCCESS":
       return Object.assign({}, state, {
@@ -12,3 +12,5 @@ export const decoration = (state = initialState, action) => {
       return state
   }
 }
+
+export default decoration

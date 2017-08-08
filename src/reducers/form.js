@@ -1,9 +1,13 @@
 import { initialValues as armorSet } from "../components/submission/armorset.schema"
 import { initialValues as newSubmission } from "../components/submission/submission.schema"
 import { initialValues as styleAndArts } from "../components/submission/styleAndArts.schema"
+const initialState = {
+  newSubmission,
+  armorSet,
+  styleAndArts
+}
 
-
-export const form = (state = { newSubmission, armorSet, styleAndArts }, action) => {
+const form = (state = initialState, action) => {
   switch (action.type) {
     case "FORM_UPDATE_ARMORSET":
       return Object.assign({}, state, { armorSet: Object.assign({}, state.armorSet, action.payload) })
@@ -15,3 +19,5 @@ export const form = (state = { newSubmission, armorSet, styleAndArts }, action) 
       return state
   }
 }
+
+export default form

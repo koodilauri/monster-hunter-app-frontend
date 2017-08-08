@@ -2,7 +2,7 @@ const initialState = {
   hunterArts: []
 }
 
-export const hunterArt = (state = initialState, action) => {
+const hunterArt = (state = initialState, action) => {
   switch (action.type) {
     case "GET_HUNTER_ART_SUCCESS":
       return Object.assign({}, state, {
@@ -12,3 +12,5 @@ export const hunterArt = (state = initialState, action) => {
       return state
   }
 }
+
+export default hunterArt

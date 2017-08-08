@@ -2,7 +2,7 @@ const initialState = {
   skills: []
 }
 
-export const skill = (state = initialState, action) => {
+const skill = (state = initialState, action) => {
   switch (action.type) {
     case "GET_SKILL_SUCCESS":
       return Object.assign({}, state, {
@@ -12,3 +12,5 @@ export const skill = (state = initialState, action) => {
       return state
   }
 }
+
+export default skill
