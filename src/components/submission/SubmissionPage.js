@@ -14,10 +14,6 @@ import ArmorSetForm from "./ArmorSetForm"
 import SubmissionForm from "./SubmissionForm"
 import SubmissionList from "./SubmissionList"
 
-import inspector from "schema-inspector"
-import { validations as styleAndArtsSchema } from "./styleAndArts.schema"
-import { validations as armorSetSchema } from "./armorset.schema"
-import { validations as submissionSchema } from "./submission.schema"
 // import "./SubmissionPage.css"
 
 class SubmissionPage extends Component {
@@ -26,41 +22,20 @@ class SubmissionPage extends Component {
     this.props.getAll()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps !== this.props) {
-      this.setState({
-        newSubmission: this.props.newSubmission,
-        armorSet: this.props.armorSet,
-        styleAndArts: this.props.styleAndArts
-      })
-    }
-  }
-  validateInput(field, value, schema) {
-    const validation = schema.properties[field]
-    const result = inspector.validate(validation, value)
-    return result.error
-  }
-  validateForm(form, schema) {
-    let valid = true
-    const newErrors = Object.keys(this.state[form]).reduce((accumulated, key) => {
-      const value = this.state[form][key]
-      const errors = this.validateInput(key, value, schema)
-      if (errors.length > 0) valid = false
-      accumulated[key] = errors
-      return accumulated
-    }, {})
-    return { valid, errors: newErrors }
-  }
-
   validateForms() {
     // TODO tässä validoi formit
+    return {
+      valid: false
+    }
   }
 
   handleSubmit = () => {
     const result = this.validateForms()
     if (result.valid) {
-      const { newSubmission, armorSet, styleAndArts } = this.props
-      this.props.saveSubmission(newSubmission, armorSet, styleAndArts)
+      const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
+      this.props.saveSubmission(submissionForm.values,
+        armorSetForm.values,
+        styleAndArtsForm.values)
     }
   }
 
@@ -68,8 +43,8 @@ class SubmissionPage extends Component {
     return (
       <div>
         <div className="flex-row">
-          <StyleAndArts />
-          <ArmorSetForm />
+          <StyleAndArts ref="styleAndArts" validate={this.asdf}/>
+          <ArmorSetForm ref="armorSetForm" />
         </div>
         <SubmissionForm onSubmit={this.handleSubmit} />
         <SubmissionList />
@@ -79,9 +54,9 @@ class SubmissionPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  newSubmission: state.form.newSubmission,
-  armorSet: state.form.armorSet,
-  styleAndArts: state.form.styleAndArts
+  submissionForm: state.form.submission,
+  armorSetForm: state.form.armorSet,
+  styleAndArtsForm: state.form.styleAndArts
 })
 
 const mapDispatchToProps = dispatch => ({

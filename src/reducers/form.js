@@ -1,16 +1,42 @@
-import { initialValues as armorSet } from "../components/submission/armorset.schema"
-import { initialValues as newSubmission } from "../components/submission/submission.schema"
-import { initialValues as styleAndArts } from "../components/submission/styleAndArts.schema"
 
+import {
+  FORM_UPDATE_FIELD_WITH_ERRORS,
+  FORM_UPDATE_ERRORS,
+} from "../actions/form"
 
-export const form = (state = { newSubmission, armorSet, styleAndArts }, action) => {
+import { initialValues } from "../schemas"
+
+const INITIAL_STATE = {
+  submission: {
+    values: initialValues.submission,
+    errors: {
+      name: [],
+      quest: [],
+      weapon: [],
+      minutes: [],
+      seconds: [],
+    },
+    valid: false,
+  },
+  armorSet: {
+    values: initialValues.armorSet,
+    errors: {},
+    valid: false,
+  },
+  styleAndArts: {
+    values: initialValues.styleAndArts,
+    errors: {},
+    valid: false,
+  }
+}
+
+export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "FORM_UPDATE_ARMORSET":
-      return Object.assign({}, state, { armorSet: Object.assign({}, state.armorSet, action.payload) })
-    case "FORM_UPDATE_SUBMISSION":
-      return Object.assign({}, state, { newSubmission: action.payload })
-    case "FORM_UPDATE_STYLE_AND_ARTS":
-      return Object.assign({}, state, { styleAndArts: Object.assign({}, state.styleAndArts, action.payload) })
+    case FORM_UPDATE_FIELD_WITH_ERRORS:
+      const newState = Object.assign({}, state)
+      newState[action.payload.form].values[action.payload.field] = action.payload.value
+      newState[action.payload.form].errors[action.payload.field] = action.payload.errors
+      return newState
     default:
       return state
   }

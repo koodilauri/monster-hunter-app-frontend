@@ -1,52 +1,57 @@
 import React from "react"
 import { connect } from "react-redux"
-import { updateArmorSetForm } from "../../actions/form"
+
+import { updateFormField } from "../../actions/form"
+
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import DecorationsMenu from "../ui/DecorationsMenu"
 import SelectCharm from "../ui/SelectCharm"
+
 import image from "../../images/"
+
 import "./ArmorSetForm.css"
-import { initialValues } from "./armorset.schema"
 
 class ArmorSetForm extends React.Component {
-  state = initialValues
 
   handleChange(field, e) {
-    const newValue = e.target.value
-    const newState = Object.assign({}, this.state, { [field]: newValue })
-    this.setState(newState)
-    this.props.updateArmorSetForm({ [field]: newValue })
+    // const newValue = e.target.value
+    // const newState = Object.assign({}, this.state, { [field]: newValue })
+    // this.setState(newState)
+    // // this.props.updateArmorSetForm({ [field]: newValue })
+    // this.props.updateFormField("armorSet", "field", "value")
   }
 
   selectItem = (type, item) => {
-    const newValue = {
-      [type]: Object.assign({}, this.state[type], {
-        equipment: item
-      })
-    }
-    this.setState(Object.assign({}, this.state, newValue))
-    this.props.updateArmorSetForm(newValue)
+    // const newValue = {
+    //   [type]: Object.assign({}, this.state[type], {
+    //     equipment: item
+    //   })
+    // }
+    // this.setState(Object.assign({}, this.state, newValue))
+    // // this.props.updateArmorSetForm(newValue)
+    // this.props.updateFormField("armorSet", "field", "value")
   }
 
   selectDecoration = (part, decoration, size, id, decorations) => {
-    let usedSlots = 0
-    const sizes = decorations.map((deco) => deco.size)
-    for (let i = 0; i < decorations.length; i++) {
-      if (i !== id) usedSlots += sizes[i]
-      else usedSlots += decoration.size
-    }
-    const newValue = {
-      [part]: Object.assign({}, this.state[part], {
-        decorations: decorations
-          .slice(0, id)
-          .concat(Object.assign({}, decorations[id], decoration))
-          .concat(decorations.slice(id + 1))
-      }, {
-          usedSlots: usedSlots
-        })
-    }
-    this.setState(Object.assign({}, this.state, newValue))
-    this.props.updateArmorSetForm(newValue)
+    // let usedSlots = 0
+    // const sizes = decorations.map((deco) => deco.size)
+    // for (let i = 0; i < decorations.length; i++) {
+    //   if (i !== id) usedSlots += sizes[i]
+    //   else usedSlots += decoration.size
+    // }
+    // const newValue = {
+    //   [part]: Object.assign({}, this.state[part], {
+    //     decorations: decorations
+    //       .slice(0, id)
+    //       .concat(Object.assign({}, decorations[id], decoration))
+    //       .concat(decorations.slice(id + 1))
+    //   }, {
+    //       usedSlots: usedSlots
+    //     })
+    // }
+    // this.setState(Object.assign({}, this.state, newValue))
+    // // this.props.updateArmorSetForm(newValue)
+    // this.props.updateFormField("armorSet", "field", "value")
   }
 
   availableDecorations = (part, decorations) =>
@@ -60,14 +65,14 @@ class ArmorSetForm extends React.Component {
     })
 
   setArmorLists(type) {
-    console.log("setting " + type + " lists... ", this.props.armors.length)
-    this.setState({
-      heads: this.armorFilter("head", type),
-      torsos: this.armorFilter("torso", type),
-      arms: this.armorFilter("arms", type),
-      waists: this.armorFilter("waist", type),
-      feet: this.armorFilter("feet", type)
-    })
+    // console.log("setting " + type + " lists... ", this.props.armors.length)
+    // this.setState({
+    //   heads: this.armorFilter("head", type),
+    //   torsos: this.armorFilter("torso", type),
+    //   arms: this.armorFilter("arms", type),
+    //   waists: this.armorFilter("waist", type),
+    //   feet: this.armorFilter("feet", type)
+    // })
   }
 
   decorationIcon(slots) {
@@ -80,22 +85,24 @@ class ArmorSetForm extends React.Component {
   }
 
   changeArmorType(type) {
-    const newState = Object.assign({}, this.state, { armorType: type })
-    this.setState(newState)
-    this.props.updateArmorSetForm({ armorType: type })
-    this.setArmorLists(type)
+    // const newState = Object.assign({}, this.state, { armorType: type })
+    // this.setState(newState)
+    // // this.props.updateArmorSetForm({ armorType: type })
+    // this.props.updateFormField("armorSet", "field", "value")
+    // this.setArmorLists(type)
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.armors !== prevProps.armors) {
-      console.log("updating armors...")
-      this.setArmorLists(this.state.armorType)
-    }
+    // if (this.props.armors !== prevProps.armors) {
+    //   console.log("updating armors...")
+    //   this.setArmorLists(this.state.armorType)
+    // }
   }
 
-  render() {
-    const { weapons, decorations } = this.props
-    const { heads, torsos, arms, waists, feet } = this.state
+  renderTODOFixMe() {
+    const { armorSetForm, weapons, decorations } = this.props
+    const { heads, torsos, arms, waists, feet } = armorSetForm    
+    // const { heads, torsos, arms, waists, feet } = this.state
     return (
       <div className="armor-set-form--container">
         <table className="table-armorset">
@@ -199,17 +206,26 @@ class ArmorSetForm extends React.Component {
       </div>
     )
   }
+
+  render() {
+    return(
+      <div>
+        i am broken =(
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = state => ({
+  armorSetForm: state.form.armorSet,
   weapons: state.weapon.weapons,
   armors: state.armor.armors,
   decorations: state.decoration.decorations,
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateArmorSetForm(armorSet) {
-    dispatch(updateArmorSetForm(armorSet))
+  updateFormField(form, field, value) {
+    dispatch(updateFormField(form, field, value))
   }
 })
 

@@ -1,24 +1,50 @@
-export const FORM_UPDATE_ARMORSET = "FORM_UPDATE_ARMORSET"
-export const FORM_UPDATE_SUBMISSION = "FORM_UPDATE_SUBMISSION"
-export const FORM_UPDATE_STYLE_AND_ARTS = "FORM_UPDATE_STYLE_AND_ARTS"
 
-export const updateArmorSetForm = (armorSet) => {
-  return {
-    payload:armorSet,
-    type: FORM_UPDATE_ARMORSET
-  }
-}
+export const FORM_UPDATE_FIELD = "FORM_UPDATE_FIELD"
+export const FORM_VALIDATE = "FORM_VALIDATE"
 
-export const updateSubmissionForm = (newSubmission) => {
-  return {
-    payload: newSubmission,
-    type: FORM_UPDATE_SUBMISSION
-  }
-}
+export const FORM_UPDATE_FIELD_WITH_ERRORS = "FORM_UPDATE_FIELD_WITH_ERRORS"
+export const FORM_UPDATE_ERRORS = "FORM_UPDATE_ERRORS"
 
-export const updateStyleAndArts = (state) => {
-  return{
-    payload: state,
-    type: FORM_UPDATE_STYLE_AND_ARTS
+
+/**
+ * Action creators called by components
+ */
+
+export const updateFormField = (form, field, value) => ({
+  type: FORM_UPDATE_FIELD,
+  payload: {
+    form,
+    field,
+    value,
   }
-}
+})
+
+export const validateForm = (form) => ({
+  type: FORM_VALIDATE,
+  payload: {
+    form,
+  }
+})
+
+/**
+ * Action creators called by validation-middleware
+ */
+
+export const updateFormFieldWithErrors = (form, field, value, errors) => ({
+  type: FORM_UPDATE_FIELD_WITH_ERRORS,
+  payload: {
+    form,
+    field,
+    value,
+    errors,
+  }
+})
+
+export const updateFormErrors = (form, errors, valid) => ({
+  type: FORM_UPDATE_ERRORS,
+  payload: {
+    form,
+    errors,
+    valid,
+  }
+})
