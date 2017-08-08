@@ -14,7 +14,7 @@ import {
 
 export const initialValues = {
   submission: submissionValues,
-  armorsSet: armorSetValues,
+  armorSet: armorSetValues,
   styleAndArts: styleAndArtsValues,
 }
 

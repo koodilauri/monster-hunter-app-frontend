@@ -1,17 +1,16 @@
 .style-and-arts--container {
   margin: 10px 5px 10px 10px;
-}
-
-.table-style-art{
+ .style-and-arts--row{
   border: 1px solid black;
-  tr{
-    border: 1px solid black;
+  height: 34px;
+  .search-menu{
+    position: relative;
   }
-  td{
-    .search-container{
-      width: 100%;
-      height: 100%;
-      margin:0px;
-    }
   }
+.style-and-arts--head{
+  padding: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 700;
+}
 }

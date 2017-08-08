@@ -5,7 +5,7 @@ export const initialValues = {
   selectedWeapon: {
     equipment: {
       slots: 0,
-      class: "greatsword"
+      class: "General"
     }
   },
   selectedHead: {
