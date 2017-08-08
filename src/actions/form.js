@@ -40,11 +40,11 @@ export const updateFormFieldWithErrors = (form, field, value, errors) => ({
   }
 })
 
-export const updateFormErrors = (form, errors, valid) => ({
+export const updateFormErrors = (form) => ({
   type: FORM_UPDATE_ERRORS,
   payload: {
-    form,
-    errors,
-    valid,
+    form: form.form,
+    newErrors: form.newErrors,
+    valid: form.valid,
   }
 })

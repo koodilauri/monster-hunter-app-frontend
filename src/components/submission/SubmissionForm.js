@@ -12,7 +12,10 @@ import SelectTimeInput from "../ui/SelectTimeInput"
 class SubmissionForm extends Component {
 
   state = {
-    styles: ["Guild", "Striker", "Adept", "Aerial"]
+    styles: ["Guild", "Striker", "Adept", "Aerial"],
+    errors: {
+      name:[]
+    }
   }
 
   // validateInput(field, value) {
@@ -35,13 +38,19 @@ class SubmissionForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(this.state)
     this.props.validateForm("submission")
-    this.props.validateForm("armorSet")
+    // this.props.validateForm("armorSet")
     this.props.validateForm("styleAndArts")
     const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
     if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
-      this.props.onSubmit()
+      // this.props.onSubmit()
+      console.log("all forms are valid")
+    }
+    else{
+      console.log("forms are not valid")
+      this.setState({
+        errors:this.props.submissionForm.errors
+      })
     }
   }
 
@@ -75,10 +84,9 @@ class SubmissionForm extends Component {
   }
 
   render() {
-    const { styles } = this.state
+    const { styles, errors } = this.state
     const { submissionForm, quests, weapons } = this.props
-    const errors = submissionForm.errors
-    console.log(submissionForm)
+    // const errors = submissionForm.errors
     return (
       <div className="submission-form--container">
         <form className="submission-form" onSubmit={this.handleSubmit}>

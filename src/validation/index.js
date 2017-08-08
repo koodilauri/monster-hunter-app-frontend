@@ -16,13 +16,19 @@ const validateFormUpdate = (action, store) => {
   store.dispatch(updateFormFieldWithErrors(form, field, value, result.error))
 }
 
+const validateInput = (form, field, value) => {
+  const validation = validations[form].properties[field]
+  const result = inspector.validate(validation, value)
+  return result.error
+}
+
 const validateFormFields = (action, store) => {
   const { form } = action.payload
   const values = store.getState().form[form].values
   let valid = true
   const newErrors = Object.keys(values).reduce((accumulated, key) => {
     const value = values[key]
-    const errors = this.validateInput(form, key, value)
+    const errors = validateInput(form, key, value)
     if (errors.length > 0) valid = false
     accumulated[key] = errors
     return accumulated

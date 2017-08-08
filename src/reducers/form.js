@@ -31,11 +31,15 @@ const INITIAL_STATE = {
 }
 
 export default (state = INITIAL_STATE, action) => {
+  let newState = Object.assign({}, state)
   switch (action.type) {
     case FORM_UPDATE_FIELD_WITH_ERRORS:
-      const newState = Object.assign({}, state)
       newState[action.payload.form].values[action.payload.field] = action.payload.value
       newState[action.payload.form].errors[action.payload.field] = action.payload.errors
+      return newState
+    case FORM_UPDATE_ERRORS:
+      newState[action.payload.form].errors = action.payload.newErrors
+      newState[action.payload.form].valid = action.payload.valid
       return newState
     default:
       return state
