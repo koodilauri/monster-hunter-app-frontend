@@ -43,17 +43,18 @@ class SubmissionPage extends Component {
   handleSubmit = () => {
     const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
     const result = this.validateForms()
-    if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
-      console.log("valid", result)
       this.props.saveSubmission(submissionForm.values,
         armorSetForm.values,
         styleAndArtsForm.values)
+    if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
+      console.log("valid", result)
     }
   }
 
   render() {
     return (
       <div>
+        {this.props.backendError}
         <div className="flex-row">
           <StyleAndArts />
           <ArmorSetForm />
@@ -68,7 +69,8 @@ class SubmissionPage extends Component {
 const mapStateToProps = state => ({
   submissionForm: state.form.submission,
   armorSetForm: state.form.armorSet,
-  styleAndArtsForm: state.form.styleAndArts
+  styleAndArtsForm: state.form.styleAndArts,
+  backendError: state.submission.backendError
 })
 
 const mapDispatchToProps = dispatch => ({
