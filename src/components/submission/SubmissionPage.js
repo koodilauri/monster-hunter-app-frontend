@@ -43,9 +43,9 @@ class SubmissionPage extends Component {
   handleSubmit = () => {
     const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
     const result = this.validateForms()
-      this.props.saveSubmission(submissionForm.values,
-        armorSetForm.values,
-        styleAndArtsForm.values)
+    this.props.saveSubmission(submissionForm.values,
+      armorSetForm.values,
+      styleAndArtsForm.values)
     if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
       console.log("valid", result)
     }
@@ -54,7 +54,7 @@ class SubmissionPage extends Component {
   render() {
     return (
       <div>
-        {this.props.backendError}
+        {this.props.backendError.message ? <div className="backend-error-container">{this.props.backendError.message}</div> : <div>{this.props.backendError}</div>}
         <div className="flex-row">
           <StyleAndArts />
           <ArmorSetForm />
