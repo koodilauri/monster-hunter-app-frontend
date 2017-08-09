@@ -23,6 +23,13 @@ class SubmissionPage extends Component {
     this.props.getAll()
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
+    if (prevProps !== this.props && submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
+      console.log("props changed and all valid")
+    }
+  }
+
   validateForms() {
     // TODO tässä validoi formit
     this.props.validateForm("submission")
@@ -34,10 +41,10 @@ class SubmissionPage extends Component {
   }
 
   handleSubmit = () => {
-    console.log("lol")
+    const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
     const result = this.validateForms()
-    if (result.valid) {
-      const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
+    if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
+      console.log("valid", result)
       this.props.saveSubmission(submissionForm.values,
         armorSetForm.values,
         styleAndArtsForm.values)

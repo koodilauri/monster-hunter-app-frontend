@@ -20,7 +20,9 @@ const INITIAL_STATE = {
   },
   armorSet: {
     values: initialValues.armorSet,
-    errors: {},
+    errors: {
+      setName: []
+    },
     valid: false,
   },
   styleAndArts: {
@@ -43,17 +45,22 @@ export default (state = INITIAL_STATE, action) => {
 
 const updateFormField = (state, action) => {
   const { form, field, value, errors } = action.payload
-  return Object.assign({}, state, { [form]: {
-    values: Object.assign({}, state[form].values, { [field]: value }),
-    errors: Object.assign({}, state[form].errors, { [field]: errors }),
-  }})
+  return Object.assign({}, state, {
+    [form]: {
+      values: Object.assign({}, state[form].values, { [field]: value }),
+      errors: Object.assign({}, state[form].errors, { [field]: errors }),
+      valid: state[form].valid,
+    }
+  })
 }
 
 const updateForm = (state, action) => {
   const { form, errors, valid } = action.payload
-  return Object.assign({}, state, { [form]: {
-    values: state[form].values,
-    errors,
-    valid,
-  }})
+  return Object.assign({}, state, {
+    [form]: {
+      values: state[form].values,
+      errors,
+      valid,
+    }
+  })
 }
