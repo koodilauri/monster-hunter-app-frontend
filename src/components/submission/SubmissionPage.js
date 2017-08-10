@@ -31,17 +31,18 @@ class SubmissionPage extends Component {
   }
 
   handleSubmit = () => {
-    this.validateForms()
-    const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
-    console.log(this.props)
-    if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
-      console.log("forms are valid")
-      this.props.saveSubmission(submissionForm.values,
-        armorSetForm.values,
-        styleAndArtsForm.values)
-    } else {
-      console.log("forms are not valid")
-    }
+    new Promise((resolve) => resolve(this.validateForms()))
+      .then(() => {
+        const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
+        if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
+          console.log("forms are valid")
+          this.props.saveSubmission(submissionForm.values,
+            armorSetForm.values,
+            styleAndArtsForm.values)
+        } else {
+          console.log("forms are not valid")
+        }
+      })
   }
 
   render() {
