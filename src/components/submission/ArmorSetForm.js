@@ -56,9 +56,9 @@ class ArmorSetForm extends React.Component {
           usedSlots: usedSlots
         })
     }
-    this.setState(Object.assign({}, this.state, newValue))
+    // this.setState(Object.assign({}, this.state, newValue))
     // this.props.updateArmorSetForm(newValue)
-    this.props.updateFormField("armorSet", "field", "value")
+    this.props.updateFormField("armorSet", part, { equipment: this.props.armorSetForm.values[part].equipment, decorations: newValue[part].decorations, usedSlots: newValue[part].usedSlots })
   }
 
   availableDecorations = (part, decorations) =>
@@ -125,11 +125,11 @@ class ArmorSetForm extends React.Component {
             value={this.state.setName}
             placeholder="Set name"
             onChange={this.handleChange.bind(this, "setName")} />
-           <div>
+          <div>
             {armorSetForm.errors.setName.map((error, i) =>
               <div key={i}>{error.message}</div>
             )}
-          </div> 
+          </div>
         </div>
         <div className="armor-set-form-row">
           <div>

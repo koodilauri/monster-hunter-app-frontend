@@ -172,7 +172,6 @@ class DecorationsMenu extends React.Component {
       onChange={this.handleChange.bind(this, id)}
       value={this.state.selectedDecorations[id].id}
     >
-      <option value="-1">---</option>
       {this.renderDecorationOptions("decolist" + id)}
     </select>
   }

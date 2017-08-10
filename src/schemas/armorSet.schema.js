@@ -71,9 +71,9 @@ export const validations = {
     },
     setName: {
       type: "string",
-      pattern: /^[a-zA-Z]+$/,
+      pattern: /^[a-z A-Z1-9']+$/,
       required: true,
-      error: "Armorset name must be all letters and at least 1 character long"
+      error: "Armorset can contain letters and numbers and must be at least 1 character long"
     },
     selectedWeapon: {
       type: "object",
