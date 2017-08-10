@@ -1,4 +1,6 @@
 import React from "react"
+import { updateFormField } from "../../actions/form"
+import { connect } from "react-redux"
 
 class DecorationsMenu extends React.Component {
   state = {
@@ -26,20 +28,20 @@ class DecorationsMenu extends React.Component {
       decorations: newProps.decorations,
       usedSlots: newProps.usedSlots
     })
-    switch (newProps.slots) {
-      case 3:
-        this.changeDecorations(3)
-        break
-      case 2:
-        this.changeDecorations(2)
-        break
-      case 1:
-        this.changeDecorations(1)
-        break
-      default:
-        this.changeDecorations(0)
+      switch (newProps.slots) {
+        case 3:
+          this.changeDecorations(3)
+          break
+        case 2:
+          this.changeDecorations(2)
+          break
+        case 1:
+          this.changeDecorations(1)
+          break
+        default:
+          this.changeDecorations(0)
 
-    }
+      }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -50,14 +52,15 @@ class DecorationsMenu extends React.Component {
         decolist1: this.props.decorations,
         decolist2: this.props.decorations
       })
+      this.props.updateFormField("armorSet", this.props.part, { equipment: this.props.armorSetForm.values[this.props.part].equipment, decorations: [], usedSlots: 0 })
       //to do: initialize decos for the armor piece so old ones dont linger
     }
     if (prevProps.usedSlots !== this.props.usedSlots) {
       // console.log("updated: free slots ", this.props.slots - this.state.usedSlots, this.state)
       this.setState({
-        decolist0: this.availableDecorations(this.state.selectedDecorations[0] || {size:0}, this.props.slots - this.state.usedSlots),
-        decolist1: this.availableDecorations(this.state.selectedDecorations[1] || {size:0}, this.props.slots - this.state.usedSlots),
-        decolist2: this.availableDecorations(this.state.selectedDecorations[2] || {size:0}, this.props.slots - this.state.usedSlots)
+        decolist0: this.availableDecorations(this.state.selectedDecorations[0] || { size: 0 }, this.props.slots - this.state.usedSlots),
+        decolist1: this.availableDecorations(this.state.selectedDecorations[1] || { size: 0 }, this.props.slots - this.state.usedSlots),
+        decolist2: this.availableDecorations(this.state.selectedDecorations[2] || { size: 0 }, this.props.slots - this.state.usedSlots)
       })
     }
   }
@@ -69,8 +72,7 @@ class DecorationsMenu extends React.Component {
   changeDecorations(amount) {
     const { selectedDecorations } = this.state
     let l = selectedDecorations.length
-    if (l < amount) this.addDecoration(amount - l)
-    if (l > amount) this.removeDecoration(amount)
+    if (l !== amount) this.addDecoration(amount)
   }
 
   addDecoration(length) {
@@ -89,7 +91,7 @@ class DecorationsMenu extends React.Component {
       });
     }
     this.setState({
-      selectedDecorations: selectedDecorations.concat(data)
+      selectedDecorations: data
     })
   }
 
@@ -194,4 +196,12 @@ class DecorationsMenu extends React.Component {
   }
 }
 
-export default DecorationsMenu
+const mapStateToProps = state => ({
+  armorSetForm: state.form.armorSet,
+})
+const mapDispatchToProps = dispatch => ({
+  updateFormField(form, field, value) {
+    dispatch(updateFormField(form, field, value))
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(DecorationsMenu)
