@@ -2,13 +2,11 @@ import reducers from "./reducers"
 import { createStore, applyMiddleware } from "redux"
 import createSagaMiddleware from "redux-saga"
 import rootSaga from "./sagas"
-import { handleFormUpdate } from "./validation"
 
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware()
 
-  const createStoreWithMiddleware = applyMiddleware(handleFormUpdate,
-    sagaMiddleware)(createStore)
+  const createStoreWithMiddleware = applyMiddleware(sagaMiddleware)(createStore)
 
   const store = createStoreWithMiddleware(
     reducers,

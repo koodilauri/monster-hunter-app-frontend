@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { updateFormFieldWithErrors } from "../../actions/form"
+import { updateFormField } from "../../actions/form"
 
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 
@@ -183,7 +183,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateFormField(form, field, value) {
-    dispatch(updateFormFieldWithErrors(form, field, value))
+    dispatch(updateFormField(form, field, value))
   }
 })
 

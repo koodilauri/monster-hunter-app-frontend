@@ -23,31 +23,24 @@ class SubmissionPage extends Component {
     this.props.getAll()
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
-    if (prevProps !== this.props && submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
-      console.log("props changed and all valid")
-    }
-  }
-
   validateForms() {
     // TODO tässä validoi formit
-    this.props.validateForm("submission")
-    this.props.validateForm("armorSet")
-    this.props.validateForm("styleAndArts")
-    return {
-      valid: false
-    }
+    this.props.validateForm("submission", this.props.submissionForm.values)
+    this.props.validateForm("armorSet", this.props.armorSetForm.values)
+    this.props.validateForm("styleAndArts", this.props.styleAndArtsForm.values)
   }
 
   handleSubmit = () => {
+    this.validateForms()
     const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
-    const result = this.validateForms()
+    console.log(this.props)
     if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
-      console.log("valid", result)
+      console.log("forms are valid")
       this.props.saveSubmission(submissionForm.values,
         armorSetForm.values,
         styleAndArtsForm.values)
+    } else {
+      console.log("forms are not valid")
     }
   }
 
@@ -88,8 +81,8 @@ const mapDispatchToProps = dispatch => ({
       styleAndArts
     }))
   },
-  validateForm(form) {
-    dispatch(validateForm(form))
+  validateForm(form, values) {
+    dispatch(validateForm(form, values))
   },
 })
 
