@@ -6,10 +6,12 @@ class SubmissionList extends React.Component {
     submissions: [],
     sorted: {
       name: undefined,
-      quest: undefined,
+      quest_name: undefined,
       time: undefined,
-      weapon: undefined,
-      style: undefined
+      weapon_name: undefined,
+      style: undefined,
+      weapon_class:undefined,
+      set_name:undefined
     }
   }
 
@@ -52,15 +54,15 @@ class SubmissionList extends React.Component {
         </td>
         <td
           className="table__td--submission">
-          {submission.questname}
+          {submission.quest_name}
         </td>
         <td
           className="table__td--submission">
-          {submission.questtime}
+          {submission.quest_time}
         </td>
         <td
           className="table__td--submission">
-          {submission.weaponname}
+          {submission.weapon_name}
         </td>
         <td
           className="table__td--submission">
@@ -68,11 +70,11 @@ class SubmissionList extends React.Component {
         </td>
         <td
           className="table__td--submission">
-          {submission.weaponclass}
+          {submission.weapon_class}
         </td>
         <td
           className="table__td--submission">
-          {submission.setname}
+          {submission.set_name}
         </td>
       </tr>
     )
@@ -89,37 +91,37 @@ class SubmissionList extends React.Component {
                   className="table__htd"
                   onClick={this.sortTable.bind(this, "name")}>
                   Name
-          </td>
+                </td>
                 <td
                   className="table__htd"
-                  onClick={this.sortTable.bind(this, "questname")}>
+                  onClick={this.sortTable.bind(this, "quest_name")}>
                   Quest
-          </td>
+              </td>
                 <td
                   className="table__htd"
-                  onClick={this.sortTable.bind(this, "questtime")}>
+                  onClick={this.sortTable.bind(this, "quest_time")}>
                   Time
-          </td>
+                </td>
                 <td
                   className="table__htd"
-                  onClick={this.sortTable.bind(this, "weaponname")}>
+                  onClick={this.sortTable.bind(this, "weapon_name")}>
                   Weapon
-          </td>
+                </td>
                 <td
                   className="table__htd"
                   onClick={this.sortTable.bind(this, "style")}>
                   Style
-          </td>
+                </td>
                 <td
                   className="table__htd"
-                  onClick={this.sortTable.bind(this, "weaponclass")}>
+                  onClick={this.sortTable.bind(this, "weapon_class")}>
                   Weapon Class
-          </td>
+                </td>
                 <td
                   className="table__htd"
-                  onClick={this.sortTable.bind(this, "setname")}>
+                  onClick={this.sortTable.bind(this, "set_name")}>
                   Armor set
-          </td>
+              </td>
               </tr>
             </thead>
             <tbody className="table__tbody">

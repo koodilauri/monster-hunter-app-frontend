@@ -125,81 +125,51 @@ class ArmorSetForm extends React.Component {
             value={this.state.setName}
             placeholder="Set name"
             onChange={this.handleChange.bind(this, "setName")} />
-          <div>
-            {armorSetForm.errors.setName.map((error, i) =>
-              <div key={i}>{error.message}</div>
-            )}
-          </div>
+          {armorSetForm.errors.setName.map((error, i) =>
+            <div key={i}>{error.message}</div>
+          )}
         </div>
         <div className="armor-set-form-row">
           <div>
             Name
-        </div>
+          </div>
           <div>
             Slots
-        </div>
-        </div>
-        <div className="armor-set-form-row">
-          <div className="armor-set-form-col">
-            <img src={image.greatSword} alt="weapon" width="30" height="30" />
-            <SearchSelectionInput items={weapons} selectItem={this.selectItem} errors={armorSetForm.errors.selectedWeapon} item="selectedWeapon" />
-          </div>
-          <div>
-            {this.decorationIcon(selectedWeapon.slots)}
           </div>
         </div>
         <div className="armor-set-form-row">
-          <div className="armor-set-form-col">
-            <img src={image.head} alt="head" width="30" height="30" />
-            <SearchSelectionInput items={heads} selectItem={this.selectItem} errors={armorSetForm.errors.selectedHead} item="selectedHead" />
-          </div>
-          <div>
-            <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedHead.usedSlots} slots={selectedHead.equipment.slots} decorations={this.availableDecorations("selectedHead", decorations)} part="selectedHead" />
-          </div>
+          <img src={image.greatSword} alt="weapon" width="30" height="30" />
+          <SearchSelectionInput items={weapons} selectItem={this.selectItem} errors={armorSetForm.errors.selectedWeapon} item="selectedWeapon" className="armor-set-form-col" />
+          {this.decorationIcon(selectedWeapon.slots)}
         </div>
         <div className="armor-set-form-row">
-          <div className="armor-set-form-col">
-            <img src={image.torso} alt="torso" width="30" height="30" />
-            <SearchSelectionInput items={torsos} selectItem={this.selectItem} errors={armorSetForm.errors.selectedTorso} item="selectedTorso" />
-          </div>
-          <div>
-            <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedTorso.usedSlots} slots={selectedTorso.equipment.slots} decorations={this.availableDecorations("selectedTorso", decorations)} part="selectedTorso" />
-          </div>
+          <img src={image.head} alt="head" width="30" height="30" />
+          <SearchSelectionInput items={heads} selectItem={this.selectItem} errors={armorSetForm.errors.selectedHead} item="selectedHead" className="armor-set-form-col" />
+          <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedHead.usedSlots} slots={selectedHead.equipment.slots} decorations={this.availableDecorations("selectedHead", decorations)} part="selectedHead" />
         </div>
         <div className="armor-set-form-row">
-          <div className="armor-set-form-col">
-            <img src={image.arms} alt="arms" width="30" height="30" />
-            <SearchSelectionInput items={arms} selectItem={this.selectItem} errors={armorSetForm.errors.selectedArms} item="selectedArms" />
-          </div>
-          <div>
-            <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedArms.usedSlots} slots={selectedArms.equipment.slots} decorations={this.availableDecorations("selectedArms", decorations)} part="selectedArms" />
-          </div>
+          <img src={image.torso} alt="torso" width="30" height="30" />
+          <SearchSelectionInput items={torsos} selectItem={this.selectItem} errors={armorSetForm.errors.selectedTorso} item="selectedTorso" className="armor-set-form-col" />
+          <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedTorso.usedSlots} slots={selectedTorso.equipment.slots} decorations={this.availableDecorations("selectedTorso", decorations)} part="selectedTorso" />
         </div>
         <div className="armor-set-form-row">
-          <div className="armor-set-form-col">
-            <img src={image.waist} alt="waist" width="30" height="30" />
-            <SearchSelectionInput items={waists} selectItem={this.selectItem} errors={armorSetForm.errors.selectedWaist} item="selectedWaist" />
-          </div>
-          <div>
-            <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedWaist.usedSlots} slots={selectedWaist.equipment.slots} decorations={this.availableDecorations("selectedWaist", decorations)} part="selectedWaist" />
-          </div>
+          <img src={image.arms} alt="arms" width="30" height="30" />
+          <SearchSelectionInput items={arms} selectItem={this.selectItem} errors={armorSetForm.errors.selectedArms} item="selectedArms" className="armor-set-form-col" />
+          <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedArms.usedSlots} slots={selectedArms.equipment.slots} decorations={this.availableDecorations("selectedArms", decorations)} part="selectedArms" />
         </div>
         <div className="armor-set-form-row">
-          <div className="armor-set-form-col">
-            <img src={image.feet} alt="feet" width="30" height="30" />
-            <SearchSelectionInput items={feet} selectItem={this.selectItem} errors={armorSetForm.errors.selectedFeet} item="selectedFeet" />
-          </div>
-          <div>
-            <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedFeet.usedSlots} slots={selectedFeet.equipment.slots} decorations={this.availableDecorations("selectedFeet", decorations)} part="selectedFeet" />
-          </div>
+          <img src={image.waist} alt="waist" width="30" height="30" />
+          <SearchSelectionInput items={waists} selectItem={this.selectItem} errors={armorSetForm.errors.selectedWaist} item="selectedWaist" className="armor-set-form-col" />
+          <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedWaist.usedSlots} slots={selectedWaist.equipment.slots} decorations={this.availableDecorations("selectedWaist", decorations)} part="selectedWaist" />
         </div>
         <div className="armor-set-form-row">
-          <div className="armor-set-form-col">
-            <SelectCharm selectItem={this.selectItem} item="selectedCharm" />
-          </div>
-          <div>
-            <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedCharm.usedSlots} slots={selectedCharm.equipment.slots} decorations={this.availableDecorations("selectedCharm", decorations)} part="selectedCharm" />
-          </div>
+          <img src={image.feet} alt="feet" width="30" height="30" />
+          <SearchSelectionInput items={feet} selectItem={this.selectItem} errors={armorSetForm.errors.selectedFeet} item="selectedFeet" className="armor-set-form-col" />
+          <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedFeet.usedSlots} slots={selectedFeet.equipment.slots} decorations={this.availableDecorations("selectedFeet", decorations)} part="selectedFeet" />
+        </div>
+        <div className="armor-set-form-row">
+          <SelectCharm selectItem={this.selectItem} item="selectedCharm" className="armor-set-form-col" />
+          <DecorationsMenu selectDecoration={this.selectDecoration} usedSlots={selectedCharm.usedSlots} slots={selectedCharm.equipment.slots} decorations={this.availableDecorations("selectedCharm", decorations)} part="selectedCharm" />
         </div>
       </div >
     )

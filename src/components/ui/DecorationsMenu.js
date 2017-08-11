@@ -11,11 +11,11 @@ class DecorationsMenu extends React.Component {
         id: -1,
         size: 0,
         name: "---",
-        skill1id: 149,
-        skill2id: 149,
+        skill1_id: 149,
+        skill2_id: 149,
         bonus1: 0,
         bonus2: 0,
-        skillname: "---"
+        skill_name: "---"
       }
     ],
     decolist0: [],
@@ -46,7 +46,7 @@ class DecorationsMenu extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.decorations.length !== this.props.decorations.length) {
-      console.log("new decos for component")
+      console.log("new decos for component ",prevProps.decorations.length)
       this.setState({
         decolist0: this.props.decorations,
         decolist1: this.props.decorations,
@@ -76,18 +76,18 @@ class DecorationsMenu extends React.Component {
   }
 
   addDecoration(length) {
-    const { selectedDecorations } = this.state
+    // const { selectedDecorations } = this.state
     let data = [];
     for (let i = 0; i < length; i++) {
       data.push({
         id: -1,
         size: 0,
         name: "---",
-        skill1id: 149,
-        skill2id: 149,
+        skill1_id: 149,
+        skill2_id: 149,
         bonus1: 0,
         bonus2: 0,
-        skillname: "---"
+        skill_name: "---"
       });
     }
     this.setState({
@@ -111,11 +111,11 @@ class DecorationsMenu extends React.Component {
       id: -1,
       size: 0,
       name: "---",
-      skill1id: 149,
-      skill2id: 149,
+      skill1_id: 149,
+      skill2_id: 149,
       bonus1: 0,
       bonus2: 0,
-      skillname: "---"
+      skill_name: "---"
     }
 
     this.setState({
@@ -164,7 +164,7 @@ class DecorationsMenu extends React.Component {
 
   renderDecorationOptions(list) {
     return this.state[list].map((decoration, id) =>
-      <option key={id} value={decoration.id}>{decoration.skillname} +{decoration.bonus1}, size: {decoration.size}</option>
+      <option key={id} value={decoration.id}>{decoration.skill_name} +{decoration.bonus1}, size: {decoration.size}</option>
     )
   }
 

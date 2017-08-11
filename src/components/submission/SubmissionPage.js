@@ -8,6 +8,7 @@ import { getSkills } from "../../actions/skill"
 import { getWeapons } from "../../actions/weapon"
 import { getDecorations } from "../../actions/decoration"
 import { getSubmissions, saveSubmission } from "../../actions/submission"
+import { getArmorSets } from "../../actions/armorSet"
 import { validateForm } from "../../actions/form"
 
 import StyleAndArts from "./StyleAndArts"
@@ -76,6 +77,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getSkills())
     dispatch(getWeapons())
     dispatch(getDecorations())
+    dispatch(getArmorSets())
   },
   saveSubmission(newSubmission, armorSet, styleAndArts) {
     dispatch(saveSubmission({
