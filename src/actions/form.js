@@ -5,7 +5,6 @@ import { validations } from "../schemas"
 const validateInput = (form, field, value) => {
   const validation = validations[form].properties[field]
   const result = inspector.validate(validation, value)
-  console.log(form, field, value, validation, result)
   return result.error
 }
 
@@ -18,7 +17,6 @@ const validateFormFields = (form, values) => {
     accumulated[key] = fieldErrors
     return accumulated
   }, {})
-  console
   return {
     errors,
     valid,
