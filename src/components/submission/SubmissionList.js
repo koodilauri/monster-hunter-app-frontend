@@ -79,7 +79,7 @@ class SubmissionList extends React.Component {
         </td>
         <td
           className="table__td--submission">
-          {submission.created}
+          {submission.created.split("T")[0]}
         </td>
       </tr>
     )
