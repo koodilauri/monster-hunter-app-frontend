@@ -47,7 +47,7 @@ class ArmorSetForm extends React.Component {
       else usedSlots += decoration.size
     }
     const newValue = {
-      [part]: Object.assign({}, this.state[part], {
+      [part]: Object.assign({}, this.props.armorSetForm.values[part], {
         decorations: decorations
           .slice(0, id)
           .concat(Object.assign({}, decorations[id], decoration))
@@ -95,7 +95,7 @@ class ArmorSetForm extends React.Component {
     const newState = Object.assign({}, this.state, { armorType: type })
     this.setState(newState)
     // this.props.updateArmorSetForm({ armorType: type })
-    this.props.updateFormField("armorSet", "field", "value")
+    this.props.updateFormField("armorSet", "armorType", type)
     this.setArmorLists(type)
   }
 
