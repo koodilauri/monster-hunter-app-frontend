@@ -8,10 +8,6 @@ import SelectTimeInput from "../ui/SelectTimeInput"
 
 class SubmissionForm extends Component {
 
-  state = {
-    styles: ["Guild", "Striker", "Adept", "Aerial"],
-  }
-
   handleSubmit = (e) => {
     e.preventDefault()
     this.props.submit()
@@ -30,8 +26,7 @@ class SubmissionForm extends Component {
   }
 
   render() {
-    const { styles } = this.state
-    const { submissionForm, quests, weapons } = this.props
+    const { submissionForm, quests } = this.props
     const { values, errors } = submissionForm
     return (
       <div className="submission-form--container">
@@ -53,16 +48,6 @@ class SubmissionForm extends Component {
           </div>
           <SearchSelectionInput item="quest" items={quests} selectItem={this.selectItem} errors={errors.quest}/>
           <SelectTimeInput setTime={this.setTime} />
-          <SearchSelectionInput item="weapon" items={weapons} selectItem={this.selectItem} errors={errors.weapon}/>
-          <div className="form-group">
-            <select
-              name="style"
-              className="form-control"
-              onChange={this.handleChange.bind(this, "style")}
-            >
-              {styles.map(style => <option key={style} value={style}>{style}</option>)}
-            </select>
-          </div>
           <div className="form-group">
             <button type="submit" className="btn btn-primary">Submit</button>
           </div>
@@ -75,9 +60,7 @@ class SubmissionForm extends Component {
 const mapStateToProps = state => ({
   submissionForm: state.form.submission,
   armorSetForm: state.form.armorSet,
-  styleAndArtsForm: state.form.styleAndArts,
   quests: state.quest.quests,
-  weapons: state.weapon.weapons,
 })
 
 const mapDispatchToProps = dispatch => ({

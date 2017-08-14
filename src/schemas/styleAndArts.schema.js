@@ -20,18 +20,22 @@ export const validations = {
   properties: {
     selectedStyle: {
       type: "string",
-      required: true,
       pattern: /^(Guild|Striker|Adept|Aerial)$/,
       error: "Style has to be one of the following: Guild, Striker, Adept or Aerial"
     },
     selectedHunterArts: {
-      type: Array,
-      required: true,
-      length: {
-        min: 1,
-        max: 6
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          id: {
+            type: "number"
+          }
+        }
       },
-      error: "Hunter arts must be 1 - 3"
+      minLength: 1,
+      maxLength: 3,
+      error: "Hunter arts must be 1 - 3. You cannot choose an art more than once"
     },
   }
 }

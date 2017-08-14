@@ -10,8 +10,9 @@ class SubmissionList extends React.Component {
       time: undefined,
       weapon_name: undefined,
       style: undefined,
-      weapon_class:undefined,
-      set_name:undefined
+      weapon_class: undefined,
+      set_name: undefined,
+      created: undefined
     }
   }
 
@@ -66,15 +67,19 @@ class SubmissionList extends React.Component {
         </td>
         <td
           className="table__td--submission">
-          {submission.style}
-        </td>
-        <td
-          className="table__td--submission">
           {submission.weapon_class}
         </td>
         <td
           className="table__td--submission">
+          {submission.style}
+        </td>
+        <td
+          className="table__td--submission">
           {submission.set_name}
+        </td>
+        <td
+          className="table__td--submission">
+          {submission.created}
         </td>
       </tr>
     )
@@ -109,18 +114,23 @@ class SubmissionList extends React.Component {
                 </td>
                 <td
                   className="table__htd"
-                  onClick={this.sortTable.bind(this, "style")}>
-                  Style
-                </td>
-                <td
-                  className="table__htd"
                   onClick={this.sortTable.bind(this, "weapon_class")}>
                   Weapon Class
                 </td>
                 <td
                   className="table__htd"
+                  onClick={this.sortTable.bind(this, "style")}>
+                  Style
+                </td>
+                <td
+                  className="table__htd"
                   onClick={this.sortTable.bind(this, "set_name")}>
                   Armor set
+              </td>
+                <td
+                  className="table__htd"
+                  onClick={this.sortTable.bind(this, "created")}>
+                  Date
               </td>
               </tr>
             </thead>

@@ -125,6 +125,7 @@ class StyleAndArts extends React.Component {
   render() {
     // const { selectedHunterArts } = styleAndArtsForm.values
     const { hunterArts, selectedHunterArts } = this.state
+    const { errors } = this.props.styleAndArtsForm
     return (
       <div className="style-and-arts--container">
         <div className="style-and-arts--row style-and-arts--head">
@@ -144,6 +145,9 @@ class StyleAndArts extends React.Component {
             <option value="Adept">Adept</option>
             <option value="Aerial">Aerial</option>
           </select>
+          {errors.selectedStyle.map((error, i) =>
+            <div key={i}>{error.message}</div>
+          )}
         </div>
         <div className="style-and-arts--row  style-and-arts--head">
           Hunter Arts
@@ -170,6 +174,10 @@ class StyleAndArts extends React.Component {
         <div className="style-and-arts--row">
           {selectedHunterArts[2] ? selectedHunterArts[2].gaugesize : "---"}
         </div>
+      { errors.selectedHunterArts.map((error, i) =>
+      <div key={i}>{error.message}</div>
+    )
+    }
       </div>
     )
   }

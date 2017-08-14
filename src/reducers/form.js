@@ -12,7 +12,6 @@ const INITIAL_STATE = {
     errors: {
       name: [],
       quest: [],
-      weapon: [],
       minutes: [],
       seconds: [],
     },
@@ -27,9 +26,12 @@ const INITIAL_STATE = {
   },
   styleAndArts: {
     values: initialValues.styleAndArts,
-    errors: {},
+    errors: {
+      selectedStyle: [],
+      selectedHunterArts: []
+    },
     valid: false,
-  }
+  },
 }
 
 export default (state = INITIAL_STATE, action) => {
