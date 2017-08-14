@@ -68,13 +68,13 @@ class ArmorSetForm extends React.Component {
 
   armorFilter = (part, type) =>
     this.props.armors.filter((armor) => {
-      return (armor.part.toLowerCase() === part && (armor.type === type || armor.type === "Both"))
+      return (armor.part.toLowerCase() === part && (armor.type === type || armor.type === "Both" || type === "Both"))
     })
 
   setArmorLists(type) {
     console.log("setting " + type + " lists... ", this.props.armors.length)
     this.setState({
-      heads: this.armorFilter("head", type),
+      heads: this.armorFilter("head", "Both"), //head pieces can be chosen for both bladem. and gunner
       torsos: this.armorFilter("torso", type),
       arms: this.armorFilter("arms", type),
       waists: this.armorFilter("waist", type),
@@ -94,7 +94,6 @@ class ArmorSetForm extends React.Component {
   changeArmorType(type) {
     const newState = Object.assign({}, this.state, { armorType: type })
     this.setState(newState)
-    // this.props.updateArmorSetForm({ armorType: type })
     this.props.updateFormField("armorSet", "armorType", type)
     this.setArmorLists(type)
   }
