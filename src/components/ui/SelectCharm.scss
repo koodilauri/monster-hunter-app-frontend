@@ -1,9 +1,39 @@
-.charm--input{
-  width:110px;
-}
 
 .charm-container{
+  // width: 200px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  
+  .charm--slots{
+    width: 53px;
+  }
+}
+  .charm--row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;    
+
+    p{
+      margin-top: 5px;
+    }
+
+    .charm--skill{
+      // width: 110px;
+      width: 59.9%;
+      padding-left: 2px;
+    }
+  
+    .charm--input{
+      // width: 78px;
+      width: 40%;
+      padding-left: 2px;
+    }
+  }
+
+@media (max-width: 450px) {
+  .charm-row {
+    flex-direction: column;
+      align-self: stretch;
+  }
 }

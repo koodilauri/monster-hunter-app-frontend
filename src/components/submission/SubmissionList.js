@@ -96,6 +96,8 @@ class SubmissionList extends React.Component {
                   className="table__htd"
                   onClick={this.sortTable.bind(this, "name")}>
                   Name
+                  <span class="glyphicon glyphicon-menu-up"></span>
+                  
                 </td>
                 <td
                   className="table__htd"

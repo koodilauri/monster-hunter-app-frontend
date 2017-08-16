@@ -1,0 +1,16 @@
+.decoration-container{
+  float: right;
+  width: 40%;
+  // background-color: #ddd;
+  border-left: 2px solid black;
+  margin-top: 2px;
+  margin-bottom:2px; 
+  text-align: center;
+  .table__input--decoration{
+    width: 90%;
+    padding: 0px 2px;
+    margin-left: 8px;
+    height: 20px;
+  }
+
+}

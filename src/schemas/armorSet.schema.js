@@ -99,7 +99,7 @@ export const validations = {
             id: {
               type: "number",
               gt: 0,
-              error: "You must select an armor piece for head"
+              error: "You must select a head"
             }
           }
         }
@@ -114,7 +114,7 @@ export const validations = {
             id: {
               type: "number",
               gt: 0,
-              error: "You must select an armor piece for torso"
+              error: "You must select a torso"
             }
           }
         }
@@ -129,7 +129,7 @@ export const validations = {
             id: {
               type: "number",
               gt: 0,
-              error: "You must select an armor piece for arms"
+              error: "You must select arms"
             }
           }
         }
@@ -144,7 +144,7 @@ export const validations = {
             id: {
               type: "number",
               gt: 0,
-              error: "You must select an armor piece for waist"
+              error: "You must select a waist"
             }
           }
         }
@@ -159,7 +159,7 @@ export const validations = {
             id: {
               type: "number",
               gt: 0,
-              error: "You must select an armor piece for feet"
+              error: "You must select feet"
             }
           }
         }

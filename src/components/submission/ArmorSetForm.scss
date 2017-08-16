@@ -1,14 +1,45 @@
 .armor-set-form--container {
   margin: 10px 10px 10px 0;
+  width: 400px;
   .armor-set-form-row{
     display: flex;
     flex-direction: row;
-  border: 1px solid black; 
-   .armor-set-form-col{
-    display: flex;
-    .search-container{
-    margin: 0px;
+    border: 1px solid black; 
+    // padding-top: 20px;
+    // padding-bottom: 14px;
+    
+    .armor-set-name-col{
+      width: 60%;
+      text-align: center;
+      font-weight: 700;
     }
-  }
+    .armor-set-slots-col{
+      width: 40%;  
+      text-align: center;
+      font-weight: 700;      
+    }
+
+    .armor-set-form-col{
+      display: flex;
+      flex-direction: row;
+      margin-top:14px;
+      margin-bottom: 14px;
+      width: 60%;
+    }
+
+    .armor-set-form--charm-p{
+      margin-top: 40px;
+    }
+    // .armor-set-form--charm{
+    //   .decoration-container{
+    //     margin-top: 30px;
+    //   }
+    // }
+
+    .search-container{
+      margin-right: 20px;
+      margin-bottom: 0px;
+      // width:190px;
+    }
   }
 }

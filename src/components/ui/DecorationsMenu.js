@@ -2,6 +2,8 @@ import React from "react"
 import { updateFormField } from "../../actions/form"
 import { connect } from "react-redux"
 
+import "./DecorationsMenu.css"
+
 class DecorationsMenu extends React.Component {
   state = {
     decorations: [],
@@ -143,7 +145,7 @@ class DecorationsMenu extends React.Component {
 
   renderDecorations(id) {
     return <select
-      className="table__input--decoration"
+      className="form-control table__input--decoration"
       onChange={this.handleChange.bind(this, id, "decolist" + id)}
       value={this.state.selectedDecorations[id].id}
     >
@@ -154,16 +156,16 @@ class DecorationsMenu extends React.Component {
   render() {
     const { selectedDecorations } = this.state
     return (
-      <div>
+      <div className="decoration-container">
         {selectedDecorations[0] && this.state.decolist0[0] ?
           <div>{this.renderDecorations(0)}</div>
-          : "-"}
+          : <div>-</div>}
         {selectedDecorations[1] && this.state.decolist1[0] ?
           <div>{this.renderDecorations(1)}</div>
-          : "-"}
+          : <div>-</div>}
         {selectedDecorations[2] && this.state.decolist2[0] ?
           <div>{this.renderDecorations(2)}</div>
-          : "-"}
+          : <div>-</div>}
       </div>
     )
   }

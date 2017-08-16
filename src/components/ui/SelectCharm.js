@@ -32,32 +32,43 @@ class SelectCharm extends React.Component {
     const { skills } = this.props
     return (
       <div className="charm-container">
-        <select onChange={this.handleChange.bind(this, "slots")}>
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-        <select 
-        value={this.state.charm.skill1}
-        onChange={this.handleChange.bind(this, "skill1")}>
-          {this.renderSkills(skills)}
-        </select>
-        <input 
-        className="charm--input"
-        onChange={this.handleChange.bind(this, "amount1")} 
-        type="number" 
-        placeholder="skill 1 amount" />
-        <select 
-        value={this.state.charm.skill2}
-        onChange={this.handleChange.bind(this, "skill2")}>
-          {this.renderSkills(skills)}
-        </select>
-        <input 
-        className="charm--input"        
-        onChange={this.handleChange.bind(this, "amount2")} 
-        type="number" 
-        placeholder="skill 2 amount" />
+        <div className="charm--row">
+          <p>Slots:</p>
+          <select
+            className="form-control charm--slots"
+            onChange={this.handleChange.bind(this, "slots")}>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <div className="charm--row">
+          <select
+            className="form-control charm--skill"
+            value={this.state.charm.skill1}
+            onChange={this.handleChange.bind(this, "skill1")}>
+            {this.renderSkills(skills)}
+          </select>
+          <input
+            className="form-control charm--input"
+            onChange={this.handleChange.bind(this, "amount1")}
+            type="number"
+            placeholder="Amount" />
+        </div>
+        <div className="charm--row">
+          <select
+            className="form-control charm--skill"
+            value={this.state.charm.skill2}
+            onChange={this.handleChange.bind(this, "skill2")}>
+            {this.renderSkills(skills)}
+          </select>
+          <input
+            className="form-control charm--input"
+            onChange={this.handleChange.bind(this, "amount2")}
+            type="number"
+            placeholder="Amount" />
+        </div>
       </div>
     )
   }
