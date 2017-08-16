@@ -19,6 +19,25 @@ import SubmissionList from "./SubmissionList"
 import "./SubmissionPage.css"
 
 class SubmissionPage extends Component {
+  state = {
+    armorSet: true,
+    styleAndArts: false
+  }
+
+  switchTab(tab) {
+    if (tab) {
+      this.setState({
+        armorSet: true,
+        styleAndArts: false
+      })
+    }
+    else {
+      this.setState({
+        armorSet: false,
+        styleAndArts: true
+      })
+    }
+  }
 
   componentDidMount() {
     this.props.getAll()
@@ -51,9 +70,29 @@ class SubmissionPage extends Component {
       <div>
         <SubmissionForm submit={this.handleSubmit} />
         {this.props.backendError.message ? <div className="backend-error-container">{this.props.backendError.message}</div> : <div>{this.props.backendError}</div>}
-        <div className="style-and-armor--container">
-          <ArmorSetForm />
-          <StyleAndArts />
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <div className="btn-group btn-group-justified">
+              <div
+                className={this.state.armorSet ? "btn btn-default disabled" : "btn btn-default"}
+                onClick={this.switchTab.bind(this, true)}>
+                Armor set</div>
+              <div
+                className={this.state.styleAndArts ? "btn btn-default disabled" : "btn btn-default"}
+                onClick={this.switchTab.bind(this, false)}>
+                Style and Arts</div>
+            </div>
+          </div>
+          <div className="panel-body">
+            <div id="myTabContent" className="tab-content style-and-armor--container">
+              <div className={this.state.armorSet ? "" : "hidden"}>
+                <ArmorSetForm />
+              </div>
+              <div className={this.state.styleAndArts ? "" : "hidden"}>
+                <StyleAndArts />
+              </div>
+            </div>
+          </div>
         </div>
         <SubmissionList />
       </div>

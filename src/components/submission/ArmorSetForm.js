@@ -112,10 +112,8 @@ class ArmorSetForm extends React.Component {
     return (
       <div className="panel panel-default armor-set-form--container">
         <div className="panel-heading">
-          Armor set
-        </div>
-        <div className="panel-body">
-          <div className="armor-set-form-row">
+          <div className="armor-set-form-row armor-set-header">
+
             <div className="armor-set-form-col">
               Equipment
           </div>
@@ -135,6 +133,8 @@ class ArmorSetForm extends React.Component {
                 onClick={this.changeArmorType.bind(this, "Gunner")} />
             </div>
           </div>
+        </div>
+        <div className="panel-body">
           <div className="armor-set-form-row">
             <div className={armorSetForm.errors.setName.length === 0 ? "armor-set-form--setname" : "armor-set-form--setname has-error"}>
               <input

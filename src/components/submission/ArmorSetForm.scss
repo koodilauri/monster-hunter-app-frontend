@@ -6,7 +6,6 @@
   .panel-body{
     padding:0px;
   }
-
   .armor-set-form-row{
     display: flex;
     flex-direction: row;
@@ -24,7 +23,7 @@
       text-align: center;
       font-weight: 700;      
     }
-
+    
     .armor-set-form-col{
       display: flex;
       flex-direction: row;
@@ -32,24 +31,34 @@
       margin-bottom: 14px;
       width: 60%;
     }
-
+    
     .armor-set-form--setname{
       width: 100%;
     }
-
+    
     .armor-set-form--charm-p{
       margin-top: 40px;
     }
     // .armor-set-form--charm{
-    //   .decoration-container{
-    //     margin-top: 30px;
-    //   }
-    // }
+      //   .decoration-container{
+        //     margin-top: 30px;
+        //   }
+        // }
+        
+        .search-container{
+          margin-right: 20px;
+          margin-bottom: 0px;
+          // width:190px;
+        }
+      }
+      .armor-set-header{
+        display: flex;
+        flex-direction: row;
+        border-top: 0px solid black; 
 
-    .search-container{
-      margin-right: 20px;
-      margin-bottom: 0px;
-      // width:190px;
+        .armor-set-form-col{
+          width: 100%;
+          margin: 0px;
+        }
+      }    
     }
-  }
-}

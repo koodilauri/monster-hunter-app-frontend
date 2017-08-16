@@ -129,12 +129,9 @@ class StyleAndArts extends React.Component {
     return (
       <div className="panel panel-default style-and-arts--container">
         <div className="panel-heading">
-          Armor set
+        Style and Hunter Arts
       </div>
         <div className="panel-body">
-          <div className="style-and-arts--row style-and-arts--head">
-            Style and Hunter Arts
-        </div>
           <div className="style-and-arts--row  style-and-arts--head">
             Style
         </div>
