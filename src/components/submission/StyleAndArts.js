@@ -127,57 +127,62 @@ class StyleAndArts extends React.Component {
     const { hunterArts, selectedHunterArts } = this.state
     const { errors } = this.props.styleAndArtsForm
     return (
-      <div className="style-and-arts--container">
-        <div className="style-and-arts--row style-and-arts--head">
-          Style and Hunter Arts
+      <div className="panel panel-default style-and-arts--container">
+        <div className="panel-heading">
+          Armor set
+      </div>
+        <div className="panel-body">
+          <div className="style-and-arts--row style-and-arts--head">
+            Style and Hunter Arts
         </div>
-        <div className="style-and-arts--row  style-and-arts--head">
-          Style
+          <div className="style-and-arts--row  style-and-arts--head">
+            Style
         </div>
-        <div className="style-and-arts--row">
-          <select
-            name="selectedStyle"
-            className="form-control"
-            onChange={this.handleChange.bind(this, "selectedStyle")}
-          >
-            <option value="Guild">Guild</option>
-            <option value="Striker">Striker</option>
-            <option value="Adept">Adept</option>
-            <option value="Aerial">Aerial</option>
-          </select>
-          {errors.selectedStyle.map((error, i) =>
+          <div className="style-and-arts--row">
+            <select
+              name="selectedStyle"
+              className="form-control"
+              onChange={this.handleChange.bind(this, "selectedStyle")}
+            >
+              <option value="Guild">Guild</option>
+              <option value="Striker">Striker</option>
+              <option value="Adept">Adept</option>
+              <option value="Aerial">Aerial</option>
+            </select>
+            {errors.selectedStyle.map((error, i) =>
+              <div key={i}>{error.message}</div>
+            )}
+          </div>
+          <div className="style-and-arts--row  style-and-arts--head">
+            Hunter Arts
+        </div>
+          <div className="style-and-arts--row">
+            <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="0" />
+          </div>
+          <div className="style-and-arts--row">
+            {selectedHunterArts[0].gaugesize}
+          </div>
+          <div className="style-and-arts--row">
+            {selectedHunterArts[1] ?
+              <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="1" />
+              : "---"}
+          </div>
+          <div className="style-and-arts--row">
+            {selectedHunterArts[1] ? selectedHunterArts[1].gaugesize : "---"}
+          </div>
+          <div className="style-and-arts--row">
+            {selectedHunterArts[2] ?
+              <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="2" />
+              : "---"}
+          </div>
+          <div className="style-and-arts--row">
+            {selectedHunterArts[2] ? selectedHunterArts[2].gaugesize : "---"}
+          </div>
+          {errors.selectedHunterArts.map((error, i) =>
             <div key={i}>{error.message}</div>
-          )}
+          )
+          }
         </div>
-        <div className="style-and-arts--row  style-and-arts--head">
-          Hunter Arts
-        </div>
-        <div className="style-and-arts--row">
-          <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="0" />
-        </div>
-        <div className="style-and-arts--row">
-          {selectedHunterArts[0].gaugesize}
-        </div>
-        <div className="style-and-arts--row">
-          {selectedHunterArts[1] ?
-            <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="1" />
-            : "---"}
-        </div>
-        <div className="style-and-arts--row">
-          {selectedHunterArts[1] ? selectedHunterArts[1].gaugesize : "---"}
-        </div>
-        <div className="style-and-arts--row">
-          {selectedHunterArts[2] ?
-            <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="2" />
-            : "---"}
-        </div>
-        <div className="style-and-arts--row">
-          {selectedHunterArts[2] ? selectedHunterArts[2].gaugesize : "---"}
-        </div>
-      { errors.selectedHunterArts.map((error, i) =>
-      <div key={i}>{error.message}</div>
-    )
-    }
       </div>
     )
   }

@@ -48,7 +48,7 @@ class DecorationsMenu extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.decorations.length !== this.props.decorations.length) {
-      console.log("new decos for component ", prevProps.decorations.length)
+      // console.log("new decos for component ", prevProps.decorations.length)
       this.setState({
         decolist0: this.props.decorations,
         decolist1: this.props.decorations,

@@ -90,7 +90,7 @@ class SelectTimeInput extends Component {
 
   render() {
     return (
-      <div className="form-group flex-row">
+      <div className="form-group time--container">
         {this.renderTime("minutes")}
         {this.renderTime("seconds")}
       </div>

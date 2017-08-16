@@ -1,10 +1,16 @@
 .armor-set-form--container {
-  margin: 10px 10px 10px 0;
+  margin: 10px 5px 10px 10px;
+  
   width: 400px;
+
+  .panel-body{
+    padding:0px;
+  }
+
   .armor-set-form-row{
     display: flex;
     flex-direction: row;
-    border: 1px solid black; 
+    border-top: 1px solid black; 
     // padding-top: 20px;
     // padding-bottom: 14px;
     
@@ -25,6 +31,10 @@
       margin-top:14px;
       margin-bottom: 14px;
       width: 60%;
+    }
+
+    .armor-set-form--setname{
+      width: 100%;
     }
 
     .armor-set-form--charm-p{

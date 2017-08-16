@@ -1,3 +1,7 @@
+$primary-color: #002b36;
+$success-color: #2aa198;
+$secondary-color: #073642;
+
  .search-menu {
   max-height: 200px;
   overflow-y: scroll;
@@ -6,19 +10,27 @@
 }
 
 .search-container {
+  margin-left:15px!important; 
 }
 
 .search-menu--item {
-  background-color: #e5e5e5;
-  border-block-start: 0 solid white;
+  background-color: $secondary-color;
+  border-block-start: 0 $secondary-color;
   border-top: 1px solid black;
   padding: 10px;
 }
 
 .search-menu--item:hover{
-  background-image: -webkit-gradient(linear, left top, left bottom, from(darkgreen),to(#91fc7e));
-  background-image: -webkit-linear-gradient(top, darkgreen, #91fc7e);
-  background-image: -moz-linear-gradient(top, darkgreen, #91fc7e);
-  background-image: linear-gradient(to bottom, darkgreen, #91fc7e);
-  color: white;
+  background: $success-color;
+  background-image: -webkit-gradient(linear, left top, left bottom, from($primary-color),to($success-color));
+  background-image: -webkit-linear-gradient(bottom right, $primary-color, $success-color);
+  background-image: -moz-linear-gradient(bottom right, $primary-color, $success-color);
+  background-image: linear-gradient(to bottom right, $primary-color, $success-color);
+  // color: white;
+}
+
+@media (max-width: 540px){
+.search-container {
+  margin-left:-15px!important; 
+}
 }

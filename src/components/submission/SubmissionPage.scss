@@ -1,0 +1,27 @@
+.style-and-armor--container{
+  // margin: 0px 5%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;  
+  align-self: stretch;
+
+  .armor-set-form--container {
+    align-self: auto;    
+  }
+  .style-and-arts--container{
+    align-self: auto;    
+  }
+}
+
+@media (max-width: 380px) {
+  .style-and-armor--container {
+    width: 360px;
+    margin: 0px 0px;
+  }
+  .armor-set-form--container {
+    margin: 0px 0px 10px 0px;
+  }
+  .style-and-arts--container{
+    margin: 10px 0px 10px 0px;    
+  }
+}

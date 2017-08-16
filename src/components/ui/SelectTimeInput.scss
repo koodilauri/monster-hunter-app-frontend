@@ -1,4 +1,11 @@
- .select-time--container{
+.time--container{
+  width: 217px;
+  margin-left: 15px !important;
+  display: flex;
+  flex-direction: row;
+}
+
+.select-time--container{
    display: flex;
    flex-direction: row;
    flex-wrap: nowrap;
@@ -20,4 +27,15 @@
   -webkit-appearance: none !important;
   margin: 0 !important;
   -moz-appearance:textfield !important;
+}
+
+
+@media (max-width: 540px) {
+  .time--container{
+    margin-left: -15px !important;
+    flex-direction: column;    
+    .select-time--container{
+      margin-bottom: 10px;
+    }  
+  }
 }

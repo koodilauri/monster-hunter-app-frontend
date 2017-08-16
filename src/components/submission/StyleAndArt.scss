@@ -1,7 +1,20 @@
 .style-and-arts--container {
   margin: 10px 5px 10px 10px;
+  align-self: center;
+  
+  width: 400px;
+  height: 745px;
+
+  .search-container{
+    padding: 0px;
+    margin: 0px!important;    
+    input{
+      margin: 0px;
+    }
+  }
+
  .style-and-arts--row{
-  border: 1px solid black;
+  border-top: 1px solid black;
   height: 34px;
   .search-menu{
     position: relative;
@@ -12,5 +25,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 700;
+}
+.panel-body{
+  padding: 0px;
 }
 }

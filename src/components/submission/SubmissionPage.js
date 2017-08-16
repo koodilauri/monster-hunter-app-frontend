@@ -16,7 +16,7 @@ import ArmorSetForm from "./ArmorSetForm"
 import SubmissionForm from "./SubmissionForm"
 import SubmissionList from "./SubmissionList"
 
-// import "./SubmissionPage.css"
+import "./SubmissionPage.css"
 
 class SubmissionPage extends Component {
 
@@ -49,12 +49,12 @@ class SubmissionPage extends Component {
   render() {
     return (
       <div>
-        {this.props.backendError.message ? <div className="backend-error-container">{this.props.backendError.message}</div> : <div>{this.props.backendError}</div>}
-        <div className="flex-row">
-          <StyleAndArts />
-          <ArmorSetForm />
-        </div>
         <SubmissionForm submit={this.handleSubmit} />
+        {this.props.backendError.message ? <div className="backend-error-container">{this.props.backendError.message}</div> : <div>{this.props.backendError}</div>}
+        <div className="style-and-armor--container">
+          <ArmorSetForm />
+          <StyleAndArts />
+        </div>
         <SubmissionList />
       </div>
     )

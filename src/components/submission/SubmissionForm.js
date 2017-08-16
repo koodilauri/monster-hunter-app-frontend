@@ -30,8 +30,8 @@ class SubmissionForm extends Component {
     const { values, errors } = submissionForm
     return (
       <div className="submission-form--container">
-        <form className="submission-form" onSubmit={this.handleSubmit}>
-          <div className="form-group">
+        <form className="submission-form form-horizontal" onSubmit={this.handleSubmit}>
+          <div className={errors.name.lenght === 0 ? "form-group" : "form-group has-error"}>
             <input
               name="name"
               type="text"
@@ -40,13 +40,11 @@ class SubmissionForm extends Component {
               value={values.name}
               onChange={this.handleChange.bind(this, "name")}
             />
-            <div>
-              { errors.name.map((error, i) =>
-                <div key={i}>{error.message}</div>
-              )}
-            </div>
+            {errors.name.map((error, i) =>
+              <label className="control-label" key={i}>{error.message}</label>
+            )}
           </div>
-          <SearchSelectionInput item="quest" items={quests} selectItem={this.selectItem} errors={errors.quest}/>
+          <SearchSelectionInput item="quest" items={quests} selectItem={this.selectItem} errors={errors.quest} />
           <SelectTimeInput setTime={this.setTime} />
           <div className="form-group">
             <button type="submit" className="btn btn-primary">Submit</button>
