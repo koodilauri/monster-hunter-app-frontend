@@ -55,11 +55,14 @@ class SubmissionPage extends Component {
       .then(() => {
         const { submissionForm, armorSetForm, styleAndArtsForm } = this.props
         if (submissionForm.valid && armorSetForm.valid && styleAndArtsForm.valid) {
-          console.log("forms are valid")
           this.props.saveSubmission(submissionForm.values,
             armorSetForm.values,
             styleAndArtsForm.values)
+          console.log("forms are valid")
         } else {
+          this.props.saveSubmission(submissionForm.values,
+            armorSetForm.values,
+            styleAndArtsForm.values)
           console.log("forms are not valid")
         }
       })
@@ -68,8 +71,11 @@ class SubmissionPage extends Component {
   render() {
     return (
       <div>
+        {this.props.backendError.message ?
+          <div className="alert alert-dismissible alert-danger backend-error-container">
+            <strong>{this.props.backendError.message}</strong>
+          </div> : <div> </div>}
         <SubmissionForm submit={this.handleSubmit} />
-        {this.props.backendError.message ? <div className="backend-error-container">{this.props.backendError.message}</div> : <div>{this.props.backendError}</div>}
         <div className="panel panel-default">
           <div className="panel-heading">
             <div className="btn-group btn-group-justified">

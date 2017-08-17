@@ -41,7 +41,7 @@ class SubmissionForm extends Component {
               onChange={this.handleChange.bind(this, "name")}
             />
             {errors.name.map((error, i) =>
-              <label className="control-label" key={i}>{error.message}</label>
+              <label className="control-label submission-form--name-error" key={i}>{error.message}</label>
             )}
           </div>
           <SearchSelectionInput item="quest" items={quests} selectItem={this.selectItem} errors={errors.quest} />

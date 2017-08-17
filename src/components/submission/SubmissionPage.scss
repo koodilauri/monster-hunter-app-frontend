@@ -13,6 +13,15 @@
   }
 }
 
+.backend-error-container{
+  width: 50%;
+  // display: flex;
+  // flex-wrap: wrap;
+  // flex-direction: row;
+  // align-self: center;
+  margin-left: 25%;
+}
+
 @media (max-width: 380px) {
   .style-and-armor--container {
     width: 360px;
