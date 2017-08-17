@@ -15,16 +15,25 @@
 
  .style-and-arts--row{
   border-top: 1px solid black;
-  height: 34px;
+  height: 34px;//34px;
+ 
+  .style-and-arts--text{
+    margin: 5px 0px 0px 0px;
+    text-align: center;
+  }
+
   .search-menu{
     position: relative;
   }
-  }
+}
+
+
 .style-and-arts--head{
   padding: 6px;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 700;
+  height: 34px;
 }
 .panel-body{
   padding: 0px;

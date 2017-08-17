@@ -60,9 +60,6 @@ class SubmissionPage extends Component {
             styleAndArtsForm.values)
           console.log("forms are valid")
         } else {
-          this.props.saveSubmission(submissionForm.values,
-            armorSetForm.values,
-            styleAndArtsForm.values)
           console.log("forms are not valid")
         }
       })

@@ -1,11 +1,21 @@
 .time--container{
   width: 217px;
   margin-left: 15px !important;
+  margin-right: -7px !important;
   display: flex;
-  flex-direction: row;
+  // flex-direction: row;
+}
+
+.button--plus{
+  margin-right: 31px;
+}
+
+.button--minus{
+  margin-left: 1px;
 }
 
 .select-time--container{
+  width: 97px;
    display: flex;
    flex-direction: row;
    flex-wrap: nowrap;
@@ -13,9 +23,9 @@
   /* border: 1px solid black; */
 
   .select-time__input{
-    margin:0px; 
-    width: 30px;
-    height: 30px;
+    margin:0px 0px 0px 0px; 
+    width: 35px;
+    height: 34px;
     padding: 1px 2px 1px 2px;
     text-align: center;
     float: initial;

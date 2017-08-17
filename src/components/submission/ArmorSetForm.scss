@@ -31,6 +31,10 @@
       margin-bottom: 14px;
       width: 60%;
     }
+
+    .armor-set-form--radio{
+      margin: 3px 15px 0px 5px;
+    }
     
     .armor-set-form--setname{
       width: 100%;
@@ -51,6 +55,12 @@
           // width:190px;
         }
       }
+
+      .armor-set-form-row--head{
+        height: 34px;
+        padding-top: 5px;
+      }
+
       .armor-set-header{
         display: flex;
         flex-direction: row;

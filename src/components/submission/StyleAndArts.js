@@ -13,14 +13,14 @@ class StyleAndArts extends React.Component {
       {
         id: -1,
         name: "art1",
-        gaugesize: 0,
+        gauge_size: 0,
         description: "",
         weapon: "General"
       },
       {
         id: -1,
         name: "",
-        gaugesize: 0,
+        gauge_size: 0,
         description: "",
         weapon: "General"
       }
@@ -81,7 +81,7 @@ class StyleAndArts extends React.Component {
     const newState = Object.assign({}, this.state, {
       selectedHunterArts: selectedHunterArts
         .slice(0, id)
-        .concat(Object.assign({}, { id: item.id, name: item.name, gaugesize: item.gaugesize, description: item.description, weapon: item.weapon }))
+        .concat(Object.assign({}, { id: item.id, name: item.name, gauge_size: item.gauge_size, description: item.description, weapon: item.weapon }))
         .concat(selectedHunterArts.slice(Number(id) + 1))
     })
     // this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
@@ -100,7 +100,7 @@ class StyleAndArts extends React.Component {
     const { selectedHunterArts } = this.props.styleAndArtsForm.values
     let data = [];
     for (let i = 0; i < length; i++) {
-      data.push({ id: -1, name: "", gaugesize: 0, description: "", weapon: "General" });
+      data.push({ id: -1, name: "", gauge_size: 0, description: "", weapon: "General" });
     }
     const newValue = selectedHunterArts.concat(data)
 
@@ -157,23 +157,23 @@ class StyleAndArts extends React.Component {
             <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="0" />
           </div>
           <div className="style-and-arts--row">
-            {selectedHunterArts[0].gaugesize}
+            <p className="style-and-arts--text">{selectedHunterArts[0].gauge_size}</p>
           </div>
           <div className="style-and-arts--row">
             {selectedHunterArts[1] ?
               <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="1" />
-              : "---"}
+              : <p className="style-and-arts--text">---</p>}
           </div>
           <div className="style-and-arts--row">
-            {selectedHunterArts[1] ? selectedHunterArts[1].gaugesize : "---"}
+            <p className="style-and-arts--text">{selectedHunterArts[1] ? selectedHunterArts[1].gauge_size : "---"}</p>
           </div>
           <div className="style-and-arts--row">
             {selectedHunterArts[2] ?
               <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="2" />
-              : "---"}
+              : <p className="style-and-arts--text">---</p>}
           </div>
           <div className="style-and-arts--row">
-            {selectedHunterArts[2] ? selectedHunterArts[2].gaugesize : "---"}
+            <p className="style-and-arts--text">{selectedHunterArts[2] ? selectedHunterArts[2].gauge_size : "---"}</p>
           </div>
           {errors.selectedHunterArts.map((error, i) =>
             <div key={i}>{error.message}</div>

@@ -122,6 +122,7 @@ class ArmorSetForm extends React.Component {
             <input
                 type="radio"
                 name="armorType"
+                className="armor-set-form--radio"
                 value="Blademaster"
                 defaultChecked
                 onClick={this.changeArmorType.bind(this, "Blademaster")} />
@@ -129,6 +130,7 @@ class ArmorSetForm extends React.Component {
             <input
                 type="radio"
                 name="armorType"
+                className="armor-set-form--radio"                
                 value="Gunner"
                 onClick={this.changeArmorType.bind(this, "Gunner")} />
             </div>
@@ -147,7 +149,7 @@ class ArmorSetForm extends React.Component {
               )}
             </div>
           </div>
-          <div className="armor-set-form-row">
+          <div className="armor-set-form-row armor-set-form-row--head">
             <div className="armor-set-name-col">
               Name
           </div>
