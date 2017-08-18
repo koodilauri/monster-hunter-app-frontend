@@ -6,6 +6,10 @@
    /* border: 1px solid black;  */
 }
 
+.submission-form--name{
+  margin-right: 15px!important;
+}
+
 .submission-form--name-error{
   margin-right: 10px;
 }
@@ -22,8 +26,15 @@
     flex-direction: column;
       align-self: stretch;
       margin: 0px 5%;
-  }
+      .search-container {
+        margin-left:-15px!important; 
+      }
+      .submission-form--name{
+        margin-right: -15px!important;
+      }
+    }
 }
+
 
 .submission-form--input {
   /* margin: 0px 5px 0px 5px; */

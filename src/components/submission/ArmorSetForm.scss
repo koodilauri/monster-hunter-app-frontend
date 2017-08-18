@@ -1,5 +1,5 @@
 .armor-set-form--container {
-  margin: 10px 5px 10px 10px;
+  margin: auto;
   
   width: 400px;
 
@@ -21,8 +21,13 @@
     .armor-set-slots-col{
       width: 40%;  
       text-align: center;
-      font-weight: 700;      
+      font-weight: 700;   
+      
     }
+    
+    .armor-set-form--image{
+      margin: 0px 5px;
+    }      
     
     .armor-set-form-col{
       display: flex;
@@ -52,6 +57,7 @@
         .search-container{
           margin-right: 20px;
           margin-bottom: 0px;
+          margin-left: 0px;
           // width:190px;
         }
       }

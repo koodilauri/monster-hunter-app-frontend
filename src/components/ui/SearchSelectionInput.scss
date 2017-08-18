@@ -10,7 +10,7 @@ $secondary-color: #073642;
 }
 
 .search-container {
-  margin-left:15px!important; 
+  margin-left:15px; 
 }
 
 .search-menu--item {
@@ -27,10 +27,4 @@ $secondary-color: #073642;
   background-image: -moz-linear-gradient(bottom right, $primary-color, $success-color);
   background-image: linear-gradient(to bottom right, $primary-color, $success-color);
   // color: white;
-}
-
-@media (max-width: 540px){
-.search-container {
-  margin-left:-15px!important; 
-}
 }

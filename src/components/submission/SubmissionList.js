@@ -1,20 +1,24 @@
 import React from "react"
 import { connect } from "react-redux"
+import ArmorSetInfo from "./ArmorSetInfo"
+import "./SubmissionList.css"
 
 class SubmissionList extends React.Component {
   state = {
-    submissions: [],
-    sorted: {
-      name: undefined,
-      quest_name: undefined,
-      time: undefined,
-      weapon_name: undefined,
-      style: undefined,
-      weapon_class: undefined,
-      set_name: undefined,
-      created: undefined
+      submissions: [],
+      sorted: {
+        name: undefined,
+        quest_name: undefined,
+        time: undefined,
+        weapon_name: undefined,
+        style: undefined,
+        weapon_class: undefined,
+        set_name: undefined,
+        created: undefined
+      },
+      modalIsOpen: false,
+      set_id: -1
     }
-  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.submissions !== this.props.submissions) {
@@ -22,6 +26,21 @@ class SubmissionList extends React.Component {
         submissions: this.props.submissions
       })
     }
+  }
+
+  openModal = (id, e) => {
+    e.preventDefault()
+    this.setState({
+      modalIsOpen: true,
+      set_id: id
+    })
+  }
+
+  closeModal = () => {
+    this.setState({
+      modalIsOpen: false,
+      set_id:-1
+    })
   }
 
   sortTable = (field, event) => {
@@ -75,7 +94,10 @@ class SubmissionList extends React.Component {
         </td>
         <td
           className="table__td--submission">
-          {submission.set_name}
+          <button className="btn btn-info"
+            onClick={this.openModal.bind(this, submission.set_id)}>
+            {submission.set_name}
+          </button>
         </td>
         <td
           className="table__td--submission">
@@ -88,6 +110,7 @@ class SubmissionList extends React.Component {
   render() {
     return (
       <div className="container">
+        <ArmorSetInfo isOpen={this.state.modalIsOpen} close={this.closeModal.bind(this)} set_id={this.state.set_id} />
         <div className="col-md-12">
           <table className="table table-striped table-bordered table-hover table--submission">
             <thead>

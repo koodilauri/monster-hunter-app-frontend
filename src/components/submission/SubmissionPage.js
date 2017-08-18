@@ -5,6 +5,7 @@ import { getQuests } from "../../actions/quest"
 import { getArmors } from "../../actions/armor"
 import { getHunterArts } from "../../actions/hunterArt"
 import { getSkills } from "../../actions/skill"
+import { getCharms } from "../../actions/charm"
 import { getWeapons } from "../../actions/weapon"
 import { getDecorations } from "../../actions/decoration"
 import { getSubmissions, saveSubmission } from "../../actions/submission"
@@ -73,7 +74,7 @@ class SubmissionPage extends Component {
             <strong>{this.props.backendError.message}</strong>
           </div> : <div> </div>}
         <SubmissionForm submit={this.handleSubmit} />
-        <div className="panel panel-default">
+        <div className="panel panel-default style-and-armor--container">
           <div className="panel-heading">
             <div className="btn-group btn-group-justified">
               <div
@@ -87,11 +88,11 @@ class SubmissionPage extends Component {
             </div>
           </div>
           <div className="panel-body">
-            <div id="myTabContent" className="tab-content style-and-armor--container">
-              <div className={this.state.armorSet ? "" : "hidden"}>
+            <div id="myTabContent" className="tab-content">
+              <div className={this.state.armorSet ? "armor-visibility-toggler" : "hidden"}>
                 <ArmorSetForm />
               </div>
-              <div className={this.state.styleAndArts ? "" : "hidden"}>
+              <div className={this.state.styleAndArts ? "style-visibility-toggler" : "hidden"}>
                 <StyleAndArts />
               </div>
             </div>
@@ -117,6 +118,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getArmors())
     dispatch(getHunterArts())
     dispatch(getSkills())
+    dispatch(getCharms())
     dispatch(getWeapons())
     dispatch(getDecorations())
     dispatch(getArmorSets())

@@ -1,16 +1,16 @@
 .style-and-armor--container{
-  // margin: 0px 5%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;  
-  align-self: stretch;
+  
 
-  .armor-set-form--container {
-    align-self: auto;    
-  }
-  .style-and-arts--container{
-    align-self: auto;    
-  }
+}
+    .armor-set-form--container {
+      align-self: auto;    
+    }
+    .style-and-arts--container{
+      align-self: auto;    
+    }
+
+.armor-visibility-toggler, .style-visibility-toggler{
+  margin: auto;
 }
 
 .backend-error-container{

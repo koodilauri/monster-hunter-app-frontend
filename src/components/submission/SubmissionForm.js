@@ -31,7 +31,7 @@ class SubmissionForm extends Component {
     return (
       <div className="submission-form--container">
         <form className="submission-form form-horizontal" onSubmit={this.handleSubmit}>
-          <div className={errors.name.lenght === 0 ? "form-group" : "form-group has-error"}>
+          <div className={errors.name.lenght === 0 ? "form-group submission-form--name" : "form-group has-error submission-form--name"}>
             <input
               name="name"
               type="text"

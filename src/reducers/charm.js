@@ -1,14 +1,12 @@
 const initialState = {
-  skills: [],
-  effects:[]
+  charms:[]
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "GET_SKILL_SUCCESS":
+    case "GET_CHARM_SUCCESS":
       return Object.assign({}, state, {
-        skills: action.payload.skills,
-        effects: action.payload.effects
+        charms: action.payload.charms
       })
     default:
       return state

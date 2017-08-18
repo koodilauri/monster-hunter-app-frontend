@@ -22,4 +22,9 @@ export const validations = {
   submission: submissionValidations,
   armorSet: armorSetValidations,
   styleAndArts: styleAndArtsValidations,
+  exec(schema, values) {
+    if (values.minutes === 0 && values.seconds === 0) {
+      this.report("Time can't be 00:00")
+    }
+  }
 }
