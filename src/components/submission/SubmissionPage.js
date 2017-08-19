@@ -20,23 +20,16 @@ import "./SubmissionPage.css"
 
 class SubmissionPage extends Component {
   state = {
-    armorSet: true,
-    styleAndArts: false
+    shown: {
+      styleAndArts: true,
+      armorSet: true,
+    }
   }
 
-  switchTab(tab) {
-    if (tab) {
-      this.setState({
-        armorSet: true,
-        styleAndArts: false
-      })
-    }
-    else {
-      this.setState({
-        armorSet: false,
-        styleAndArts: true
-      })
-    }
+  toggleShown(type, e) {
+    this.setState({
+      shown: Object.assign({}, this.state.shown, { [type]: !this.state.shown[type] })
+    })
   }
 
   componentDidMount() {
@@ -66,34 +59,39 @@ class SubmissionPage extends Component {
   }
 
   render() {
+    const { shown } = this.state
     return (
       <div>
         {this.props.backendError.message ?
           <div className="alert alert-dismissible alert-danger backend-error-container">
             <strong>{this.props.backendError.message}</strong>
-          </div> : <div> </div>}
+          </div> : null }
         <SubmissionForm submit={this.handleSubmit} />
-        <div className="panel panel-default style-and-armor--container">
-          <div className="panel-heading">
-            <div className="btn-group btn-group-justified">
-              <div
-                className={this.state.armorSet ? "btn btn-default disabled" : "btn btn-default"}
-                onClick={this.switchTab.bind(this, true)}>
-                Armor set</div>
-              <div
-                className={this.state.styleAndArts ? "btn btn-default disabled" : "btn btn-default"}
-                onClick={this.switchTab.bind(this, false)}>
-                Style and Arts</div>
+        <div className="style-and-armor--container">
+          <div className="style-and-armor--item">
+            <div onClick={this.toggleShown.bind(this, "styleAndArts")}>
+              <h3 className="style-and-armor--item__header">Style and Arts
+                <span className="m-left">
+                  <i className={shown.styleAndArts ? "fa fa-chevron-down" : "fa fa-chevron-up"} 
+                    aria-hidden="true"></i>
+                </span>
+              </h3>
+            </div>
+            <div className={shown.styleAndArts ? "visible" : "hidden"}>
+              <StyleAndArts />
             </div>
           </div>
-          <div className="panel-body">
-            <div id="myTabContent" className="tab-content">
-              <div className={this.state.armorSet ? "armor-visibility-toggler" : "hidden"}>
-                <ArmorSetForm />
-              </div>
-              <div className={this.state.styleAndArts ? "style-visibility-toggler" : "hidden"}>
-                <StyleAndArts />
-              </div>
+          <div className="style-and-armor--item">
+            <div onClick={this.toggleShown.bind(this, "armorSet")}>
+              <h3 className="style-and-armor--item__header">Armor Set
+                <span className="m-left">
+                  <i className={shown.armorSet ? "fa fa-chevron-down" : "fa fa-chevron-up"} 
+                    aria-hidden="true"></i>
+                </span>
+              </h3>
+            </div>
+            <div className={shown.armorSet ? "visible" : "hidden"}>
+              <ArmorSetForm />
             </div>
           </div>
         </div>

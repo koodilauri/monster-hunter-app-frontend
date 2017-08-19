@@ -222,14 +222,6 @@ class ArmorSetForm extends React.Component {
       </div>
     )
   }
-
-  // render() {
-  //   return(
-  //     <div>
-  //       i am broken =(
-  //     </div>
-  //   )
-  // }
 }
 
 const mapStateToProps = state => ({

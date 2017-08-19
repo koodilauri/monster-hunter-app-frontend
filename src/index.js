@@ -12,6 +12,7 @@ import "./components/submission/SubmissionForm.css"
 import "./components/submission/SubmissionList.css"
 import "./components/ui/SelectTimeInput.css"
 import "./components/ui/SearchSelectionInput.css"
+import "font-awesome/css/font-awesome.css"
 
 ReactDOM.render(
   <Provider store={store}>
