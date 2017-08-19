@@ -15,7 +15,6 @@ import { validateForm } from "../../actions/form"
 import StyleAndArts from "./StyleAndArts"
 import ArmorSetForm from "./ArmorSetForm"
 import SubmissionForm from "./SubmissionForm"
-import SubmissionList from "./SubmissionList"
 
 import "./SubmissionPage.css"
 
@@ -98,7 +97,6 @@ class SubmissionPage extends Component {
             </div>
           </div>
         </div>
-        <SubmissionList />
       </div>
     )
   }

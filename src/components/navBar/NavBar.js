@@ -1,23 +1,19 @@
 import React from "react"
-// import image from "../../images/"
+import { Link } from "react-router-dom"
 
 class NavBar extends React.Component {
-  // <ul className="nav navbar-nav">
-  //   {Object.keys(image).map((key, index) =>
-  //     <li><img src={image[key]} alt={key} width="21" height="21" key={index} /></li>
-  //   )}
-  //   <img src={require("../../images/Log_Icon.png")} width="21" height="21" alt="log" />
-  // </ul>
   render() {
     return (
       <div>
         <nav className="navbar navbar-default navbar-static-top">
           <div className="container">
             <div className="navbar-header">
-              <a className="navbar-brand" href="/">Hunters log</a>
+              <Link className="navbar-brand" to="/">Hunters log</Link>
             </div>
+            <ul className="nav navbar-nav">
+              <li><Link className="" to="/submit">Submit</Link></li>
+            </ul>
           </div>
-
         </nav>
       </div>
     )
