@@ -14,14 +14,6 @@ class ArmorSetInfo extends React.Component {
       amount: [],
       effect: []
     },
-    skillInArmor: {
-      head: {},
-      torso: {},
-      arms: {},
-      waist: {},
-      feet: {},
-      charm: {},
-    },
     skills: {}
   }
 
@@ -40,62 +32,64 @@ class ArmorSetInfo extends React.Component {
       setDecorations: newDecorations,
       weapon: newWeapon
     })
-    this.calculateSkills(newSet)
+    this.calculateSkills(newSet, newDecorations)
   }
 
-  calculateSkills(set) {
-    const skills = {
-      head: this.getSkills(set.head_id),
-      torso: this.getSkills(set.torso_id),
-      arms: this.getSkills(set.arms_id),
-      waist: this.getSkills(set.waist_id),
-      feet: this.getSkills(set.feet_id)
+  calculateSkills(set, decorations) {
+    const charm = this.props.charms.find(x => x.id === set.charm_id)
+    let skills = {
+      selectedHead: this.getSkills(set.head_id),
+      selectedTorso: this.getSkills(set.torso_id),
+      selectedArms: this.getSkills(set.arms_id),
+      selectedWaist: this.getSkills(set.waist_id),
+      selectedFeet: this.getSkills(set.feet_id),
+      selectedCharm: {
+        [this.props.skills.find(x => x.id === charm.skill1_id).name]: charm.bonus1,
+        [this.props.skills.find(x => x.id === charm.skill2_id).name]: charm.bonus2
+      }
     }
-    const skillMatrix = this.parseSkills(skills)
+    const decos = this.addDecos(skills, decorations) //gets the skills from decorations
+    const skillMatrix = this.parseSkills(skills, decos) //sums up the skills so they can be shown in the 'total' colum
     this.setState({
       skills: skills,
       skillSums: skillMatrix,
-      skillInArmor: {
-        head: {
-          [skills.head.skill1.name]: skills.head.skill1.amount,
-          [skills.head.skill2.name]: skills.head.skill2.amount,
-          [skills.head.skill3.name]: skills.head.skill3.amount
-        },
-        torso: {
-          [skills.torso.skill1.name]: skills.torso.skill1.amount,
-          [skills.torso.skill2.name]: skills.torso.skill2.amount,
-          [skills.torso.skill3.name]: skills.torso.skill3.amount
-        },
-        arms: {
-          [skills.arms.skill1.name]: skills.arms.skill1.amount,
-          [skills.arms.skill2.name]: skills.arms.skill2.amount,
-          [skills.arms.skill3.name]: skills.arms.skill3.amount
-        },
-        waist: {
-          [skills.waist.skill1.name]: skills.waist.skill1.amount,
-          [skills.waist.skill2.name]: skills.waist.skill2.amount,
-          [skills.waist.skill3.name]: skills.waist.skill3.amount
-        },
-        feet: {
-          [skills.feet.skill1.name]: skills.feet.skill1.amount,
-          [skills.feet.skill2.name]: skills.feet.skill2.amount,
-          [skills.feet.skill3.name]: skills.feet.skill3.amount
-        },
-        charm: {
-
-        },
-      }
-
     })
   }
 
-  parseSkills(skills) {
+  addDecos(skills, setDecorations) {
+    let newValues = {}
+    let deco1 = {}
+    let deco2 = {}
+    let deco3 = {}
+    Object.keys(skills).map(key => {  //doesnt really need the 'skills' var, only wants the 'selected*' keys
+      let decos = setDecorations.find(x => x.part === key)
+      if (decos !== undefined) {
+        deco1 = this.props.decorations.find(x => x.id === decos.decoration1_id)
+        deco2 = this.props.decorations.find(x => x.id === decos.decoration2_id)
+        deco3 = this.props.decorations.find(x => x.id === decos.decoration3_id)
+        newValues = Object.assign({}, newValues, {
+          [key]: {
+            [this.props.skills.find(x => x.id === deco1.skill1_id).name]: deco1.bonus1,
+            [this.props.skills.find(x => x.id === deco1.skill2_id).name]: deco1.bonus2,
+            [this.props.skills.find(x => x.id === deco2.skill1_id).name]: deco2.bonus1,
+            [this.props.skills.find(x => x.id === deco2.skill2_id).name]: deco2.bonus2,
+            [this.props.skills.find(x => x.id === deco3.skill1_id).name]: deco3.bonus1,
+            [this.props.skills.find(x => x.id === deco3.skill2_id).name]: deco3.bonus2,
+          }
+        })
+      }
+      return 0
+    })
+    return newValues
+  }
+
+  parseSkills(skills, decos) {
     let skillMatrix = { skill: [], amount: [], effect: [] }
     Object.keys(skills).map((key1, id1) => {
-      Object.keys(skills[key1]).map((key2, id2) => {
-        let name = skills[key1][key2].name
-        let amount = skills[key1][key2].amount
-        let index = skillMatrix.skill.indexOf(name)//check if decoration is already in parsedDecorations
+      Object.keys(skills[key1]).map((key2) => {
+        let name = key2
+        let amount = skills[key1][key2]
+        let index = skillMatrix.skill.indexOf(name)//check if skill is already in skillMatrix
         if (index === -1) {
           if (name !== "---") {
             skillMatrix.skill = skillMatrix.skill.concat(name)
@@ -107,6 +101,23 @@ class ArmorSetInfo extends React.Component {
         }
         return 0
       })
+      if (decos[key1] !== undefined)
+        Object.keys(decos[key1]).map(key3 => {
+          //repeat all the things! 
+          let name = key3
+          let amount = decos[key1][key3]
+          let index = skillMatrix.skill.indexOf(name)
+          if (index === -1) {
+            if (name !== "---") {
+              skillMatrix.skill = skillMatrix.skill.concat(name)
+              skillMatrix.amount = skillMatrix.amount.concat(amount)
+            }
+          }
+          else {
+            skillMatrix.amount[index] += amount
+          }
+          return 0
+        })
       return 0
     })
     skillMatrix.skill.map((name, index) => {
@@ -133,26 +144,20 @@ class ArmorSetInfo extends React.Component {
     return skillEffect
   }
 
-  getSkills = id => {
+  getSkills = (id, part) => {
     const armor = this.props.armors.find(x => x.id === id)
+    const skill1 = this.props.skills.find(x => x.id === armor.skill1).name
+    const skill2 = this.props.skills.find(x => x.id === armor.skill2).name
+    const skill3 = this.props.skills.find(x => x.id === armor.skill3).name
     return {
-      skill1: {
-        name: this.props.skills.find(x => x.id === armor.skill1).name,
-        amount: armor.amount1
-      },
-      skill2: {
-        name: this.props.skills.find(x => x.id === armor.skill2).name,
-        amount: armor.amount2
-      },
-      skill3: {
-        name: this.props.skills.find(x => x.id === armor.skill3).name,
-        amount: armor.amount3
-      }
+      [skill1]: armor.amount1,
+      [skill2]: armor.amount2,
+      [skill3]: armor.amount3
     }
   }
 
   renderSkills() {
-    const { skillSums, skillInArmor } = this.state
+    const { skillSums, skills } = this.state
     return skillSums.skill.map((name, id) => {
       let skillColor = ""
       if (skillSums.effect[id].description !== "") {
@@ -167,21 +172,22 @@ class ArmorSetInfo extends React.Component {
           -
         </td>
         <td>
-          {skillInArmor.head[skillSums.skill[id]]}
+          {skills.selectedHead[skillSums.skill[id]]}
         </td>
         <td>
-          {skillInArmor.torso[skillSums.skill[id]]}
+          {skills.selectedTorso[skillSums.skill[id]]}
         </td>
         <td>
-          {skillInArmor.arms[skillSums.skill[id]]}
+          {skills.selectedArms[skillSums.skill[id]]}
         </td>
         <td>
-        {skillInArmor.waist[skillSums.skill[id]]}          
+          {skills.selectedWaist[skillSums.skill[id]]}
         </td>
         <td>
-        {skillInArmor.feet[skillSums.skill[id]]}          
+          {skills.selectedFeet[skillSums.skill[id]]}
         </td>
         <td>
+          {skills.selectedCharm[skillSums.skill[id]]}
         </td>
         <td>
           {this.state.skillSums.amount[id]}
@@ -199,19 +205,20 @@ class ArmorSetInfo extends React.Component {
     })
   }
 
-  renderDecorations(decorations) {
-    if (decorations === undefined) return null
+  renderDecorations(decos) {
+    if (decos === undefined) return null
+    const { decorations } = this.props
 
     return (
       <div className="armor-set-modal--col">
-        <div>
-          {this.props.decorations.find(x => x.id === decorations.decoration1_id).name}
+        <div title={decorations.find(x => x.id === decos.decoration1_id).skill_name}>
+          {decorations.find(x => x.id === decos.decoration1_id).name}
         </div>
-        <div>
-          {this.props.decorations.find(x => x.id === decorations.decoration2_id).name}
+        <div title={decorations.find(x => x.id === decos.decoration2_id).skill_name}>
+          {decorations.find(x => x.id === decos.decoration2_id).name}
         </div>
-        <div>
-          {this.props.decorations.find(x => x.id === decorations.decoration3_id).name}
+        <div title={decorations.find(x => x.id === decos.decoration3_id).skill_name}>
+          {decorations.find(x => x.id === decos.decoration3_id).name}
         </div>
       </div>
     )
@@ -347,6 +354,7 @@ class ArmorSetInfo extends React.Component {
 
 const mapStateToProps = state => ({
   armorSets: state.armorSet.armorSets,
+  charms: state.charm.charms,
   setDecorations: state.armorSet.setDecorations,
   weapons: state.weapon.weapons,
   armors: state.armor.armors,
