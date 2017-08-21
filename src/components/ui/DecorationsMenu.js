@@ -10,7 +10,7 @@ class DecorationsMenu extends React.Component {
     usedSlots: 0,
     selectedDecorations: [
       {
-        id: -1,
+        id: 1,
         size: 0,
         name: "---",
         skill1_id: 149,
@@ -90,7 +90,7 @@ class DecorationsMenu extends React.Component {
     let data = [];
     for (let i = 0; i < length; i++) {
       data.push({
-        id: -1,
+        id: 1,
         size: 0,
         name: "---",
         skill1_id: 149,
