@@ -42,6 +42,8 @@
 @media (max-width: 540px) {
   .time--container{
     margin-left: -15px !important;
+    margin-right: -15px !important;
+    width: inherit;
     flex-direction: column;    
     .select-time--container{
       margin-bottom: 10px;

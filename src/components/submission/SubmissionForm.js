@@ -46,8 +46,8 @@ class SubmissionForm extends Component {
           </div>
           <SearchSelectionInput item="quest" items={quests} selectItem={this.selectItem} errors={errors.quest} />
           <SelectTimeInput setTime={this.setTime} />
-          <div className="form-group">
-            <button type="submit" className="btn btn-primary">Submit</button>
+          <div className="form-group submission-submit">
+            <button type="submit" className="btn btn-primary submission-submit--btn">Submit</button>
           </div>
         </form>
       </div>

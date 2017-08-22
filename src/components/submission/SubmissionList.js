@@ -161,6 +161,7 @@ class SubmissionList extends React.Component {
               {this.renderSubmissions()}
             </tbody>
           </table>
+          {this.state.submissions.length === 0? <div>No submissions</div>: null}
         </div>
       </div >
     )

@@ -8,6 +8,7 @@ class ArmorSetInfo extends React.Component {
   state = {
     armorSet: {},
     setDecorations: [],
+    setArts: [],
     weapon: {},
     skillSums: {
       skill: [],
@@ -25,11 +26,13 @@ class ArmorSetInfo extends React.Component {
 
   findArmorSet() {
     const newSet = this.props.armorSets.find(x => x.id === this.props.set_id)
+    const newArts = this.props.hunterArts.filter(x => x.id === newSet.art1_id || x.id === newSet.art2_id || x.id === newSet.art3_id)
     const newDecorations = this.props.setDecorations.filter(deco => deco.set_id === newSet.id)
     const newWeapon = this.props.weapons.find(x => x.id === newSet.weapon_id)
     this.setState({
       armorSet: newSet,
       setDecorations: newDecorations,
+      setArts: newArts,
       weapon: newWeapon
     })
     this.calculateSkills(newSet, newDecorations)
@@ -38,17 +41,18 @@ class ArmorSetInfo extends React.Component {
   calculateSkills(set, decorations) {
     const charm = this.props.charms.find(x => x.id === set.charm_id)
     let skills = {
-      selectedHead: this.getSkills(set.head_id),
-      selectedTorso: this.getSkills(set.torso_id),
-      selectedArms: this.getSkills(set.arms_id),
-      selectedWaist: this.getSkills(set.waist_id),
-      selectedFeet: this.getSkills(set.feet_id),
+      selectedHead: this.getArmorSkills(set.head_id),
+      selectedTorso: this.getArmorSkills(set.torso_id),
+      selectedArms: this.getArmorSkills(set.arms_id),
+      selectedWaist: this.getArmorSkills(set.waist_id),
+      selectedFeet: this.getArmorSkills(set.feet_id),
       selectedCharm: {
         [this.props.skills.find(x => x.id === charm.skill1_id).name]: charm.bonus1,
         [this.props.skills.find(x => x.id === charm.skill2_id).name]: charm.bonus2
       }
     }
-    const decos = this.addDecos(skills, decorations) //gets the skills from decorations
+    const decos = this.getDecoSkills(skills, decorations) //gets the skills from decorations
+    this.sumArmorAndDecoSkills(skills, decos)
     const skillMatrix = this.parseSkills(skills, decos) //sums up the skills so they can be shown in the 'total' colum
     this.setState({
       skills: skills,
@@ -56,7 +60,29 @@ class ArmorSetInfo extends React.Component {
     })
   }
 
-  addDecos(skills, setDecorations) {
+  sumArmorAndDecoSkills(skills, decos) {
+    Object.keys(skills).map(key => { //loop through the parts (head, torso etc)
+      if (decos[key] !== undefined) { //if there are decorations in an armor piece...
+        Object.keys(decos[key]).map(key2 => {//loop through the skills of those decorations
+          if (skills[key][key2] !== undefined) {
+            //if the skill is already in the skills object, add the bonus from decorations to it
+            skills[key][key2] += decos[key][key2]
+          }
+          else {
+            //otherwise create a new skill in the skills object 
+            skills[key] = Object.assign({}, skills[key], {
+              [key2]: decos[key][key2]
+            })
+          }
+          return 0
+        })
+      }
+      return 0
+    })
+    return skills
+  }
+
+  getDecoSkills(skills, setDecorations) {
     let newValues = {}
     let deco1 = {}
     let deco2 = {}
@@ -101,23 +127,6 @@ class ArmorSetInfo extends React.Component {
         }
         return 0
       })
-      if (decos[key1] !== undefined)
-        Object.keys(decos[key1]).map(key3 => {
-          //repeat all the things! 
-          let name = key3
-          let amount = decos[key1][key3]
-          let index = skillMatrix.skill.indexOf(name)
-          if (index === -1) {
-            if (name !== "---") {
-              skillMatrix.skill = skillMatrix.skill.concat(name)
-              skillMatrix.amount = skillMatrix.amount.concat(amount)
-            }
-          }
-          else {
-            skillMatrix.amount[index] += amount
-          }
-          return 0
-        })
       return 0
     })
     skillMatrix.skill.map((name, index) => {
@@ -144,7 +153,7 @@ class ArmorSetInfo extends React.Component {
     return skillEffect
   }
 
-  getSkills = (id, part) => {
+  getArmorSkills = (id, part) => {
     const armor = this.props.armors.find(x => x.id === id)
     const skill1 = this.props.skills.find(x => x.id === armor.skill1).name
     const skill2 = this.props.skills.find(x => x.id === armor.skill2).name
@@ -206,7 +215,7 @@ class ArmorSetInfo extends React.Component {
   }
 
   renderDecorations(decos) {
-    if (decos === undefined) return null
+    if (decos === undefined) return <div className="armor-set-modal--col"></div>
     const { decorations } = this.props
 
     return (
@@ -224,14 +233,11 @@ class ArmorSetInfo extends React.Component {
     )
   }
 
-  renderDecorations2() {
-    return this.state.setDecorations.map((decos, id) =>
-      <div key={id} className="armor-set-modal--col">
-        <img src={image.decoration} alt="Decoration " width="25" height="25" />
-        {decos.part}|
-        {this.props.decorations.find(x => x.id === decos.decoration1_id).name}|
-        {this.props.decorations.find(x => x.id === decos.decoration2_id).name}|
-        {this.props.decorations.find(x => x.id === decos.decoration3_id).name}
+  renderArts() {
+    const { setArts } = this.state
+    return setArts.map((art, id) =>
+      <div key={id} title={art.description} className="well well-sm armor-set-modal--art">
+        Art #{id+1}: {art.name}
       </div>)
   }
 
@@ -243,66 +249,69 @@ class ArmorSetInfo extends React.Component {
         <div className="modal-dialog armor-set-modal-dialog">
           <div className="modal-content armor-set-modal-content">
             <div className="modal-header">
-              <h4 className="modal-title">Set Name: {armorSet.name}</h4>
+              <h4 className="modal-title">{armorSet.style} style: {armorSet.name}</h4>
             </div>
             <div className="modal-body">
               <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   Equipment
                 </div>
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   <img src={image.decoration} alt="Decoration " width="25" height="25" />
                 </div>
               </div>
               <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   <img src={image.greatSword} alt="Weapon: " width="30" height="30" />
                   {weapon.name}
                 </div>
+                <div className="armor-set-modal--col">
+                </div>
               </div>
               <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   <img src={image.head} alt="Head: " width="30" height="30" />
                   {armorSet.head}
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedHead"))}
               </div>
               <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   <img src={image.torso} alt="Torso: " width="30" height="30" />
                   {armorSet.torso}
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedTorso"))}
               </div>
               <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   <img src={image.arms} alt="Arms: " width="30" height="30" />
                   {armorSet.arms}
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedArms"))}
               </div>
               <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   <img src={image.waist} alt="Waist: " width="30" height="30" />
                   {armorSet.waist}
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedWaist"))}
               </div>
               <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   <img src={image.feet} alt="Feet: " width="30" height="30" />
                   {armorSet.feet}
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedFeet"))}
               </div>
               <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col">
+                <div className="armor-set-modal--col armor-set-modal--col__center">
                   <img src={image.charm} alt="Charm: " width="30" height="30" />
                   #{armorSet.charm_id}
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedCharm"))}
               </div>
-              <table className="table table-striped table-hover">
+              {this.renderArts()}
+              <table className="table table-striped table-hover armor-set-modal--table">
                 <thead>
                   <tr>
                     <th>
@@ -354,10 +363,11 @@ class ArmorSetInfo extends React.Component {
 
 const mapStateToProps = state => ({
   armorSets: state.armorSet.armorSets,
-  charms: state.charm.charms,
   setDecorations: state.armorSet.setDecorations,
+  charms: state.charm.charms,
   weapons: state.weapon.weapons,
   armors: state.armor.armors,
+  hunterArts: state.hunterArt.hunterArts,
   decorations: state.decoration.decorations,
   skills: state.skill.skills,
   effects: state.skill.effects

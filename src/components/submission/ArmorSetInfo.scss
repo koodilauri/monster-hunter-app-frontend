@@ -18,11 +18,29 @@
     .armor-set-modal--row{
         display: flex;
         flex-direction: row;
-
+        // border: 1px solid black; 
+        
         .armor-set-modal--col{
+            border: 1px solid black; 
             width: 50%;
+            height: 62px;
+            margin: auto;
+            text-align: center;
+        }
+        .armor-set-modal--col__center{
+            padding-top: 15px;
         }
     }
+
+    .armor-set-modal--art{
+        // border: 1px solid white; 
+        text-align: left;
+        margin: 10px 0px;
+        padding-left: 40%;
+    }
+}
+
+.armor-set-modal--table{
 }
 
 /* Modal Content/Box */
