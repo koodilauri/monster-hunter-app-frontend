@@ -3,8 +3,9 @@ notifications:
   email: false
 language: node_js
 node_js:
-- 6
-- 7
+- 8
+after_success:
+- npm run build
 deploy:
   provider: s3
   access_key_id: AKIAIFOBFA4GTBXTRM5A

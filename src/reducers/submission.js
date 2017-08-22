@@ -27,4 +27,5 @@ export default (state = initialState, action) => {
   }
 }
 
+export default submission
 
