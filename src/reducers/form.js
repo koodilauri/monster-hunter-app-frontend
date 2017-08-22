@@ -1,23 +1,68 @@
-import { initialValues as armorSet } from "../components/submission/armorset.schema"
-import { initialValues as newSubmission } from "../components/submission/submission.schema"
-import { initialValues as styleAndArts } from "../components/submission/styleAndArts.schema"
-const initialState = {
-  newSubmission,
-  armorSet,
-  styleAndArts
+
+import {
+  FORM_UPDATE_FIELD_WITH_ERRORS,
+  FORM_UPDATE_ERRORS,
+} from "../actions/form"
+
+import { initialValues } from "../schemas"
+
+const INITIAL_STATE = {
+  submission: {
+    values: initialValues.submission,
+    errors: {
+      name: [],
+      quest: [],
+      minutes: [],
+      seconds: [],
+    },
+    valid: false,
+  },
+  armorSet: {
+    values: initialValues.armorSet,
+    errors: {
+      setName: []
+    },
+    valid: false,
+  },
+  styleAndArts: {
+    values: initialValues.styleAndArts,
+    errors: {
+      selectedStyle: [],
+      selectedHunterArts: []
+    },
+    valid: false,
+  },
 }
 
-const form = (state = initialState, action) => {
+export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "FORM_UPDATE_ARMORSET":
-      return Object.assign({}, state, { armorSet: Object.assign({}, state.armorSet, action.payload) })
-    case "FORM_UPDATE_SUBMISSION":
-      return Object.assign({}, state, { newSubmission: action.payload })
-    case "FORM_UPDATE_STYLE_AND_ARTS":
-      return Object.assign({}, state, { styleAndArts: Object.assign({}, state.styleAndArts, action.payload) })
+    case FORM_UPDATE_FIELD_WITH_ERRORS:
+      return updateFormField(state, action)
+    case FORM_UPDATE_ERRORS:
+      return updateForm(state, action)
     default:
       return state
   }
 }
 
-export default form
+const updateFormField = (state, action) => {
+  const { form, field, value, errors } = action.payload
+  return Object.assign({}, state, {
+    [form]: {
+      values: Object.assign({}, state[form].values, { [field]: value }),
+      errors: Object.assign({}, state[form].errors, { [field]: errors }),
+      valid: state[form].valid,
+    }
+  })
+}
+
+const updateForm = (state, action) => {
+  const { form, errors, valid } = action.payload
+  return Object.assign({}, state, {
+    [form]: {
+      values: state[form].values,
+      errors,
+      valid,
+    }
+  })
+}

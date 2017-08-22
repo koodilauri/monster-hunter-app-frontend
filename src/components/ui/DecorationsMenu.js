@@ -1,4 +1,8 @@
 import React from "react"
+import { updateFormField } from "../../actions/form"
+import { connect } from "react-redux"
+
+import "./DecorationsMenu.css"
 
 class DecorationsMenu extends React.Component {
   state = {
@@ -6,14 +10,14 @@ class DecorationsMenu extends React.Component {
     usedSlots: 0,
     selectedDecorations: [
       {
-        id: -1,
+        id: 1,
         size: 0,
         name: "---",
-        skill1id: 149,
-        skill2id: 149,
+        skill1_id: 149,
+        skill2_id: 149,
         bonus1: 0,
         bonus2: 0,
-        skillname: "---"
+        skill_name: "---"
       }
     ],
     decolist0: [],
@@ -44,20 +48,29 @@ class DecorationsMenu extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.decorations.length !== this.props.decorations.length) {
-      // console.log("new decos for component")
+      // console.log("new decos for component ", prevProps.decorations.length)
       this.setState({
         decolist0: this.props.decorations,
         decolist1: this.props.decorations,
         decolist2: this.props.decorations
       })
-      //to do: initialize decos for the armor piece so old ones dont linger
+      this.props.updateFormField("armorSet", this.props.part, { equipment: this.props.armorSetForm.values[this.props.part].equipment, decorations: [], usedSlots: 0 })
     }
     if (prevProps.usedSlots !== this.props.usedSlots) {
-      // console.log("updated: free slots ", this.props.slots - this.state.usedSlots, this.state)
+      //shiet happns. elä updeittaa sen decon listaa joka muuttuu
+      // const prevDecos = prevProps.armorSetForm.values[prevProps.part].decorations
+      // const newDecos = this.props.armorSetForm.values[this.props.part].decorations
+      const availableSlots = this.props.slots - this.state.usedSlots
+      let newLists = [undefined, undefined, undefined]
+      for (let i = 0; i < 3; i++) {
+        // if (prevDecos[i] !== newDecos) {
+          newLists[i] = this.availableDecorations(this.state.selectedDecorations[i] || { size: 0 }, availableSlots)
+        // }
+      }
       this.setState({
-        decolist0: this.availableDecorations(this.state.selectedDecorations[0] || {size:0}, this.props.slots - this.state.usedSlots),
-        decolist1: this.availableDecorations(this.state.selectedDecorations[1] || {size:0}, this.props.slots - this.state.usedSlots),
-        decolist2: this.availableDecorations(this.state.selectedDecorations[2] || {size:0}, this.props.slots - this.state.usedSlots)
+        decolist0: newLists[0] || this.state.decolist0,
+        decolist1: newLists[1] || this.state.decolist1,
+        decolist2: newLists[2] || this.state.decolist2
       })
     }
   }
@@ -69,27 +82,26 @@ class DecorationsMenu extends React.Component {
   changeDecorations(amount) {
     const { selectedDecorations } = this.state
     let l = selectedDecorations.length
-    if (l < amount) this.addDecoration(amount - l)
-    if (l > amount) this.removeDecoration(amount)
+    if (l !== amount) this.addDecoration(amount)
   }
 
   addDecoration(length) {
-    const { selectedDecorations } = this.state
+    // const { selectedDecorations } = this.state
     let data = [];
     for (let i = 0; i < length; i++) {
       data.push({
-        id: -1,
+        id: 1,
         size: 0,
         name: "---",
-        skill1id: 149,
-        skill2id: 149,
+        skill1_id: 149,
+        skill2_id: 149,
         bonus1: 0,
         bonus2: 0,
-        skillname: "---"
+        skill_name: "---"
       });
     }
     this.setState({
-      selectedDecorations: selectedDecorations.concat(data)
+      selectedDecorations: data
     })
   }
 
@@ -101,19 +113,19 @@ class DecorationsMenu extends React.Component {
     })
   }
 
-  handleChange = (id, e) => {
+  handleChange = (id, list, e) => {
     e.preventDefault()
-    const { decorations, selectedDecorations } = this.state
-    // const { slots } = this.props
-    const newValue = decorations[e.target.value - 1] || {
-      id: -1,
+    const { selectedDecorations } = this.state
+
+    const newValue = this.state[list].find(x => x.id === Number(e.target.value)) || {
+      id: 1,
       size: 0,
       name: "---",
-      skill1id: 149,
-      skill2id: 149,
+      skill1_id: 149,
+      skill2_id: 149,
       bonus1: 0,
       bonus2: 0,
-      skillname: "---"
+      skill_name: "---"
     }
 
     this.setState({
@@ -123,56 +135,20 @@ class DecorationsMenu extends React.Component {
         .concat(this.state.selectedDecorations.slice(id + 1))
     })
     this.props.selectDecoration(this.props.part, newValue, this.props.slots, id, selectedDecorations)
-    // if (newValue.size === 3) {
-    //   id = 0
-    //   this.setState({
-    //     selectedDecorations: selectedDecorations
-    //       .slice(0, id)
-    //       .concat(Object.assign({}, selectedDecorations[id], newValue))
-    //       .concat(this.state.selectedDecorations.slice(id + 1))
-    //   })
-    // }
-    // else if (newValue.size === 2 && slots === 2) {
-    //   id = 0
-    //   this.setState({
-    //     selectedDecorations: selectedDecorations
-    //       .slice(0, id)
-    //       .concat(Object.assign({}, selectedDecorations[id], newValue))
-    //       .concat(this.state.selectedDecorations.slice(id + 1))
-    //   })
-    // }
-    // else if (newValue.size === 2 && id === 2) {
-    //   id--
-    //   this.setState({
-    //     selectedDecorations: selectedDecorations
-    //       .slice(0, id)
-    //       .concat(Object.assign({}, selectedDecorations[id], newValue))
-    //       .concat(this.state.selectedDecorations.slice(id + 1))
-    //   })
-    // }
-    // else
-
-    // if (newValue.size === 3) {
-    //   this.changeDecorations(1)
-    // }
-    // if (newValue.size === 2 && this.props.slots === 2) this.changeDecorations(1)
-    // if (newValue.size === 2 && this.props.slots === 3) this.changeDecorations(2)
-    // if (newValue.size === 1 && this.props.slots >= 1) this.changeDecorations(this.props.slots)
   }
 
   renderDecorationOptions(list) {
     return this.state[list].map((decoration, id) =>
-      <option key={id} value={decoration.id}>{decoration.skillname} +{decoration.bonus1}, size: {decoration.size}</option>
+      <option key={id} value={decoration.id}>{decoration.skill_name} +{decoration.bonus1}, size: {decoration.size}</option>
     )
   }
 
   renderDecorations(id) {
     return <select
-      className="table__input--decoration"
-      onChange={this.handleChange.bind(this, id)}
+      className="form-control table__input--decoration"
+      onChange={this.handleChange.bind(this, id, "decolist" + id)}
       value={this.state.selectedDecorations[id].id}
     >
-      <option value="-1">---</option>
       {this.renderDecorationOptions("decolist" + id)}
     </select>
   }
@@ -180,19 +156,27 @@ class DecorationsMenu extends React.Component {
   render() {
     const { selectedDecorations } = this.state
     return (
-      <div>
+      <div className="decoration-container">
         {selectedDecorations[0] && this.state.decolist0[0] ?
           <div>{this.renderDecorations(0)}</div>
-          : ""}
+          : <div>-</div>}
         {selectedDecorations[1] && this.state.decolist1[0] ?
           <div>{this.renderDecorations(1)}</div>
-          : ""}
+          : <div>-</div>}
         {selectedDecorations[2] && this.state.decolist2[0] ?
           <div>{this.renderDecorations(2)}</div>
-          : ""}
+          : <div>-</div>}
       </div>
     )
   }
 }
 
-export default DecorationsMenu
+const mapStateToProps = state => ({
+  armorSetForm: state.form.armorSet,
+})
+const mapDispatchToProps = dispatch => ({
+  updateFormField(form, field, value) {
+    dispatch(updateFormField(form, field, value))
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(DecorationsMenu)

@@ -10,6 +10,9 @@
     "axios": "^0.16.2",
     "bootstrap": "^3.3.7",
     "dotenv": "^4.0.0",
+    "font-awesome": "^4.7.0",
+    "jest-cli": "^20.0.4",
+    "node-sass-chokidar": "0.0.3",
     "react": "^15.5.4",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
@@ -20,7 +23,6 @@
     "redux": "^3.7.0",
     "redux-saga": "^0.15.4",
     "regex": "^0.1.1",
-    "node-sass-chokidar": "0.0.3",
     "schema-inspector": "^1.6.8"
   },
   "scripts": {
@@ -29,7 +31,7 @@
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "npm run build-css && react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {

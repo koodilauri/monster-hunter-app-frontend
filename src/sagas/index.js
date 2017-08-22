@@ -18,7 +18,7 @@ function* callApi(action) {
     const result = yield call(createRequest, action.payload.request)
     yield put({ type: `${action.type}_SUCCESS`, payload: result.data })
   } catch (err) {
-    yield put({ type: `${action.type}_FAIL`, payload: err.response })
+    yield put({ type: `${action.type}_FAIL`, payload: err.response.data })
   }
 }
 

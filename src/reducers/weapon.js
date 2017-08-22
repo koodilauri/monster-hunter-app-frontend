@@ -2,7 +2,7 @@ const initialState = {
   weapons: []
 }
 
-const weapon = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case "GET_WEAPON_SUCCESS":
       return Object.assign({}, state, {

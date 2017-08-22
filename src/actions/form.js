@@ -1,24 +1,56 @@
-export const FORM_UPDATE_ARMORSET = "FORM_UPDATE_ARMORSET"
-export const FORM_UPDATE_SUBMISSION = "FORM_UPDATE_SUBMISSION"
-export const FORM_UPDATE_STYLE_AND_ARTS = "FORM_UPDATE_STYLE_AND_ARTS"
 
-export const updateArmorSetForm = (armorSet) => {
+import inspector from "schema-inspector"
+import { validations } from "../schemas"
+
+const validateInput = (form, field, value) => {
+  const validation = validations[form].properties[field]
+  const result = inspector.validate(validation, value)
+  return result.error
+}
+
+const validateFormFields = (form, values) => {
+  let valid = true
+  const errors = Object.keys(values).reduce((accumulated, key) => {
+    const value = values[key]
+    const fieldErrors = validateInput(form, key, value)
+    if (fieldErrors.length > 0) valid = false
+    accumulated[key] = fieldErrors
+    return accumulated
+  }, {})
   return {
-    payload:armorSet,
-    type: FORM_UPDATE_ARMORSET
+    errors,
+    valid,
   }
 }
 
-export const updateSubmissionForm = (newSubmission) => {
+export const FORM_UPDATE_FIELD_WITH_ERRORS = "FORM_UPDATE_FIELD_WITH_ERRORS"
+export const FORM_UPDATE_ERRORS = "FORM_UPDATE_ERRORS"
+
+/**
+ * Action creators called by components
+ */
+
+export const updateFormField = (form, field, value) => {
+  const errors = validateInput(form, field, value)
   return {
-    payload: newSubmission,
-    type: FORM_UPDATE_SUBMISSION
+    type: FORM_UPDATE_FIELD_WITH_ERRORS,
+    payload: {
+      form,
+      field,
+      value,
+      errors,
+    }
   }
 }
 
-export const updateStyleAndArts = (state) => {
-  return{
-    payload: state,
-    type: FORM_UPDATE_STYLE_AND_ARTS
+export const validateForm = (form, values) => {
+  const { errors, valid } = validateFormFields(form, values)
+  return {
+    type: FORM_UPDATE_ERRORS,
+    payload: {
+      form,
+      errors,
+      valid,
+    }
   }
 }

@@ -1,18 +1,16 @@
 const initialState = {
-  skills: [],
-  effects:[]
+  armorSets: [],
+  setDecorations: []
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "GET_SKILL_SUCCESS":
+    case "GET_ARMOR_SET_SUCCESS":
       return Object.assign({}, state, {
-        skills: action.payload.skills,
-        effects: action.payload.effects
+        armorSets: action.payload.armorSets,
+        setDecorations: action.payload.setDecorations
       })
     default:
       return state
   }
 }
-
-export default skill
