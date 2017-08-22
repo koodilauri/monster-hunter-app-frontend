@@ -61,36 +61,36 @@ class SelectTimeInput extends Component {
   renderTime(unit) {
     const value = this.state[unit]
     return (
-      <div className="select-time--container">
-        <div className="">
+      <div className="select-time--container input-group">
+        <span className="input-group-btn button--plus">
           <button
             type="button"
             className="btn btn-default button-timer"
             onMouseDown={this.startTimeInterval.bind(this, unit, true)}
             onMouseUp={this.stopTimeInterval}>+</button>
-        </div>
+        </span>
         <div className=" select-time">
           <input
             type="number"
-            className="select-time__input"
+            className="select-time__input form-control"
             value={value}
             onChange={this.handleChange.bind(this, unit)}
           />
         </div>
-        <div className="">
+        <span className="input-group-btn button--minus">
           <button
             type="button"
             className="btn btn-default button-timer"
             onMouseDown={this.startTimeInterval.bind(this, unit, false)}
             onMouseUp={this.stopTimeInterval}>-</button>
-        </div>
+        </span>
       </div>
     )
   }
 
   render() {
     return (
-      <div className="form-group flex-row">
+      <div className="form-group time--container">
         {this.renderTime("minutes")}
         {this.renderTime("seconds")}
       </div>

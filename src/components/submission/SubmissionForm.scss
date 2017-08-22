@@ -2,22 +2,49 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  background-color: #eff0f1;
+  // background-color: #839496;
    /* border: 1px solid black;  */
+}
+
+.submission-form--name{
+  margin-right: 15px!important;
+}
+
+.submission-form--name-error{
+  margin-right: 10px;
 }
 
 .submission-form {
   display: flex;
   flex-direction: row;
   align-self: center;
+  margin: 0px 5%;
 }
 
-@media (max-width: 740px) {
+@media (max-width: 540px) {
   .submission-form {
     flex-direction: column;
       align-self: stretch;
-  }
+      margin: 0px 5%;
+      .search-container {
+        margin-left:-15px!important; 
+      }
+      .submission-form--name{
+        margin-right: -15px!important;
+      }
+
+
+        .select-time--container{
+          margin: auto;
+        }
+    
+        .submission-submit{
+          margin: auto;
+          text-align:center;
+        }
+    }
 }
+
 
 .submission-form--input {
   /* margin: 0px 5px 0px 5px; */

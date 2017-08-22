@@ -48,8 +48,10 @@ class SearchSelectionInput extends Component {
 
   render() {
     const { menuVisible, searchVisible, searchValue, shownItems, selectedItem } = this.state
+    const errors = this.props.errors || []
+    if(errors===undefined)console.log("undef ")
     return (
-      <div className="form-group search-container">
+      <div className={errors.length === 0 ? "form-group search-container": "form-group search-container has-error"}>
         <input
           name="search-input"
           type="text"
@@ -70,6 +72,13 @@ class SearchSelectionInput extends Component {
             >{item.name}</div>
           )}
         </div>
+          { errors ? 
+            errors.map((error, i) =>
+              <label className="control-label" key={i}>{error.message}</label>
+            )
+              :
+            null
+          }
       </div>
     )
   }

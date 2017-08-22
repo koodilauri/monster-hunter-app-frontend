@@ -5,11 +5,6 @@ export const initialValues = {
     id: -1,
     name: ""
   },
-  weapon: {
-    id: -1,
-    name: ""
-  },
-  style: "Guild",
   minutes: 0,
   seconds: 0,
 }
@@ -32,22 +27,17 @@ export const validations = {
         },
       }
     },
-    weapon: {
-      type: "object",
-      properties: {
-        id: {
-          type: "number",
-          gt: 0,
-          error: "You must select a weapon"
-        },
-      }
+    minutes: {
+      type: "number",
+      gte: 0,
+      lte: 49,
+      error: "Minutes can be from 0 to 49 only"
     },
-    style: {
-      type: "string",
-      pattern: /^(Guild|Striker|Adept|Aerial)$/,
-      error: "Style has to be one of the following: Guild, Striker, Adept or Aerial"
+    seconds: {
+      type: "number",
+      gte: 0,
+      lte: 59,
+      error: "Seconds can be from 0 to 59 only"
     },
-    minutes: { type: "number" },
-    seconds: { type: "number" },
   }
 }

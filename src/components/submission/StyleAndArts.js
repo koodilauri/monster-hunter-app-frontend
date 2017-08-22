@@ -1,36 +1,64 @@
 import React from "react"
 import { connect } from "react-redux"
-import { updateStyleAndArts } from "../../actions/form"
-import "./StyleAndArt.css"
+
+import { updateFormField } from "../../actions/form"
+
 import SearchSelectionInput from "../ui/SearchSelectionInput"
+
+import "./StyleAndArt.css"
 
 class StyleAndArts extends React.Component {
   state = {
-    selectedStyle: "Guild",
-    styles: ["Guild", "Striker", "Adept", "Aerial"],
-    selectedHunterArts: [{
-      id: -1,
-      name: "art1",
-      gaugesize: 0,
-      description: "",
-      weapon: "General"
-    },
-    {
-      id: -1,
-      name: "art2",
-      gaugesize: 0,
-      description: "",
-      weapon: "General"
-    }]
+    selectedHunterArts: [
+      {
+        id: -1,
+        name: "art1",
+        gauge_size: 0,
+        description: "",
+        weapon: "General"
+      },
+      {
+        id: -1,
+        name: "",
+        gauge_size: 0,
+        description: "",
+        weapon: "General"
+      }
+    ],
+    hunterArts: []
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.hunterArts !== this.props.hunterArts) {
+      this.setState({
+        hunterArts: this.props.hunterArts
+      })
+    }
+    if (prevProps.weapon.class !== this.props.weapon.class) {
+      console.log("new weapon class chosen, filtering arts...")
+      const arts = this.filterHunterArts(this.props.weapon.class)
+      this.setState({
+        weapon: this.props.weapon,
+        hunterArts: arts
+      })
+    }
+  }
+
+  filterHunterArts = (type) =>
+    this.props.hunterArts.filter((art) =>
+      (art.weapon === type || art.weapon === "General")
+    )
+
   handleChange(field, e) {
-    const newValue = e.target.value
-    let stateChange = Object.assign({}, this.state)
-    stateChange[field] = newValue
-    this.setState(stateChange)
-    this.props.updateStyleAndArts({ selectedStyle: stateChange.selectedStyle })
-    switch (newValue) {
+    this.props.updateFormField("styleAndArts", field, e.target.value)
+
+    // const newValue = e.target.value
+    // let stateChange = Object.assign({}, this.state)
+    // stateChange[field] = newValue
+    // this.setState(stateChange)
+    // // this.props.updateStyleAndArts({ selectedStyle: stateChange.selectedStyle })
+    // this.props.updateFormField("armorSet", "field", "value")
+    switch (e.target.value) {
       case "Guild":
         this.changeHunterArt(2)
         break
@@ -49,129 +77,123 @@ class StyleAndArts extends React.Component {
   }
 
   selectItem = (id, item) => {
+    const { selectedHunterArts } = this.props.styleAndArtsForm.values
     const newState = Object.assign({}, this.state, {
-      selectedHunterArts: this.state.selectedHunterArts
+      selectedHunterArts: selectedHunterArts
         .slice(0, id)
-        .concat(Object.assign({}, { id: item.id, name: item.name, gaugesize: item.gaugesize, description: item.description, weapon: item.weapon }))
-        .concat(this.state.selectedHunterArts.slice(Number(id) + 1))
+        .concat(Object.assign({}, { id: item.id, name: item.name, gauge_size: item.gauge_size, description: item.description, weapon: item.weapon }))
+        .concat(selectedHunterArts.slice(Number(id) + 1))
     })
+    // this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
+    this.props.updateFormField("styleAndArts", "selectedHunterArts", newState.selectedHunterArts)
     this.setState(newState)
-    this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
   }
 
   changeHunterArt(amount) {
-    const { selectedHunterArts } = this.state
+    const { selectedHunterArts } = this.props.styleAndArtsForm.values
     let l = selectedHunterArts.length
     if (l < amount) this.addHunterArt(amount - l)
     if (l > amount) this.removeHunterArt(amount)
   }
 
   addHunterArt(length) {
-    const { selectedHunterArts } = this.state
+    const { selectedHunterArts } = this.props.styleAndArtsForm.values
     let data = [];
     for (let i = 0; i < length; i++) {
-      data.push({ id: -1, name: "", gaugesize: 0, description: "", weapon: "General" });
+      data.push({ id: -1, name: "", gauge_size: 0, description: "", weapon: "General" });
     }
-    const newState = Object.assign({}, this.state, {
-      selectedHunterArts: selectedHunterArts.concat(data)
+    const newValue = selectedHunterArts.concat(data)
+
+    // this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
+    this.props.updateFormField("styleAndArts", "selectedHunterArts", newValue)
+    this.setState({
+      selectedHunterArts: newValue
     })
-    this.setState(newState)
-    this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
   }
 
   removeHunterArt(index) {
-    const { selectedHunterArts } = this.state
-    const newState = Object.assign({}, this.state, {
-      selectedHunterArts: selectedHunterArts
-        .slice(0, index)
+    const { selectedHunterArts } = this.props.styleAndArtsForm.values
+    const newValue = selectedHunterArts.slice(0, index)
+
+    // this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
+    this.props.updateFormField("styleAndArts", "selectedHunterArts", newValue)
+    this.setState({
+      selectedHunterArts: newValue
     })
-    this.setState(newState)
-    this.props.updateStyleAndArts({ selectedHunterArts: newState.selectedHunterArts })
   }
 
   render() {
-    const { hunterArts } = this.props
-    const { selectedHunterArts } = this.state
+    // const { selectedHunterArts } = styleAndArtsForm.values
+    const { hunterArts, selectedHunterArts } = this.state
+    const { errors } = this.props.styleAndArtsForm
     return (
-      <div className="style-and-arts--container">
-        <table className="table-style-art">
-          <thead>
-            <tr>
-              <th>
-                Style and Hunter Arts
-            </th>
-            </tr>
-            <tr>
-              <th>
-                Style
-            </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <select
-                  name="selectedStyle"
-                  onChange={this.handleChange.bind(this, "selectedStyle")}
-                >
-                  {this.state.styles.map(style => <option key={style} value={style}>{style}</option>)}
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                Hunter Arts
-            </th>
-            </tr>
-            <tr>
-              <td>
-                <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="0" />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[0].gaugesize}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[1] ?
-                  <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="1" />
-                  : "---"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[1] ? selectedHunterArts[1].gaugesize : "---"}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[2] ?
-                  <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="2" />
-                  : "---"}
-
-              </td>
-            </tr>
-            <tr>
-              <td>
-                {selectedHunterArts[2] ? selectedHunterArts[2].gaugesize : "---"}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="panel panel-default style-and-arts--container">
+        <div className="panel-heading">
+        Style and Hunter Arts
+      </div>
+        <div className="panel-body">
+          <div className="style-and-arts--row  style-and-arts--head">
+            Style
+        </div>
+          <div className="style-and-arts--row">
+            <select
+              name="selectedStyle"
+              className="form-control"
+              onChange={this.handleChange.bind(this, "selectedStyle")}
+            >
+              <option value="Guild">Guild</option>
+              <option value="Striker">Striker</option>
+              <option value="Adept">Adept</option>
+              <option value="Aerial">Aerial</option>
+            </select>
+            {errors.selectedStyle.map((error, i) =>
+              <div key={i}>{error.message}</div>
+            )}
+          </div>
+          <div className="style-and-arts--row  style-and-arts--head">
+            Hunter Arts
+        </div>
+          <div className="style-and-arts--row">
+            <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="0" />
+          </div>
+          <div className="style-and-arts--row">
+            <p className="style-and-arts--text">{selectedHunterArts[0].gauge_size}</p>
+          </div>
+          <div className="style-and-arts--row">
+            {selectedHunterArts[1] ?
+              <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="1" />
+              : <p className="style-and-arts--text">---</p>}
+          </div>
+          <div className="style-and-arts--row">
+            <p className="style-and-arts--text">{selectedHunterArts[1] ? selectedHunterArts[1].gauge_size : "---"}</p>
+          </div>
+          <div className="style-and-arts--row">
+            {selectedHunterArts[2] ?
+              <SearchSelectionInput items={hunterArts} selectItem={this.selectItem} item="2" />
+              : <p className="style-and-arts--text">---</p>}
+          </div>
+          <div className="style-and-arts--row">
+            <p className="style-and-arts--text">{selectedHunterArts[2] ? selectedHunterArts[2].gauge_size : "---"}</p>
+          </div>
+          {errors.selectedHunterArts.map((error, i) =>
+            <div key={i}>{error.message}</div>
+          )
+          }
+        </div>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  styleAndArtsForm: state.form.styleAndArts,
   hunterArts: state.hunterArt.hunterArts,
+  weapon: state.form.armorSet.values.selectedWeapon.equipment
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateStyleAndArts(state) {
-    dispatch(updateStyleAndArts(state))
+  updateFormField(form, field, value) {
+    dispatch(updateFormField(form, field, value))
   }
 })
 
