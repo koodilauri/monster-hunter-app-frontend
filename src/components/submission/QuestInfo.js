@@ -83,7 +83,6 @@ class QuestInfo extends React.Component {
       list.push(dT)
       return 0
     })
-    console.log(list)
     return list
   }
 
@@ -169,7 +168,7 @@ class QuestInfo extends React.Component {
         <div className="modal-dialog quest-info-modal-dialog">
           <div className="modal-content quest-info-modal-content">
             <div className="modal-header">
-              <h4 className="modal-title">Quest</h4>
+              <h4 className="modal-title">{this.props.quest_name}</h4>
             </div>
             <div className="modal-body">
               <BarChart width={730} height={250} data={this.state.data}>

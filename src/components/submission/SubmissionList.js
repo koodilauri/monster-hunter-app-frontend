@@ -83,12 +83,11 @@ class SubmissionList extends React.Component {
 
 
   updateSubmissions = (subs) => {
-    const runs = this.calculateQuests(subs, this.state.date)
+    const runs = this.calculateQuests(subs, this.state.data)
     this.setState({
       submissions: subs,
       data: runs
     })
-    console.log("filtered subs")
   }
 
   calculateQuests(subs, data) {
