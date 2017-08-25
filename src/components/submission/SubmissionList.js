@@ -1,24 +1,25 @@
 import React from "react"
 import { connect } from "react-redux"
 import ArmorSetInfo from "./ArmorSetInfo"
+import SubmissionListFilter from "../ui/SubmissionListFilter"
 import "./SubmissionList.css"
 
 class SubmissionList extends React.Component {
   state = {
-      submissions: [],
-      sorted: {
-        name: undefined,
-        quest_name: undefined,
-        time: undefined,
-        weapon_name: undefined,
-        style: undefined,
-        weapon_class: undefined,
-        set_name: undefined,
-        created: undefined
-      },
-      modalIsOpen: false,
-      set_id: -1
-    }
+    submissions: [],
+    sorted: {
+      name: undefined,
+      quest_name: undefined,
+      time: undefined,
+      weapon_name: undefined,
+      style: undefined,
+      weapon_class: undefined,
+      set_name: undefined,
+      created: undefined
+    },
+    modalIsOpen: false,
+    set_id: -1
+  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.submissions !== this.props.submissions) {
@@ -39,7 +40,7 @@ class SubmissionList extends React.Component {
   closeModal = () => {
     this.setState({
       modalIsOpen: false,
-      set_id:-1
+      set_id: -1
     })
   }
 
@@ -112,6 +113,7 @@ class SubmissionList extends React.Component {
       <div className="container">
         <ArmorSetInfo isOpen={this.state.modalIsOpen} close={this.closeModal.bind(this)} set_id={this.state.set_id} />
         <div className="col-md-12">
+          <SubmissionListFilter />
           <table className="table table-striped table-bordered table-hover table--submission">
             <thead>
               <tr>
@@ -161,7 +163,7 @@ class SubmissionList extends React.Component {
               {this.renderSubmissions()}
             </tbody>
           </table>
-          {this.state.submissions.length === 0? <div>No submissions</div>: null}
+          {this.state.submissions.length === 0 ? <div>No submissions</div> : null}
         </div>
       </div >
     )
