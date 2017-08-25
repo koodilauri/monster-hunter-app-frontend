@@ -16,7 +16,13 @@ import SubmissionList from "../submission/SubmissionList"
 import './FrontPage.css'
 
 class FrontPage extends Component {
-
+  state = {
+    data: [
+      { name: 'a', value: 12 },
+      { name: 'b', value: 11 },
+      { name: 'c', value: 9 },
+      { name: 'd', value: 19 }]
+  }
   componentDidMount() {
     this.props.getAll()
   }
@@ -25,7 +31,7 @@ class FrontPage extends Component {
     return (
       <div className="FrontPage--container">
         <h1>Submissions</h1>
-        <SubmissionList />
+        <SubmissionList/>
       </div>
     )
   }

@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import ArmorSetInfo from "./ArmorSetInfo"
-import SubmissionListFilter from "../ui/SubmissionListFilter"
+import SubmissionListFilterMenu from "../ui/SubmissionListFilterMenu"
 import "./SubmissionList.css"
 
 class SubmissionList extends React.Component {
@@ -42,6 +42,14 @@ class SubmissionList extends React.Component {
       modalIsOpen: false,
       set_id: -1
     })
+  }
+
+
+  updateSubmissions = (subs) => {
+    this.setState({
+      submissions: subs
+    })
+    console.log("filtered subs")
   }
 
   sortTable = (field, event) => {
@@ -113,7 +121,7 @@ class SubmissionList extends React.Component {
       <div className="container">
         <ArmorSetInfo isOpen={this.state.modalIsOpen} close={this.closeModal.bind(this)} set_id={this.state.set_id} />
         <div className="col-md-12">
-          <SubmissionListFilter />
+          <SubmissionListFilterMenu updateSubmissions={this.updateSubmissions} />
           <table className="table table-striped table-bordered table-hover table--submission">
             <thead>
               <tr>

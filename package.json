@@ -20,6 +20,7 @@
     "react-scripts": "^1.0.7",
     "react-search": "^2.0.5",
     "react-select": "^1.0.0-rc.5",
+    "recharts": "^1.0.0-alpha.4",
     "redux": "^3.7.0",
     "redux-saga": "^0.15.4",
     "regex": "^0.1.1",

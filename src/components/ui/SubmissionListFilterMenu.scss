@@ -1,0 +1,20 @@
+.submission-list--filter{
+  display: flex;
+  flex-direction: row;
+  padding: 5px 0px;
+
+  .filter--type{
+    width: 25%;
+  }
+  .submission-filter{
+    margin: auto;
+  }
+
+  .filter--option{
+    width: 45%;
+    
+    .search-container{
+      margin: 0px;
+    }
+  }
+}
