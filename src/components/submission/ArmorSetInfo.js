@@ -32,7 +32,7 @@ class ArmorSetInfo extends React.Component {
     this.setState({
       armorSet: newSet,
       setDecorations: newDecorations,
-      setArts: newArts,
+      setArts: newArts.filter(x => x.id !== 1),
       weapon: newWeapon
     })
     this.calculateSkills(newSet, newDecorations)
@@ -237,8 +237,9 @@ class ArmorSetInfo extends React.Component {
     const { setArts } = this.state
     return setArts.map((art, id) =>
       <div key={id} title={art.description} className="well well-sm armor-set-modal--art">
-        Art #{id+1}: {art.name}
-      </div>)
+        Art #{id + 1}: {art.name}
+      </div>
+    )
   }
 
   render() {

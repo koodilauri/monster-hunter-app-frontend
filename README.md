@@ -1,11 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
+[![Build Status](https://travis-ci.org/koodilauri/monster-hunter-app-frontend.svg?branch=master)](https://travis-ci.org/koodilauri/monster-hunter-app-frontend)
 
 # Heroku links: 
 
+- [mh-tracker.net](https://mh-tracker.net/)
 - [App in heroku](https://monster-hunter-app.herokuapp.com/)
 - [Backend in heroku](https://monster-hunter-app-api.herokuapp.com/submission)
 
-[![Build Status](https://travis-ci.org/koodilauri/monster-hunter-app-frontend.svg?branch=master)](https://travis-ci.org/koodilauri/monster-hunter-app-frontend)
+# Install:
+- download frontend repository
+- get dependencies with `npm install`
+- Create .env file with `cp .env.development .env`
+- start frontend with `npm start`
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
