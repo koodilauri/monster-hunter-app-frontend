@@ -5,7 +5,7 @@ import { updateFormField, validateForm } from "../../actions/form"
 
 import SearchSelectionInput from "../ui/SearchSelectionInput"
 import SelectTimeInput from "../ui/SelectTimeInput"
-
+const Recaptcha = require("react-recaptcha")
 class SubmissionForm extends Component {
 
   handleSubmit = (e) => {
@@ -23,6 +23,10 @@ class SubmissionForm extends Component {
 
   setTime = (unit, amount) => {
     this.props.updateFormField("submission", unit, amount)
+  }
+
+  callback = () => {
+    console.log("Done")
   }
 
   render() {
@@ -49,6 +53,11 @@ class SubmissionForm extends Component {
           <div className="form-group submission-submit">
             <button type="submit" className="btn btn-primary submission-submit--btn">Submit</button>
           </div>
+          <Recaptcha
+            sitekey={process.env.sitekey}
+            render="explicit"
+            onloadCallback={this.callback()}
+          />
         </form>
       </div>
     )

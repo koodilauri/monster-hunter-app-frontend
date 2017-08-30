@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux"
 import image from "../../images/"
 
-import "./ArmorSetInfo.css"
-
 class ArmorSetInfo extends React.Component {
   state = {
     armorSet: {},
@@ -215,11 +213,11 @@ class ArmorSetInfo extends React.Component {
   }
 
   renderDecorations(decos) {
-    if (decos === undefined) return <div className="armor-set-modal--col"></div>
+    if (decos === undefined) return <div className="mh-modal--col"></div>
     const { decorations } = this.props
 
     return (
-      <div className="armor-set-modal--col">
+      <div className="mh-modal--col">
         <div title={decorations.find(x => x.id === decos.decoration1_id).skill_name}>
           {decorations.find(x => x.id === decos.decoration1_id).name}
         </div>
@@ -236,7 +234,7 @@ class ArmorSetInfo extends React.Component {
   renderArts() {
     const { setArts } = this.state
     return setArts.map((art, id) =>
-      <div key={id} title={art.description} className="well well-sm armor-set-modal--art">
+      <div key={id} title={art.description} className="well well-sm mh-modal--art">
         Art #{id + 1}: {art.name}
       </div>
     )
@@ -246,73 +244,91 @@ class ArmorSetInfo extends React.Component {
     if (!this.props.isOpen) return null
     const { armorSet, weapon, setDecorations } = this.state
     return (
-      <div className="armor-set-modal">
-        <div className="modal-dialog armor-set-modal-dialog">
-          <div className="modal-content armor-set-modal-content">
+      <div className="mh-modal">
+        <div className="modal-dialog mh-modal-dialog">
+          <div className="modal-content mh-modal-content">
             <div className="modal-header">
               <h4 className="modal-title">{armorSet.style} style: {armorSet.name}</h4>
             </div>
-            <div className="modal-body">
-              <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  Equipment
+            <div className="modal-body mh-modal--body">
+              <div className="mh-modal--row">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    Equipment
                 </div>
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  <img src={image.decoration} alt="Decoration " width="25" height="25" />
                 </div>
-              </div>
-              <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  <img src={image.greatSword} alt="Weapon: " width="30" height="30" />
-                  {weapon.name}
-                </div>
-                <div className="armor-set-modal--col">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    <img src={image.decoration} alt="Decoration " width="25" height="25" />
+                  </div>
                 </div>
               </div>
-              <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  <img src={image.head} alt="Head: " width="30" height="30" />
-                  {armorSet.head}
+              <div className="mh-modal--row">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    <img src={image.greatSword} alt="Weapon: " width="30" height="30" />
+                    {weapon.name}
+                  </div>
+                </div>
+                <div className="mh-modal--col">
+                </div>
+              </div>
+              <div className="mh-modal--row">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    <img src={image.head} alt="Head: " width="30" height="30" />
+                    {armorSet.head}
+                  </div>
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedHead"))}
               </div>
-              <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  <img src={image.torso} alt="Torso: " width="30" height="30" />
-                  {armorSet.torso}
+              <div className="mh-modal--row">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    <img src={image.torso} alt="Torso: " width="30" height="30" />
+                    {armorSet.torso}
+                  </div>
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedTorso"))}
               </div>
-              <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  <img src={image.arms} alt="Arms: " width="30" height="30" />
-                  {armorSet.arms}
+              <div className="mh-modal--row">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    <img src={image.arms} alt="Arms: " width="30" height="30" />
+                    {armorSet.arms}
+                  </div>
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedArms"))}
               </div>
-              <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  <img src={image.waist} alt="Waist: " width="30" height="30" />
-                  {armorSet.waist}
+              <div className="mh-modal--row">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    <img src={image.waist} alt="Waist: " width="30" height="30" />
+                    {armorSet.waist}
+                  </div>
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedWaist"))}
               </div>
-              <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  <img src={image.feet} alt="Feet: " width="30" height="30" />
-                  {armorSet.feet}
+              <div className="mh-modal--row">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    <img src={image.feet} alt="Feet: " width="30" height="30" />
+                    {armorSet.feet}
+                  </div>
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedFeet"))}
               </div>
-              <div className="armor-set-modal--row">
-                <div className="armor-set-modal--col armor-set-modal--col__center">
-                  <img src={image.charm} alt="Charm: " width="30" height="30" />
-                  #{armorSet.charm_id}
+              <div className="mh-modal--row">
+                <div className="mh-modal--col mh-modal--col__center">
+                  <div>
+                    <img src={image.charm} alt="Charm: " width="30" height="30" />
+                    #{armorSet.charm_id}
+                  </div>
                 </div>
                 {this.renderDecorations(setDecorations.find(x => x.part === "selectedCharm"))}
               </div>
               {this.renderArts()}
-              <table className="table table-striped table-hover armor-set-modal--table">
+              <table className="table table-striped table-hover mh-modal--table">
                 <thead>
                   <tr>
                     <th>

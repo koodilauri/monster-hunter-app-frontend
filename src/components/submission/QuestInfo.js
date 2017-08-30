@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux"
 import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Bar, AreaChart, Area } from "recharts"
 
-import "./QuestInfo.css"
-
 class QuestInfo extends React.Component {
   state = {
     questSubs: [],
@@ -164,110 +162,146 @@ class QuestInfo extends React.Component {
   render() {
     if (!this.props.isOpen) return null
     return (
-      <div className="quest-info-modal">
-        <div className="modal-dialog quest-info-modal-dialog">
-          <div className="modal-content quest-info-modal-content">
+      <div className="mh-modal">
+        <div className="modal-dialog mh-modal-dialog">
+          <div className="modal-content mh-modal-content">
             <div className="modal-header">
               <h4 className="modal-title">{this.props.quest_name}</h4>
             </div>
-            <div className="modal-body">
-              <BarChart width={730} height={250} data={this.state.data}>
-                <XAxis dataKey="type" />
-                <YAxis dataKey="runs" />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="runs" fill="#8884d8" />
-              </BarChart>
+            <div className="modal-body mh-modal--body">
+              <div className="mh-modal--chart">
+                <BarChart width={730} height={250} data={this.state.data}>
+                  <XAxis dataKey="type" />
+                  <YAxis dataKey="runs" />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="runs" fill="#8884d8" />
+                </BarChart>
+              </div>
 
-              <BarChart width={730} height={250} data={this.state.data}>
-                <XAxis dataKey="type" />
-                <YAxis dataKey="average_time" domain={[0, 50]} />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="average_time" fill="#82ca9d" />
-              </BarChart>
+              <div className="mh-modal--chart">
+                <BarChart width={730} height={250} data={this.state.data}>
+                  <XAxis dataKey="type" />
+                  <YAxis dataKey="average_time" domain={[0, 50]} />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="average_time" fill="#82ca9d" />
+                </BarChart>
+              </div>
 
-              <AreaChart width={730} height={250} data={this.state.data2}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorGS" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#4286f4" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#4286f4" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorLS" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f44141" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#f44141" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorSNS" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f4a341" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#f4a341" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorDB" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f4ee41" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#f4ee41" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorH" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#a3f441" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#a3f441" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorHH" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#41f497" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#41f497" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorL" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#292f60" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#292f60" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorGL" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#41f4eb" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#41f4eb" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorSA" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#4194f4" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#4194f4" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorCA" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#7941f4" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#7941f4" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorIG" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#ee41f4" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#ee41f4" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorHB" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorLB" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#bc6b64" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#bc6b64" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="colorB" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="time" />
-                <YAxis />
-                <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip />
-                <Area type="monotone" dataKey="GreatSword" stroke="#4286f4" fillOpacity={1} fill="url(#colorGS)" />
-                <Area type="monotone" dataKey="LongSword" stroke="#f44141" fillOpacity={1} fill="url(#colorLS)" />
-                <Area type="monotone" dataKey="SwordNShield" stroke="#f4a341" fillOpacity={1} fill="url(#colorSNS)" />
-                <Area type="monotone" dataKey="DualBlades" stroke="#f4ee41" fillOpacity={1} fill="url(#colorDB)" />
-                <Area type="monotone" dataKey="Hammer" stroke="#a3f441" fillOpacity={1} fill="url(#colorH)" />
-                <Area type="monotone" dataKey="HuntingHorn" stroke="#41f497" fillOpacity={1} fill="url(#colorHH)" />
-                <Area type="monotone" dataKey="Lance" stroke="#292f60" fillOpacity={1} fill="url(#colorL)" />
-                <Area type="monotone" dataKey="Gunlance" stroke="#41f4eb" fillOpacity={1} fill="url(#colorGL)" />
-                <Area type="monotone" dataKey="SwitchAxe" stroke="#4194f4" fillOpacity={1} fill="url(#colorSA)" />
-                <Area type="monotone" dataKey="ChargeBlade" stroke="#7941f4" fillOpacity={1} fill="url(#colorCA)" />
-                <Area type="monotone" dataKey="InsectGlaive" stroke="#ee41f4" fillOpacity={1} fill="url(#colorIG)" />
-                <Area type="monotone" dataKey="HeavyBowgun" stroke="#8884d8" fillOpacity={1} fill="url(#colorHB)" />
-                <Area type="monotone" dataKey="LightBowgun" stroke="#bc6b64" fillOpacity={1} fill="url(#colorLB)" />
-                <Area type="monotone" dataKey="Bow" stroke="#82ca9d" fillOpacity={1} fill="url(#colorB)" />
-              </AreaChart>
+              <div className="mh-modal--chart">
+                <AreaChart width={730} height={250} data={this.state.data2}
+                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorGS" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#4286f4" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#4286f4" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorH" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#a3f441" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#a3f441" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorL" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#e52d00" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#e52d00" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorGL" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#41f4eb" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#41f4eb" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorHB" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="time" />
+                  <YAxis type="number" domain={[0, "dataMax"]} />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Legend />
+                  <Tooltip offset={90} />
+
+                  <Area type="monotone" dataKey="GreatSword" stroke="#4286f4" fillOpacity={1} fill="url(#colorGS)" />
+                  <Area type="monotone" dataKey="Hammer" stroke="#a3f441" fillOpacity={1} fill="url(#colorH)" />
+                  <Area type="monotone" dataKey="Lance" stroke="#e52d00" fillOpacity={1} fill="url(#colorL)" />
+                  <Area type="monotone" dataKey="Gunlance" stroke="#41f4eb" fillOpacity={1} fill="url(#colorGL)" />
+                  <Area type="monotone" dataKey="HeavyBowgun" stroke="#8884d8" fillOpacity={1} fill="url(#colorHB)" />
+                </AreaChart>
+              </div>
+
+              <div className="mh-modal--chart">
+                <AreaChart width={730} height={250} data={this.state.data2}
+                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorLS" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#4286f4" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#4286f4" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorSNS" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#a3f441" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#a3f441" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorDB" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#e52d00" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#e52d00" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorLB" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#41f4eb" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#41f4eb" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorB" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="time" />
+                  <YAxis type="number" domain={[0, "dataMax"]} />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Legend />
+                  <Tooltip offset={90} />
+
+                  <Area type="monotone" dataKey="LongSword" stroke="#4286f4" fillOpacity={1} fill="url(#colorLS)" />
+                  <Area type="monotone" dataKey="SwordNShield" stroke="#a3f441" fillOpacity={1} fill="url(#colorSNS)" />
+                  <Area type="monotone" dataKey="DualBlades" stroke="#e52d00" fillOpacity={1} fill="url(#colorDB)" />
+                  <Area type="monotone" dataKey="LightBowgun" stroke="#41f4eb" fillOpacity={1} fill="url(#colorLB)" />
+                  <Area type="monotone" dataKey="Bow" stroke="#8884d8" fillOpacity={1} fill="url(#colorB)" />
+                </AreaChart>
+              </div>
+
+              <div className="mh-modal--chart">
+                <AreaChart width={730} height={250} data={this.state.data2}
+                  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorHH" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#4286f4" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#4286f4" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorSA" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#a3f441" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#a3f441" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorCA" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#e52d00" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#e52d00" stopOpacity={0} />
+                    </linearGradient>
+                    <linearGradient id="colorIG" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#41f4eb" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="#41f4eb" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="time" />
+                  <YAxis type="number" domain={[0, "dataMax"]} />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Legend />
+                  <Tooltip offset={90} />
+
+                  <Area type="monotone" dataKey="HuntingHorn" stroke="#4286f4" fillOpacity={1} fill="url(#colorHH)" />
+                  <Area type="monotone" dataKey="SwitchAxe" stroke="#a3f441" fillOpacity={1} fill="url(#colorSA)" />
+                  <Area type="monotone" dataKey="ChargeBlade" stroke="#e52d00" fillOpacity={1} fill="url(#colorCA)" />
+                  <Area type="monotone" dataKey="InsectGlaive" stroke="#41f4eb" fillOpacity={1} fill="url(#colorIG)" />
+                </AreaChart>
+              </div>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-default" onClick={this.props.close}>Close</button>

@@ -6,6 +6,7 @@ import ArmorSetInfo from "./ArmorSetInfo"
 import QuestInfo from "./QuestInfo"
 import SubmissionListFilterMenu from "../ui/SubmissionListFilterMenu"
 import "./SubmissionList.css"
+import "./ModalInfo.css"
 
 class SubmissionList extends React.Component {
   state = {
@@ -92,7 +93,7 @@ class SubmissionList extends React.Component {
 
   calculateQuests(subs, data) {
     let list = []
-    data.map((weapon, id) => 
+    data.map((weapon, id) =>
       list.push({
         type: weapon.type,
         runs: subs.filter(sub => sub.weapon_class === weapon.type).length
@@ -171,10 +172,10 @@ class SubmissionList extends React.Component {
   render() {
     return (
       <div className="container">
-        <QuestInfo isOpen={this.state.questModalIsOpen} close={this.closeModal.bind(this)} calculateQuests={this.calculateQuests} quest_name={this.state.quest_name} />
         <ArmorSetInfo isOpen={this.state.setModalIsOpen} close={this.closeModal.bind(this)} set_id={this.state.set_id} />
+        <QuestInfo isOpen={this.state.questModalIsOpen} close={this.closeModal.bind(this)} calculateQuests={this.calculateQuests} quest_name={this.state.quest_name} />
         <div className="col-md-12">
-          <div>
+          <div className="submission-list--chart">
             <BarChart width={730} height={250} data={this.state.data}>
               <XAxis dataKey="type" />
               <YAxis dataKey="runs" />

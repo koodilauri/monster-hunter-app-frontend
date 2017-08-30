@@ -92,7 +92,7 @@ class SubmissionListFilterMenu extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="submission-list--filtermenu">
         <div className="btn-group btn-group-justified">
           <div className="btn btn-default"
             onClick={this.setFilters.bind(this, "Activate")}>

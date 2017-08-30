@@ -48,7 +48,6 @@ class DecorationsMenu extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.decorations.length !== this.props.decorations.length) {
-      // console.log("new decos for component ", prevProps.decorations.length)
       this.setState({
         decolist0: this.props.decorations,
         decolist1: this.props.decorations,
@@ -58,7 +57,6 @@ class DecorationsMenu extends React.Component {
     }
     if (prevProps.usedSlots !== this.props.usedSlots) {
       const availableSlots = this.props.slots - this.state.usedSlots
-      console.log("availible slots: ", availableSlots)
       let newLists = [undefined, undefined, undefined]
       for (let i = 0; i < 3; i++) {
         newLists[i] = this.availableDecorations(this.state.selectedDecorations[i] || { size: 0 }, availableSlots)
@@ -82,7 +80,6 @@ class DecorationsMenu extends React.Component {
   }
 
   addDecoration(length) {
-    // const { selectedDecorations } = this.state
     let data = [];
     for (let i = 0; i < length; i++) {
       data.push({

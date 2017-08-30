@@ -1,5 +1,5 @@
 /* The Modal (background) */
-.quest-info-modal {
+.mh-modal {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -11,15 +11,48 @@
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   
-  .quest-info-modal-dialog{
+  .mh-modal-dialog{
       width:80%;
   }
 
+  .mh-modal--row{
+    display: flex;
+    flex-direction: row;
+
+    .mh-modal--col{
+        border: 1px solid black; 
+        width: 50%;
+        height: 62px;
+    }
+    .mh-modal--col__center{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        div{
+            margin: auto;
+        }
+    }
 }
 
+.mh-modal--art{
+    // border: 1px solid white; 
+    text-align: left;
+    margin: 10px 0px;
+    padding-left: 40%;
+}
+
+}
+
+.mh-modal--body{
+  overflow-y: hidden!important;
+
+  .mh-modal--chart{
+    margin: auto;
+  }
+}
 
 /* Modal Content/Box */
-.quest-info-modal-content {
+.mh-modal-content {
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
@@ -29,15 +62,15 @@
 }
 
 /* The Close Button */
-.quest-info-close {
+.mh-close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: 100;
 }
 
-.quest-info-close:hover,
-.quest-info-close:focus {
+.mh-close:hover,
+.mh-close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
