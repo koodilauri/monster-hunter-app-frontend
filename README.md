@@ -8,10 +8,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [Backend in heroku](https://monster-hunter-app-api.herokuapp.com/submission)
 
 # Install:
-- download frontend repository
-- get dependencies with `npm install`
-- Create .env file with `cp .env.development .env`
-- start frontend with `npm start`
+- Install Node.js >=8.4 using [nvm](https://github.com/creationix/nvm)
+- Clone this repository install dependencies with `npm i`
+- This project uses .env for storing environment variables. Copy the development variables using `cp .env.development .env`
+- Start frontend with `npm start`
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).

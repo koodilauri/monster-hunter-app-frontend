@@ -57,15 +57,11 @@ class DecorationsMenu extends React.Component {
       this.props.updateFormField("armorSet", this.props.part, { equipment: this.props.armorSetForm.values[this.props.part].equipment, decorations: [], usedSlots: 0 })
     }
     if (prevProps.usedSlots !== this.props.usedSlots) {
-      //shiet happns. elä updeittaa sen decon listaa joka muuttuu
-      // const prevDecos = prevProps.armorSetForm.values[prevProps.part].decorations
-      // const newDecos = this.props.armorSetForm.values[this.props.part].decorations
       const availableSlots = this.props.slots - this.state.usedSlots
+      console.log("availible slots: ", availableSlots)
       let newLists = [undefined, undefined, undefined]
       for (let i = 0; i < 3; i++) {
-        // if (prevDecos[i] !== newDecos) {
-          newLists[i] = this.availableDecorations(this.state.selectedDecorations[i] || { size: 0 }, availableSlots)
-        // }
+        newLists[i] = this.availableDecorations(this.state.selectedDecorations[i] || { size: 0 }, availableSlots)
       }
       this.setState({
         decolist0: newLists[0] || this.state.decolist0,
@@ -77,7 +73,7 @@ class DecorationsMenu extends React.Component {
 
   availableDecorations = (selectedDecoration, max) =>
     this.state.decorations.filter((decoration) =>
-      decoration.size <= selectedDecoration.size || decoration.size <= max) /// shiet
+      decoration.size <= selectedDecoration.size + max) 
 
   changeDecorations(amount) {
     const { selectedDecorations } = this.state
